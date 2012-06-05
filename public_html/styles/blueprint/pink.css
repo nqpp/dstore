@@ -1,0 +1,18 @@
+/*
+Pink Colour Palette - Light to Dark
+#E5FFD1 #FFD1E5 #FFE9F8
+#90CD60 #CD6090
+#7DC545 #C5457D
+#649E37 #9E3764
+*/
+body { background: #FFD1E5; }
+#head h1 { background-image: url(images/logo_red.png); }
+#login h2.qm { background-image: url(images/logo_red.png); }
+#nav, #nav li ul { background-color: #C5457D; }
+a.action { color: #9E3764; }
+thead a { color: #9E3764;}
+h1, h2, h3, h4 { color: #9E3764; }
+button, a.button { background-color: #C5457D; }
+button:hover, button:focus, a.button:hover, a.button:focus { background-color: #CD6090; }
+table.contact th, table.quote th, table.order th { color: #C5457D; }
+

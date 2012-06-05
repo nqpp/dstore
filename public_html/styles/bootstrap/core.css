@@ -1,0 +1,136 @@
+@import url('bootstrap.css');
+
+/*  
+
+	Custom styles and overloads on Bootstrap.
+
+*/
+
+/* vertical margins */
+.top1 { margin-top:60px; }
+.top2 { margin-top:140px; }
+.top3 { margin-top:220px; }
+.top4 { margin-top:300px; }
+.top5 { margin-top:380px; }
+.top6 { margin-top:460px; }
+
+form.login {
+  position:relative;
+  
+  min-height: 20px;
+  padding: 29px 39px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	 -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+		  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.login .org { 
+  height:122px; 
+  width:210px; 
+  background: transparent url(images/DStoreLogo.png) center no-repeat; 
+  text-indent: -9999px; 
+  margin:0;
+  padding:0;
+}
+.login .DWarrior { 
+  width: 105px; 
+  height:220px; 
+  position:absolute; 
+  right:80px;
+  top:60px; 
+  background: transparent url(images/DWarriorCharacter.png) 0 0 no-repeat; 
+}
+
+.navbar .brand {
+  /* override bootstrap declarations */
+  float: none;
+  padding: 0;
+  margin-left: 0px;
+
+  position:absolute;
+  top:5px;
+  width:120px;
+  height:60px;
+  background: url(images/DStoreLogoSmall.png) 0px -5px no-repeat;
+  text-align:left;
+  text-indent:-9999px;
+}
+
+
+/*
+	Thumbnail Grid
+*/
+ul.thumbnails li.span3 div.thumbnail {
+  height:270px;
+  text-align:center;
+/*  position: relative;*/
+}
+div.thumbnail div.handle {
+  cursor:move;
+  font-weight:bold;
+  line-height:24px;
+  margin-bottom:10px;
+/*  padding:4px 5px;*/
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  background-color: #EEE;
+}
+div.thumbnail div.handle.staff {
+  background-color: #FFAA2F;
+  color:#FFF;
+}
+div.thumbnail div.handle.staff:hover {
+  background-color: #FFC167;
+}
+div.thumbnail div.handle.community {
+  background-color: #68C1E7;
+  color:#FFF;
+}
+div.thumbnail div.handle.community:hover {
+  background-color: #B3E8FF;
+}
+div.thumbnail h5 {
+  margin-bottom:10px;
+  
+}
+
+
+/*
+	Entity Page
+*/
+.editable .edit {
+  display:none;
+}
+.editable label {
+/*  font-weight:bold;*/
+  margin-top:10px;
+}
+
+textarea.h4 {
+  height:6em;
+}
+
+/*
+	Table form elements
+*/
+
+table input, 
+table textarea, 
+table select, 
+table .uneditable-input {
+  margin-bottom:0;
+}
+
+table .span1-5 {
+  width: 80px;
+}
+
+
+

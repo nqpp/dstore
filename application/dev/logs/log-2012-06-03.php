@@ -1,0 +1,134 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2012-06-03 07:50:56 --> 404 Page Not Found --> orders
+ERROR - 2012-06-03 09:54:48 --> Severity: Notice  --> Undefined property: Locations::$m_freights /mnt/webcode/www/d-store/dstore/application/dev/controllers/locations.php 74
+ERROR - 2012-06-03 09:55:37 --> Severity: Notice  --> Undefined property: Locations::$m_freights /mnt/webcode/www/d-store/dstore/application/dev/controllers/locations.php 74
+ERROR - 2012-06-03 10:01:57 --> Severity: Notice  --> Undefined variable: locationJSON /mnt/webcode/www/d-store/dstore/application/dev/views/zones/entity.php 23
+ERROR - 2012-06-03 10:41:18 --> Severity: Notice  --> Undefined variable: js_tpl_list /mnt/webcode/www/d-store/dstore/application/dev/views/clients/list.php 34
+ERROR - 2012-06-03 10:44:51 --> Severity: Notice  --> Undefined variable: data /mnt/webcode/www/d-store/dstore/application/dev/controllers/clients.php 52
+ERROR - 2012-06-03 10:44:51 --> Severity: Notice  --> Undefined variable: data /mnt/webcode/www/d-store/dstore/application/dev/controllers/clients.php 56
+ERROR - 2012-06-03 10:44:51 --> Severity: Notice  --> Undefined variable: data /mnt/webcode/www/d-store/dstore/application/dev/controllers/clients.php 60
+ERROR - 2012-06-03 11:11:11 --> Severity: Notice  --> Trying to get property of non-object /mnt/webcode/www/d-store/dstore/application/dev/views/client_contacts/entity.php 12
+ERROR - 2012-06-03 11:17:01 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:22:30 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:22:30 --> Severity: Notice  --> Undefined variable: client /mnt/webcode/www/d-store/dstore/application/dev/views/clients/entity.php 128
+ERROR - 2012-06-03 11:22:36 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:24:59 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:25:28 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:26:05 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:27:11 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:29:06 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:29:09 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:31:40 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:32:09 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:32:47 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:33:14 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:33:23 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:34:23 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:34:31 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:34:32 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:35:12 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:36:08 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:36:31 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:36:39 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:37:37 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:37:48 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:37:55 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:38:29 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:38:51 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 11:41:05 --> Severity: Notice  --> Undefined variable: states /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_addresslist.php 25
+ERROR - 2012-06-03 12:04:42 --> 404 Page Not Found --> favicon.ico
+ERROR - 2012-06-03 12:04:43 --> 404 Page Not Found --> favicon.ico
+ERROR - 2012-06-03 12:04:46 --> 404 Page Not Found --> favicon.ico
+ERROR - 2012-06-03 12:04:47 --> 404 Page Not Found --> favicon.ico
+ERROR - 2012-06-03 12:22:57 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:23:26 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:24:02 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:24:33 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:26:08 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:28:39 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:29:30 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:29:43 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:29:48 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:51:39 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:51:44 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 12:52:19 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:01:23 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:01:38 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:05:08 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:05:21 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:07:14 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:07:45 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:08:33 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:09:01 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:09:36 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:10:29 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:10:52 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:11:16 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:11:26 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:12:30 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:12:47 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:13:06 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:13:18 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:13:58 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:15:07 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:15:58 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:16:19 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:42:07 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:42:21 --> Severity: Notice  --> Trying to get property of non-object /mnt/webcode/www/d-store/dstore/application/dev/views/client_contacts/entity.php 12
+ERROR - 2012-06-03 13:45:45 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:46:28 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:46:55 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:49:34 --> 404 Page Not Found --> favicon.ico
+ERROR - 2012-06-03 13:51:54 --> Severity: Notice  --> Trying to get property of non-object /mnt/webcode/www/d-store/dstore/application/dev/views/client_contacts/entity.php 12
+ERROR - 2012-06-03 13:53:25 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:53:46 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:54:37 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 13:59:04 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:02:25 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:02:31 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:03:03 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:03:09 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:05:50 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:08:55 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:11:16 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:11:26 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:16:01 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:16:17 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:18:58 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:19:11 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:19:11 --> Severity: Notice  --> Undefined variable: row /mnt/webcode/www/d-store/dstore/application/dev/controllers/client_contacts.php 87
+ERROR - 2012-06-03 14:19:35 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:19:41 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:25:16 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:25:23 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:26:22 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:38:22 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:38:55 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:40:13 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:41:00 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:41:18 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:41:32 --> Severity: Notice  --> Undefined property: Client_contacts::$confirm_passwd /mnt/webcode/www/d-store/dstore/system_210/core/Model.php 51
+ERROR - 2012-06-03 14:43:45 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:45:02 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 14:46:36 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 15:02:55 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 15:02:57 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 15:03:28 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 15:03:40 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 15:03:44 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 15:14:11 --> Severity: Notice  --> Undefined variable: contact /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 10
+ERROR - 2012-06-03 15:14:11 --> Severity: Notice  --> Trying to get property of non-object /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 10
+ERROR - 2012-06-03 15:14:32 --> Severity: Notice  --> Undefined variable: emailTypes /mnt/webcode/www/d-store/dstore/application/dev/views/clients/js_tpl_emaillist.php 6
+ERROR - 2012-06-03 15:49:45 --> Severity: Notice  --> Undefined variable: addressJSON /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 64
+ERROR - 2012-06-03 15:49:46 --> Severity: Notice  --> Undefined variable: phoneJSON /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 65
+ERROR - 2012-06-03 15:49:46 --> Severity: Notice  --> Undefined variable: js_tpl_entity /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 69
+ERROR - 2012-06-03 15:49:46 --> Severity: Notice  --> Undefined variable: js_addresslist /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 70
+ERROR - 2012-06-03 15:49:46 --> Severity: Notice  --> Undefined variable: js_phonelist /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 71
+ERROR - 2012-06-03 15:49:56 --> Severity: Notice  --> Undefined variable: addressJSON /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 64
+ERROR - 2012-06-03 15:49:56 --> Severity: Notice  --> Undefined variable: phoneJSON /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 65
+ERROR - 2012-06-03 15:49:56 --> Severity: Notice  --> Undefined variable: js_addresslist /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 70
+ERROR - 2012-06-03 15:49:56 --> Severity: Notice  --> Undefined variable: js_phonelist /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 71
+ERROR - 2012-06-03 15:50:29 --> Severity: Notice  --> Undefined property: Contacts::$m_client_addresses /mnt/webcode/www/d-store/dstore/application/dev/controllers/contacts.php 26
+ERROR - 2012-06-03 15:50:48 --> Severity: Notice  --> Undefined variable: js_addresslist /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 70
+ERROR - 2012-06-03 15:50:48 --> Severity: Notice  --> Undefined variable: js_phonelist /mnt/webcode/www/d-store/dstore/application/dev/views/contacts/entity.php 71

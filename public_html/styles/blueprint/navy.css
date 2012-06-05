@@ -1,0 +1,21 @@
+/*
+Blue Colour Palette - Light to Dark
+#E2F6FF
+#4FC6FC
+#0094D7
+#046895
+#40B0E3
+*/
+body { background: #E2F6FF; }
+#head h1 { background-image: url(images/logo_navy.png); }
+#login h2.qm { background-image: url(images/logo_navy.png); }
+#nav, #nav li ul { background-color: #4FC6FC; }
+a.action { color: #0094D7; }
+thead a { color: #0094D7;}
+h1, h2, h3, h4 { color: #046895; }
+/*
+button, a.button { background-color: #40B0E3; }
+button:hover, button:focus, a.button:hover, a.button:focus { background-color: #4FC6FC; }
+*/
+table.contact th, table.quote th, table.order th { color: #0094D7; }
+

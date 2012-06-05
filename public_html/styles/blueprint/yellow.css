@@ -1,0 +1,18 @@
+/*
+Yellow Colour Palette - Light to Dark
+#E5FFD1 #FFFCD7
+#90CD60 #FFD700
+#7DC545 #FFB90F
+#649E37 #FFC125
+*/
+body { background: #FFFCD7; }
+#head h1 { background-image: url(images/logo_yellow.png); }
+#login h2.qm { background-image: url(images/logo_yellow.png); }
+#nav, #nav li ul { background-color: #FFB90F; }
+a.action { color: #FFC125; }
+thead a { color: #FFC125;}
+h1, h2, h3, h4 { color: #FFC125; }
+button, a.button { background-color: #FFB90F; }
+button:hover, button:focus, a.button:hover, a.button:focus { background-color: #FFD700; }
+table.contact th, table.quote th, table.order th { color: #FFB90F; }
+

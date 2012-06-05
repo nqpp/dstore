@@ -1,0 +1,18 @@
+/*
+Green Colour Palette - Light to Dark
+#E5FFD1
+#90CD60
+#7DC545
+#649E37
+*/
+body { background: #E5FFD1; }
+#head h1 { background-image: url(images/logo_green.png); }
+#login h2.qm { background-image: url(images/logo_green.png); }
+#nav, #nav li ul { background-color: #7DC545; }
+a.action { color: #649E37; }
+thead a { color: #649E37;}
+h1, h2, h3, h4 { color: #649E37; }
+button, a.button { background-color: #7DC545; }
+button:hover, button:focus, a.button:hover, a.button:focus { background-color: #90CD60; }
+table.contact th, table.quote th, table.order th { color: #7DC545; }
+

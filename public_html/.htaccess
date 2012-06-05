@@ -1,0 +1,17 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{ENV:REDIRECT_APP_PATH} !^$
+RewriteRule ^(.*)$ - [E=APP_PATH:%{ENV:REDIRECT_APP_PATH}]
+
+RewriteCond %{ENV:APP_PATH} ^$
+RewriteRule ^(.*)$ - [E=APP_PATH:/$1]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^images/(.*)$ media_process.php/?$1 [NS,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.php|media_process\.php|styles|scripts)
+RewriteRule ^(.*)$ index.php/$1 [L]
