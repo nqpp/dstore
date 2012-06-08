@@ -18,7 +18,7 @@ class Carts extends MM_Controller {
 
 	// Cannot have multiple instances of product in multiple carts.
 	// Check for product in cart for user
-	$this->m_carts->usersID = User::$id;
+	$this->m_carts->usersID = User::id();
 	$this->m_carts->productsID = $json->productsID;
 
 	$test = $this->m_carts->fetch();
@@ -38,7 +38,7 @@ class Carts extends MM_Controller {
 	} else {
 
 	  // Product not in cart, create new row.
-	  $this->m_carts->usersID = User::$id;
+	  $this->m_carts->usersID = User::id();
 	  $this->m_carts->createdAt = date("Y-m-d H:i:s");
 
 	  $this->m_carts->add();
@@ -61,5 +61,16 @@ class Carts extends MM_Controller {
 	$row = $this->m_carts->get();
 	print json_encode($row);
   }
+
+	function renderJSONDelete() {
+		
+		// Remove cart_items
+		$this->m_cart_items->cartsID = $this->entityID;
+		$this->m_cart_items->removeByCartsId();
+		
+		// Remove cart		
+		$this->m_carts->id = $this->entityID;
+		$this->m_carts->delete();
+	}
 
 }

@@ -24,7 +24,7 @@ class M_carts extends MM_Model {
 
   function fetchUserCart() {
 	
-	$this->usersID = User::$id;
+	$this->usersID = User::id();
 	$cart = $this->fetchIndexed();
 	return $cart;
   }

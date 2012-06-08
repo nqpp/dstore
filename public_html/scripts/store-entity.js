@@ -261,7 +261,9 @@ $(function(){
 	  App.CartPreps.bind('reset', this.addAll, this);
 	  App.CartPreps.bind('add', this.add, this);
 	},
-	calcTotal:function() {
+	
+	calcTotal: function() {
+
 	  this.resetTotals();
 	  var self = this;
 	  
@@ -318,6 +320,7 @@ $(function(){
 	  this.$el.find('#gst_total').html(this.gstTotal.toFixed(2));
 	  this.$el.find('#price_total').html(this.priceTotal.toFixed(2));
 	  
+		this.$el.find("#add_to_cart").html('Update');
 	  this.$el.find("#add_to_cart").attr('disabled',false);
 	},
 	calcTotals:function() {
@@ -338,6 +341,8 @@ $(function(){
 	  
 	  if (freight > min) this.freight = freight;
 	  else this.freight = min;
+	
+		if(isNaN(this.freight)) this.freight = 0; // Fail gracefully if freight matrix is incorrectly set on server side.
 
 	},
 	toCart:function() {
@@ -347,33 +352,36 @@ $(function(){
 	  cart.save({},{wait:true,success:this.toCartItem});
 	  
 	  this.resetTotals();
+		this.calcTotal();
 	},
 	toCartItem:function(model,response) {
 
 	  App.CartPreps.each(function(m) {
 		m.set({cartsID:response.cartID});
+		
+		var cartItem = new App.CartItem(m.toJSON());
+		
+		// Save the cart item if there is a qty, otherwise, delete it (if it exists...)
+		if (!isNaN(m.get('qty')) && m.get('qty') > 0) cartItem.save();
+		else cartItem.destroy();
 
-		if (!isNaN(m.get('qty')) && m.get('qty') > 0) {
-		  
-		  var cartItem = new App.CartItem(m.toJSON());
-		  cartItem.save();
-		}
-		m.set({cartsID:'',qty:''});
+//		m.set({cartsID:'',qty:''});
 	  });
 	  
 	},
 	add: function(model) {
 	  var view = new App.CartPrepView({model: model});
 	  $('#cart_prep tbody').append(view.render().el);	  
+	
 	},
 	addAll: function() {
 	  App.CartPreps.each(this.add);
 	}
   });
   
-  new App.CartPrepsView;
+  test = new App.CartPrepsView;
   App.CartPreps.reset(subProductJSON);
-
+	test.calcTotal();
 
   /*
    * ======================================================================

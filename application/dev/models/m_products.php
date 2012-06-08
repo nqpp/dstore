@@ -87,6 +87,22 @@ class M_products extends MM_Model {
 	$this->parentID = $this->id;
 	return $this->fetch();
   }
+
+	function fetchSubProductsWithQty() {
+		
+		$this->db->select('products.*, cartItems.qty, cartItems.cartItemID');
+//		$this->db->join('cartItems', 'products.code = cartItems.code AND cartItems.cartsID IN (SELECT cartID FROM carts WHERE usersID = 1)', 'left outer');
+		$this->db->join('cartItems', 'products.code = cartItems.code AND cartItems.cartsID IN (SELECT cartID FROM carts WHERE usersID = ' . User::id() . ')', 'left outer');
+		$this->db->where('products.parentID', $this->id);
+		
+		return $this->fetch();
+	}
+	
+	function fetchSubProductsWithQtyJSON() {
+		
+		$result = $this->fetchSubProductsWithQty();
+		return json_encode($result);
+	}
   
   function fetchSubProductsJSON() {
 	
