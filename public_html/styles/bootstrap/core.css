@@ -6,6 +6,13 @@
 
 */
 
+.lead {
+  font-weight: 300;
+}
+ul.lead li {
+  line-height: 28px;
+}
+
 /* vertical margins */
 .top1 { margin-top:60px; }
 .top2 { margin-top:140px; }
@@ -14,12 +21,12 @@
 .top5 { margin-top:380px; }
 .top6 { margin-top:460px; }
 
-form.login {
+.well-well {
   position:relative;
   
   min-height: 20px;
   padding: 29px 39px;
-  margin-bottom: 20px;
+/*  margin-bottom: 20px;*/
   background-color: #f5f5f5;
   border: 1px solid #ddd;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -30,7 +37,7 @@ form.login {
 	 -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 		  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
-.login .org { 
+.well-well .org { 
   height:122px; 
   width:210px; 
   background: transparent url(images/DStoreLogo.png) center no-repeat; 
@@ -38,7 +45,7 @@ form.login {
   margin:0;
   padding:0;
 }
-.login .DWarrior { 
+.well-well .DWarrior { 
   width: 105px; 
   height:220px; 
   position:absolute; 
