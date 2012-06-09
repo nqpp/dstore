@@ -6,7 +6,7 @@ class M_contacts extends M_users {
 
   function __construct() {
     parent::__construct();
-	$this->adminGroup = 4;
+	$this->adminGroup = 32;
 	$this->model = 'users';
   }
   
