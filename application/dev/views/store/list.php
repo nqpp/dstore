@@ -1,15 +1,17 @@
-<div class="container" id="productApp">
-  <div class="span-4">
-	<h1>Product Store</h1>
-  </div>
+<div id="productApp">
   
-  
-  <div class="clear">&nbsp;</div>
+  <div class="row row-padded">
+	<div class="span4">
+	  <h1>Product Store</h1>
+	</div>
 
-  
-  <ul id="products"></ul>
-  
+  </div>
+
+
+  <ul class="thumbnails" id="products"></ul>
+
 </div>
+
 
 <script type="text/javascript">
 var productsJSON = <?= $productsJSON ?>;
