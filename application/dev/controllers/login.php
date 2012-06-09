@@ -2,7 +2,14 @@
 
 require_once (APPPATH.'/core/Unsecure.php');
 
+/*
+ * Login Class
+ * 
+ * TODO: determine delivery address of client on login.
+ */
 class Login extends Unsecure {
+  
+  private $https = false;
 
   function __construct() {
     parent::__construct();
@@ -11,8 +18,9 @@ class Login extends Unsecure {
   
   function renderHTML() {
 	
-//	$this->check_https();
-    $this->load->view('system/login');
+	$this->check_https();
+	$this->load->vars('content',$this->load->view('system/login','',true));
+    $this->pageTemplate('page_dialog');
 	
   }
   
@@ -60,6 +68,8 @@ class Login extends Unsecure {
   }
   
   function check_https() {
+	
+	if (!$this->https) return;
 	
 	if (!isset($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] != 'on') {
 	  $base_url = $this->config->item('base_url');

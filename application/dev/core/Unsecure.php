@@ -14,10 +14,16 @@ class Unsecure extends CI_Controller {
   protected $entityID;
   protected $method;
   protected $methodCall;
+  protected $pageTemplate;
+  protected $HTMLErrorDisplay;
+  protected $cssFiles = array();
+  protected $jsFiles = array();
+  protected $jsScripts = array();
 
   function __construct() {
     parent::__construct();
 	$this->load_tpl_vars();
+	$this->pageTemplate('page_bootstrap');
   }
   
   function _remap($id = false) {
@@ -96,8 +102,43 @@ class Unsecure extends CI_Controller {
 	  exit;
 	}
 
-	$this->{$this->methodCall}();
+	try {
+	  $this->{$this->methodCall}();
+	}
+	catch (Exception $e) {
+	  
+	  switch ($this->method['type']) {
+		case 'JSON':
+		  header("HTTP/1.0 500 Internal Server Error");
+		  print $e->getMessage();
+		  break;
+		case 'HTML':
+		default:
+		  $data->error = $e->getMessage();
+		  $this->load->vars('content', $this->load->view('errors/entity',$data,true));
+		  break;
+	  }
+	  
+	}
 
+	if ($this->method['type'] == 'HTML') {
+	  $this->load->vars('cssFiles', $this->cssFiles());
+	  $this->load->vars('jsFiles', $this->jsFiles());
+	  $this->load->vars('jsScripts', $this->jsScripts());
+	  $this->load->view('system/'.$this->pageTemplate());
+
+	}
+
+  }
+  
+  /*
+   * 
+   */
+  private function HTMLErrorDisplay($HTMLErrorDisplay = 'errorpage') {
+	
+	if ($HTMLErrorDisplay) $this->HTMLErrorDisplay = $HTMLErrorDisplay;
+	return $this->HTMLErrorDisplay;
+	
   }
   
   private function HTMLError($err_code = '404') {
@@ -110,6 +151,15 @@ class Unsecure extends CI_Controller {
 	
 	$a = array("status"=>$err_code);
 	die(json_encode($a));
+	
+  }
+  
+  public function pageTemplate($pageTemplate = false) {
+	
+	if ($pageTemplate) $this->pageTemplate = $pageTemplate;
+//	else $this->pageTemplate = 'page_bootstrap';
+	
+	return $this->pageTemplate;
 	
   }
   
@@ -146,6 +196,33 @@ class Unsecure extends CI_Controller {
 	return array(
 	  'application/json'=>'JSON'
 	);
+  }
+  
+  /*
+   * store reference to css files to be included in view
+   */
+  function cssFiles($cssFile = false) {
+	
+	if ($cssFile) $this->cssFiles[] = $cssFile;
+	else return $this->cssFiles;
+  }
+  
+  /*
+   * store reference to js files to be included in view
+   */
+  function jsFiles($jsFile = false) {
+	
+	if ($jsFile) $this->jsFiles[] = $jsFile;
+	else return $this->jsFiles;
+  }
+  
+  /*
+   * store js script strings to be included in view
+   */
+  function jsScripts($jsScript = false) {
+	
+	if ($jsScript) $this->jsScripts[] = $jsScript;
+	else return implode("\n",$this->jsScripts);
   }
   
 }
