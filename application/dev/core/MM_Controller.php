@@ -244,10 +244,10 @@ class MM_Controller extends CI_Controller {
 	  case 1:
 		$nav = 'nav_admin';
 		break;
-	  case 2:
+	  case 16:
 		$nav = 'nav_manager';
 		break;
-	  case 4:
+	  case 32:
 		$nav = 'nav_client';
 		break;
 	  default:
