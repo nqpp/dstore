@@ -7,7 +7,6 @@ class Myorders extends MM_Controller {
 	$this->load->model('m_orders');
 	$this->load->model('m_order_products');
 	$this->load->model('m_order_product_quantities');
-//print 'Myorders'; exit;
   }
   
   function renderHTML() {

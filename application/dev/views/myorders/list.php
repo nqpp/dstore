@@ -20,19 +20,39 @@
 			<tr>
 			  <th width="100">Code</th>
 			  <th>Name</th>
-			  <th>Qty</th>
-			  <th>Sub Total</th>
-			  <th>Sub Total</th>
-			  <th width="40">Sort</th>
-			  <th width="100">
-				<a class="btn" href="/metas/<?= $schema ?>.html?deleteschema"><span class="icon-trash"> </span> Group</a>
-			  </th>			  
+			  <th width="60">Qty</th>
+			  <th width="60">Sub Total</th>
+			  <th width="60">Freight</th>
+			  <th width="40">GST</th>
+			  <th width="60">Total</th>
 			</tr>
 		  </thead>
+		  <tbody>
+			<?php if (count($orderProducts) && isset($orderProducts[$o->orderID])): ?>
+			<?php foreach ($orderProducts[$o->orderID] as $op): ?>
+			<?php
+			$subTotal = $op->qtyTotal * $op->itemPrice;
+			$gst = ($subTotal + $op->freightTotal) * $op->taxRate;
+			$total = $subTotal + $op->freightTotal + $gst;
+			?>
+			<tr>
+			  <td><?= $op->code ?></td>
+			  <td><?= $op->name ?></td>
+			  <td><?= $op->qtyTotal ?></td>
+			  <td><?= $subTotal ?></td>
+			  <td><?= $op->freightTotal ?></td>
+			  <td><?= $gst ?></td>
+			  <td><?= $total ?></td>
+			</tr>
+			<?php endforeach; ?>
+			<?php endif; ?>
+		  </tbody>
 		</table>
 	  </div>
 	</div>
 	<?php $i++; endforeach; ?>
+	<?php else: ?>
+	<div>No orders yet. <a href="/store">Let's go shopping</a></div>
 	<?php endif; ?>
 	
   </div>
