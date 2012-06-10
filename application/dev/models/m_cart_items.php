@@ -31,10 +31,19 @@ class M_cart_items extends MM_Model {
 	return $items;
   }
 
+  function removeByCartsId() {
 
-	function removeByCartsId() {
-		
-		$this->db->where('cartsID', $this->cartsID);
-		$this->db->delete('cartItems');
-	}
+	$this->db->where('cartsID', $this->cartsID);
+	$this->db->delete('cartItems');
+  }
+
+  function removeByCartIDs() {
+
+	if (!$this->cartIDs || !count($this->cartIDs)) return;
+	
+	$this->db->where_in('cartsID', $this->cartIDs);
+	$this->db->delete('cartItems');
+	
+  }
+
 }
