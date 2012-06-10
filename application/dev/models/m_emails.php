@@ -1,16 +1,13 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class M_email extends CI_Model {
+class M_emails extends MM_Model {
 
-  public $emailID;
-  public $searchStr;
   public $attachmentPath;
 
   function __construct() {
 	$this->pk = 'emailID';
 	$this->fields = $this->fields();
     parent::__construct();
-    $this->load->library('Email_handler');
     $this->attachmentPath = realpath(BASEPATH.'../artwork').'/';
   }
 
@@ -41,14 +38,11 @@ class M_email extends CI_Model {
 
   function get() {
 
-    if(!$this->emailID) throw new Exception('No ID supplied.');
-
     $this->db->select("DATE_FORMAT(`emails`.`createdAt`,'%e %b %Y') as 'createdDate'",false);
     $this->db->select("DATE_FORMAT(`emails`.`sentAt`,'%e %b %Y') as 'sentDate'",false);
     $this->db->select("DATE_FORMAT(`emails`.`sentAt`,'%e %b %Y %k:%i') as 'sentDateTime'",false);
 
 	$row = parent::get();
-    $row->attachments = $this->strToArray($row->attachments);
 
     return $row;
   }
@@ -56,6 +50,7 @@ class M_email extends CI_Model {
   function add() {
 
     $this->createdAt = date('Y-m-d H:i:s');
+//    $this->createdBy = $this->user->userID;
 
     if ($this->input->post('attachments')) {
       $this->attachments = serialize($this->input->post('attachments'));
@@ -88,26 +83,6 @@ class M_email extends CI_Model {
 	
   }
 
-//  function deleteForSchemaID() {
-//
-//    if(!$this->schemaID) throw new Exception('No schemaID supplied.[m_email:deleteForSchemaID]');
-//    if(!$this->schemaName) throw new Exception('No schemaName supplied.[m_email:deleteForSchemaID]');
-//
-//    $this->db->where('schemaID',$this->schemaID);
-//    $this->db->where('schemaName',$this->schemaName);
-//    $data = $this->db->get('emails');
-//    
-//    if (!$data->num_rows()) return;
-//
-//    $row = $data->row();
-//    $att = $this->formatAttachments($row->attachments);
-//    $this->deleteTmpMedia($att);
-//
-//
-//    $this->db->where('emailID',$row->emailID);
-//    $this->db->delete('emails');
-//  }
-
   function sort() {
     
 	$sort = $this->input->get('sort');
@@ -131,9 +106,9 @@ class M_email extends CI_Model {
     $sql = "(";
     $sql .= "`subject` LIKE '%{$this->searchStr}%'";
     $sql .= " OR `message` LIKE '%{$this->searchStr}%'";
-    $sql .= " OR `email_to` LIKE '%{$this->searchStr}%'";
-    $sql .= " OR `email_cc` LIKE '%{$this->searchStr}%'";
-    $sql .= " OR `email_bcc` LIKE '%{$this->searchStr}%'";
+    $sql .= " OR `to` LIKE '%{$this->searchStr}%'";
+    $sql .= " OR `cc` LIKE '%{$this->searchStr}%'";
+    $sql .= " OR `bcc` LIKE '%{$this->searchStr}%'";
     $sql .= ")";
 
     $this->db->where($sql);
@@ -142,33 +117,24 @@ class M_email extends CI_Model {
 
   function send() {
 
-    if(!$this->emailID) throw new Exception('No ID supplied. [m_email:send]');
+    if(!$this->id) throw new Exception('No ID supplied. [m_email:send]');
 
-    // get record data
     $row = $this->get();
-    $row->attachments =
-	$this->formatAttachments($row->attachments);
-	
 	$data = (object) array_merge((array) $row, (array) $this->email_config);
-	
 
     // send the email
-/* no sending email in demo version
     $this->load->library('email_handler');
-    $this->email_handler->initialise($row);
+    $this->email_handler->set($data);
     $this->email_handler->send();
-*/
 
-	$this->sent();
+	$this->saveSent();
 
-    // erase any temp files uploded as attachments
-    $this->deleteTmpMedia($row->attachments);
   }
   
-  function sent() {
+  function saveSent() {
     
     $this->db->set('`sentAt`',date('Y-m-d H:i:s'));
-    $this->db->where('`emailID`',$this->emailID);
+    $this->db->where('`emailID`',$this->id);
     $this->db->update('emails');
 	
   }

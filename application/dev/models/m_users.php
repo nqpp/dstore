@@ -109,16 +109,23 @@ class M_users extends MM_Model {
 
     return $salt;
   }
+  
+  function generate_password() {
+	return $this->generate_salt();
+  }
 
-  function set_passwd($id,$passwd) {
+  function set_passwd($userID, $password) {
 
     $salt = $this->generate_salt();
-    $salted = $this->salt_passwd($passwd,$salt);
+    $salted = $this->salt_password($password,$salt);
 
     $this->db->set('salt',$salt);
     $this->db->set('passwd',$salted);
-    $this->db->where('id',(int)$id);
-    return $this->db->update('users');
+    $this->db->where('userID',(int)$userID);
+    if (!$this->db->update('users')) {
+	  throw new Exception('An error occurred. Password was not reset');
+	}
+
   }
 
   function authenticate() {
@@ -154,25 +161,19 @@ class M_users extends MM_Model {
   }
 
   
-  function reset_password($email) {
+  function reset_password() {
 
-    $this->db->select('userID');
-    $this->db->where('email',$email);
-    $data = $this->db->get('users');
+	$this->email = $this->input->post('email_address');
+	$result = $this->fetch();
+	
+	if(!count($result)) throw new Exception("Email address $email does not exist in the system.");
 
-    if($data->num_rows() == 1) {
-      $data = $data->row();
-    } else {
-      return FALSE;
-    }
+	$row = reset($result);
+	// gen new passwd
+	$row->password = $this->generate_password();
+	$this->set_passwd($row->userID,$row->password);
 
-    $id = $data->id;
-
-    // gen new passwd
-   $passwd = $this->generate_salt();
-   $this->set_passwd($id,$passwd);
-
-   return $passwd;
+	return $row;
   }
 
 
