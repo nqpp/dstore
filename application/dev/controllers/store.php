@@ -30,7 +30,7 @@ class Store extends MM_controller {
 	$product = $this->m_products->get();
 	$this->load->vars('product', $product);
 	$this->load->vars('productJSON', json_encode($product));
-	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsJSON());
+	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsWithQtyJSON());
 	$this->load->vars('priceJSON', $this->m_product_metas->priceJSON());
 	$this->load->vars('imageJSON', $this->m_product_metas->imageJSON());
 
@@ -55,5 +55,4 @@ class Store extends MM_controller {
 	$this->jsFiles('/scripts/store-entity.js');
 	
   }
-  
 }

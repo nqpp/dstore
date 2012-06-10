@@ -138,8 +138,8 @@ class M_users extends MM_Model {
 	if ( count($result) != 1) throw new Exception('Bad username',0);
 	
 	$row = reset($result);
-	
-    if(!$this->compare_passwords($this->password, $row->passwd, $row->salt)) {
+
+    if(!$this->compare_passwords($this->password, $row->password, $row->salt)) {
       throw new Exception('Incorrect password', 1);
     }
 	

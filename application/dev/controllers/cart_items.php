@@ -56,4 +56,10 @@ class Cart_items extends MM_Controller {
 	print json_encode($row);
   }
 
+	function renderJSONDelete() {
+		
+		$this->m_cart_items->id = $this->entityID;
+		$this->m_cart_items->delete();
+	}
+
 }
