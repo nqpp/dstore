@@ -1,5 +1,14 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/*
+ * Email_handler class
+ * 
+ * Pass in details of message as well as config for sending.
+ * Allows validation of required items.
+ * 
+ * TODO: test on live server
+ * 
+ */
 class Email_handler {
 
   private $email; // placeholder for ci email object
