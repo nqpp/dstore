@@ -51,11 +51,6 @@ class M_users extends MM_Model {
 	
     if (!$this->id) throw new Exception('No ID supplied.');
 
-//    $this->postToVar();
-
-//    $pw = $this->passwords_match();
-//    if (!$pw) $this->passwd = false;
-    
     $this->passwords_match();
     $this->postToVar();
     $this->dbSetVars();
@@ -69,13 +64,13 @@ class M_users extends MM_Model {
 	
     $pw = trim($this->input->post('password'));
     $cpw = trim($this->input->post('confirm_password'));
-//	$cpw = trim($this->confirm_passwd);
+
 	$this->passwd = false;
 	$this->confirm_passwd = false;
 
     if($pw) {
-//print
-      if (!$cpw) throw new Exception('No confirm password supplied.');
+
+	  if (!$cpw) throw new Exception('No confirm password supplied.');
 
       if($pw == $cpw) {
         $this->salt = $this->generate_salt();
@@ -87,7 +82,6 @@ class M_users extends MM_Model {
 
     }
 	
-//	return $pw;
   }
 
 
@@ -139,7 +133,7 @@ class M_users extends MM_Model {
 	
 	$row = reset($result);
 
-    if(!$this->compare_passwords($this->password, $row->password, $row->salt)) {
+    if(!$this->compare_passwords($this->password, $row->passwd, $row->salt)) {
       throw new Exception('Incorrect password', 1);
     }
 	
