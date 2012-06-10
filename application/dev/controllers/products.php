@@ -28,10 +28,6 @@ class Products extends MM_controller {
     $this->m_products->id = $this->entityID;
     $this->m_product_metas->productsID = $this->entityID;
 
-//	$freight = $this->freights();
-//	$this->load->vars('freightJSON', json_encode($freight));
-//	$this->m_freight_locations->freightsID = $freight->freightID;
-//	$this->load->vars('freightLocationsJSON', json_encode($this->m_freight_locations->fetchJoined()));
 	$this->load->vars('productJSON', $this->m_products->getJoinedJSON());
 	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsJSON());
 	$this->load->vars('priceJSON', $this->m_product_metas->priceJSON());
@@ -47,8 +43,6 @@ class Products extends MM_controller {
 	$this->load->vars('js_tpl_price_list', $this->load->view('products/js_tpl_price_list','',true));
 	$this->load->vars('js_tpl_subproduct_list', $this->load->view('products/js_tpl_subproduct_list','',true));
 	$this->load->vars('js_tpl_image_list', $this->load->view('products/js_tpl_image_list','',true));
-//	$this->load->vars('js_tpl_freight', $this->load->view('products/js_tpl_freight','',true));
-//	$this->load->vars('js_tpl_freightlocation', $this->load->view('products/js_tpl_freightlocation','',true));
 
 	$this->load->vars('content',$this->load->view('products/entity','', true));
 
@@ -57,6 +51,18 @@ class Products extends MM_controller {
 	$this->jsFiles('/scripts/fileuploader.js');
 	$this->jsFiles('/scripts/product-entity.js');
 
+  }
+  
+  function renderHTMLDelete() {
+	
+    $this->m_products->id = $this->entityID;
+    $this->m_product_metas->productsID = $this->entityID;
+	
+    $this->m_product_metas->deleteProduct();
+    $this->m_products->delete();
+	
+	die (header("Location:/products.html"));
+	
   }
   
   function renderJSONDelete() {
@@ -115,36 +121,10 @@ class Products extends MM_controller {
 	$this->entityID = $this->m_products->id;
 	$row = $this->m_products->get();
 
-//	if ($row->parentID == 0) {
-//	  $this->freights();
-//	}
-
 	print json_encode($row);
 	
   }
   
-//  function freights() {
-//	
-//	$this->load->model('m_freights');
-//	$this->load->model('m_freight_locations');
-//	$this->load->model('m_locations');
-//   
-//	$this->m_freights->productsID = $this->entityID;
-//	$freight = $this->m_freights->getProduct();
-//
-//	if (!$freight) {
-//
-//	  $this->m_freights->add();
-//	  $freight = $this->m_freights->get();
-//	  
-//	  $this->m_freight_locations->locations = $this->m_locations->fetchIndexed();
-//	  $this->m_freight_locations->freightsID = $this->m_freights->id;
-//	  $this->m_freight_locations->addFreight();
-//
-//	}
-//	
-//	return $freight;
-//  }
   
   // dev method for cleaning up images
   function imageMaint() {
