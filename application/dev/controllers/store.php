@@ -35,8 +35,7 @@ class Store extends MM_controller {
 	$this->load->vars('imageJSON', $this->m_product_metas->imageJSON());
 
 	$this->m_supplier_freights->suppliersID = $product->suppliersID;
-	$this->m_supplier_freights->zonesID = $this->user->zoneID();
-
+	$this->m_supplier_freights->zonesID = User::zoneID();
 	$this->load->vars('freightJSON', json_encode($this->m_supplier_freights->getJoined()));
 
 	$this->load->vars('js_tpl_entity', $this->load->view('store/js_tpl_entity','',true));

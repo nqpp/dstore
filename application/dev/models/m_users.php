@@ -133,7 +133,7 @@ class M_users extends MM_Model {
 	
 	$row = reset($result);
 
-    if(!$this->compare_passwords($this->password, $row->passwd, $row->salt)) {
+    if(!$this->compare_passwords($this->password, $row->password, $row->salt)) {
       throw new Exception('Incorrect password', 1);
     }
 	
