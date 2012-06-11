@@ -6,6 +6,11 @@
  * Controller extender that provides RESTful service, page variables as well as
  * login and permissions layer
  * 
+ * TODO: implement unsecure usage.
+ * abstract out auth and permission areas so that the controller may also be 
+ * used for unsecure purposes perhaps by an explicit setting of a flag from
+ * the overriding constructor.
+ * 
  */
 class MM_Controller extends CI_Controller {
   
@@ -14,9 +19,9 @@ class MM_Controller extends CI_Controller {
   protected $access;
   protected $methodCall;
   protected $pageTemplate;
-  public $cssFiles = array();
-  public $jsFiles = array();
-  public $jsScripts = array();
+  protected $cssFiles = array();
+  protected $jsFiles = array();
+  protected $jsScripts = array();
 
   function __construct() {
     
@@ -26,6 +31,7 @@ class MM_Controller extends CI_Controller {
 	  $this->check_login();
 	  $this->check_rest_permission();
 	  $this->load_tpl_vars();
+	  $this->userPrefs();
 	  $this->pageTemplate();
 	}
 	catch (Exception $e) {
@@ -225,6 +231,10 @@ class MM_Controller extends CI_Controller {
     $page_name = implode(' ',$segment_array);
     $this->load->vars('page_name',$page_name);
 	
+  }
+  
+  private function userPrefs() {
+	
     $this->load->model('m_user_metas');
 	$this->m_user_metas->usersID = $this->user->userID();
 	$this->m_user_metas->schemaName = 'userPref';
@@ -235,10 +245,10 @@ class MM_Controller extends CI_Controller {
 	  case 1:
 		$nav = 'nav_admin';
 		break;
-	  case 2:
+	  case 16:
 		$nav = 'nav_manager';
 		break;
-	  case 4:
+	  case 32:
 		$nav = 'nav_client';
 		break;
 	  default:

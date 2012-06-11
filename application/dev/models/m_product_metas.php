@@ -67,6 +67,24 @@ class M_product_metas extends MM_Model {
 	
   }
   
+  function deleteProduct() {
+	
+	if (!$this->productsID) throw new Exception("No id supplied.[{$this->className}:deleteProduct]");
+	
+	$metas = $this->fetchAllForProduct();
+	
+	if (isset($metas['image'])) {
+	  foreach ($metas['image'] as $img) {
+		$this->id = $img->productMetaID;
+		$this->deleteImage();
+	  }
+	}
+	
+	$this->db->where('productsID',$this->productsID);
+	$this->db->delete('productMetas');
+	
+  }
+  
   function deleteImage() {
 	
 	require_once(APPPATH.'libraries/IMagick_Image.php');

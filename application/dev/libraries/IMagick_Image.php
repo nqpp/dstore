@@ -7,6 +7,18 @@
  * Image manipulation class using IMagick API or ImageMagick CLI. 
  * Cropping and resizing options determined by image url.
  * 
+ * Format for url:
+ * /images/imagedir/resizecode/width/height/filename.ext
+ * 
+ * imagedir and filename will typically be the same as when image directories
+ * are created by the system they are named the same as the image filename sans 
+ * extension such that
+ * 
+ * myimagename.jpg will create directory myimagename and will contain the 
+ * master image myimagename.jpg
+ * All additional image sizes will be stored in this directory in a folder 
+ * structure corresponding to the url
+ * 
  * 
  * Image resizing codes:
 		0 => 'width',

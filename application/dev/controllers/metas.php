@@ -60,9 +60,10 @@ class Metas extends MM_Controller {
   function formHTMLEntity() {
 	
     $this->m_metas->id = $this->entityID;
-	
-	if ($this->input->post('add_action')) {
+
+	if ($this->input->post('add_action') !== false) {
 	  $this->formHTMLNew();
+	  return;
 	}
 
 	$this->m_metas->update();

@@ -43,9 +43,6 @@ $(function() {
 	  else if (sort1 < sort2) return -1;
 	  else return 0;
 	}
-//	comparator:function(model) {
-//	  return model.get('sort');
-//	}
 	
   });
   
@@ -53,6 +50,15 @@ $(function() {
   
   App.ProductView = Backbone.View.extend({
 	tagName: 'li',
+	
+	attributes: function() {
+	  var data = {
+		class:'span3'
+	  };
+
+	  data["data-id"] = this.model.cid
+	  return data;
+	},
 	
 	template: _.template($('#tpl-list').html()),
 	

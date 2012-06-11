@@ -6,13 +6,12 @@ class Request_login extends Unsecure {
 
   function __construct() {
     parent::__construct();
-//    $this->load->model('m_users');
   }
   
   function renderHTML() {
 	
-//	$this->check_https();
-    $this->load->view('system/request_login');
+	$this->load->vars('content',$this->load->view('system/request_login','',true));
+    $this->pageTemplate('page_dialog');
 	
   }
   

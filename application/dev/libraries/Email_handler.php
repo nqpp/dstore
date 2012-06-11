@@ -1,131 +1,338 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/*
+ * Email_handler class
+ * 
+ * Pass in details of message as well as config for sending.
+ * Allows validation of required items.
+ * 
+ * TODO: test on live server
+ * 
+ */
 class Email_handler {
 
-  var $ci;
-  private $user = false;
-  private $config;
-  private $vars = false;
-  private $userID = false;
+  private $email; // placeholder for ci email object
+  private $nosend = true;  // control whether emails get sent
   
   function __construct() {
 
-    $this->ci =& get_instance();
-    $this->ci->load->library('email');
+    $ci =& get_instance();
+    $ci->load->library('email');
+	$this->email = $ci->email;
+	
   }
 
-  // initialise
-  function initialise($row) {
-
-    if (!is_object($row)) throw new Exception('No variables supplied to email handler');
-
-    if (isset($row->userID))
-            $this->userID = $row->userID;
-
-    if (!$this->user)
-            $this->user = $this->user();
-
-    if (!$this->config) {
-      $this->config = $this->config();
-      $this->ci->email->initialize($this->config);
-    }
-    
-
-    foreach ($this->vars() as $v=>$r) {
-      $this->$v = false;
-
-      if (isset($row->$v) AND $row->$v) {
-        $this->$v = $row->$v;
-      }
-      elseif ($r) { // not set but required
-        throw new Exception ("$v is required but not set.");
-      }
-    }
+  function set($data) {
+	
+	if (! is_object($data)) throw new Exception('Argument is not object.');
+	
+	foreach (get_object_vars($data) as $prop=>$val) {
+	  if (method_exists($this,$prop)) {
+		$this->$prop($val);
+	  }
+	}
 
   }
+  
+  private function config() {
+	
+	$this->config = array();
+	$this->config['mailtype'] = $this->mailtype();
+	$this->config['newline'] = $this->newline();
+	$this->config['wrapchars'] = $this->wrapchars();
+	$this->config['protocol'] = $this->protocol();
+	
+	$this->{'send_'.$this->config['protocol']}();
+	
+	$this->email->initialize($this->config);
+	
+  }
+  
+  /*
+   * config specific to smtp
+   */
+  private function send_smtp() {
+	
+	$this->config['smtp_host'] = $this->validate_smtp_host();
+	$this->config['smtp_user'] = $this->validate_smtp_user();
+	$this->config['smtp_pass'] = $this->validate_smtp_pass();
+	$this->config['smtp_port'] = $this->smtp_port();
 
-  // get user detail 
-  private function user() {
-
-    $this->ci->load->model('m_admin','admin');
-    
-    if ($this->userID) {
-      $this->ci->admin->id = $this->userID; // newsletter cron user
-    }
-    else {
-      $this->ci->admin->id = User::$id;
-    }
-    
-    return $this->ci->admin->get();
+  }
+  
+  /*
+   * config specific to mail
+   */
+  private function send_mail() {
+	
+  }
+  
+  /*
+   * config specific to sendmail
+   */
+  private function send_sendmail() {
+	
+	$this->config['mailpath'] = $this->mailpath();
+	
   }
 
-  // set email library config vars
-  function config() {
-
-    if (!$this->user) throw new Exception ('User data not set');
-    if (!$this->user->smtp_pass) throw new Exception ('User SMTP password not set');
-
-    return array(
-      'mailtype'=>'html',
-      'newline'=>"\r\n",
-      'protocol'=>'smtp',
-      'smtp_host'=>'ssl://smtp.gmail.com',
-      'smtp_user'=>$this->user->email_address,
-      'smtp_pass'=>$this->user->smtp_pass,
-      'smtp_port'=>'465',
-      'wrapchars'=>100
-    );
+  /*
+   * determine how message should be sent
+   */
+  private function sendtype($sendtype = false) {
+	
+	if ($sendtype !== false) $this->sendtype = $sendtype;
+	return $this->sendtype;
+	
   }
+  
+  /*
+   * format for message. html or text
+   */
+  function mailtype($mailtype = false) {
+	
+	if ($mailtype !== false) $this->mailtype = $mailtype;
+	return $this->mailtype;
+	
+  }
+  
+  /*
+   * server path to sendmail
+   */
+  function mailpath($mailpath = false) {
+	
+	if ($mailpath !== false) $this->mailpath = $mailpath;
+	return $this->mailpath;
+	
+  }
+  
+  function newline($newline = false) {
+	
+	if ($newline) $this->newline = $newline;
+	return $this->newline;
+	
+  }
+  
+  function protocol($protocol = false) {
+	
+	if ($protocol) $this->protocol = $protocol;
+	return $this->protocol;
+	
+  }
+  
+  function smtp_host($smtp_host = false) {
+	
+	if ($smtp_host) $this->smtp_host = $smtp_host;
+	return $this->smtp_host;
+	
+  }
+  
+  function validate_smtp_host() {
 
-  /// email message vars and whether required
-  private function vars() {
- 
-    return array(
-      'email_from'=>true,
-      'email_name'=>true,
-      'email_to'=>true,
-      'email_cc'=>false,
-      'email_bcc'=>false,
-      'subject'=>true,
-      'message'=>true,
-      'alt_message'=>false,
-      'attachments'=>false,
-      'priority'=>false
-    );
+	if (!$this->smtp_host()) {
+      log_message('error','No SMTP Host supplied');
+	  throw new Exception('No SMTP Host supplied');
+	}
+	return $this->smtp_host();
+	
+  }
+  
+  function smtp_user($smtp_user = false) {
+	
+	if ($smtp_user) $this->smtp_user = $smtp_user;
+	return $this->smtp_user;
+	
+  }
+  
+  function validate_smtp_user() {
 
+	if (!$this->smtp_user()) {
+      log_message('error','No SMTP User supplied');
+	  throw new Exception('No SMTP User supplied');
+	}
+	return $this->smtp_user();
+	
+  }
+  
+  function smtp_pass($smtp_pass = false) {
+	
+	if ($smtp_pass) $this->smtp_pass = $smtp_pass;
+	return $this->smtp_pass;
+	
+  }
+  
+  function validate_smtp_pass() {
+
+	if (!$this->smtp_pass()) {
+      log_message('error','No SMTP Password supplied');
+	  throw new Exception('No SMTP Password supplied');
+	}
+	return $this->smtp_pass();
+	
+  }
+  
+  function smtp_port($smtp_port = false) {
+	
+	if ($smtp_port) $this->smtp_port = $smtp_port;
+	return $this->smtp_port || "465";
+	
+  }
+  
+  function wrapchars($wrapchars = false) {
+	
+	if ($wrapchars) $this->wrapchars = $wrapchars;
+	return $this->wrapchars || 100;
+	
+  }
+  
+  function to($to = false) {
+	
+	if ($to) $this->to = $to;
+	return $this->to;
+	
+  }
+  
+  function cc($cc = false) {
+	
+	if ($cc) $this->cc = $cc;
+	return $this->cc;
+	
+  }
+  
+  function bcc($bcc = false) {
+	
+	if ($bcc) $this->bcc = $bcc;
+	return $this->bcc;
+	
+  }
+  
+  function from($from = false) {
+	
+	if ($from) $this->from = $from;
+	return $this->from;
+	
+  }
+  
+  function name($name = false) {
+	
+	if ($name) $this->name = $name;
+	return $this->name;
+	
+  }
+  
+  function subject($subject = false) {
+	
+	if ($subject) $this->subject = $subject;
+	return $this->subject;
+	
+  }
+  
+  function message($message = false) {
+	
+	if ($message) $this->message = $message;
+	return $this->message;
+	
+  }
+  
+  function altmessage($altmessage = false) {
+	
+	if ($altmessage) $this->altmessage = $altmessage;
+	return $this->altmessage;
+	
+  }
+  
+  function attachment($attachment = false) {
+	
+	if ($attachment) {
+	  $this->attachments[] = $attachment;
+	}
+	if ($this->attachments && count($this->attachements)) {
+	  return $this->attachments;
+	}
+	
+	return false;
+  }
+  
+
+  
+  /*
+   * fields that are required
+   */
+  function is_required() {
+	return array(
+      'from',
+      'name',
+      'to',
+      'subject',
+      'message'		
+	);
+  }
+  
+  /* 
+   * validate fields for email send
+   */
+  function validate() {
+	
+	foreach ($this->is_required() as $prop) {
+	  if (!$this->$prop()) {
+		throw new Exception("$prop Field is required.");
+	  }
+	}
+	
   }
 
   // set properties, add attachments and send
-  function send() {
-    $this->ci->email->to($this->email_to);
-    $this->ci->email->from($this->email_from, $this->email_name);
-    $this->ci->email->subject($this->subject);
-    $this->ci->email->message($this->message);
+  function send($data = false) {
+	
+//print $this->mailtype();exit;
+	if ($data) {
+	  $this->set($data);
+	}
+//print $this->to();
+//print $this->from();
 
-    if ($this->email_cc)
-            $this->ci->email->cc($this->email_cc);
-
-    if ($this->email_bcc)
-            $this->ci->email->bcc($this->email_bcc);
-
-    if ($this->alt_message)
-            $this->ci->email->set_alt_message($this->alt_message);
-
-    if ($this->attachments and count($this->attachments)) {
+	$this->config();
+	$this->validate();
+	
+	if ($this->nosend) return;
+	
+    $this->email->to($this->to());
+	
+	if ($this->cc()) {
+	  $this->email->cc($this->cc());	  
+	}
+	
+	if ($this->bcc()) {
+	  $this->email->bcc($this->bcc());	  
+	}
+	
+    $this->email->from($this->from());
+    $this->email->subject($this->subject());
+    $this->email->message($this->message());
+	
+	if ($this->altmessage()) {
+	  $this->email->altmessage($this->altmessage());	  
+	}
+	
+    if ($this->attachments) {
       foreach ($this->attachments as $a) {
-        $this->ci->email->attach($a);
+        $this->email->attach($a);
       }
     }
 
-    /* DEMO VERSION - Email send disabled */
-    return;
-    
-    if (!$this->ci->email->send()) {
-      log_message('error',$this->ci->email->print_debugger());
+	if (!$this->email->send()) {
+      log_message('error',$this->email->print_debugger());
       throw new Exception('Email not sent. Errors have been logged');
     }
-  }
 
+  }
+  
+  function __get($name) {
+	
+	if (! isset($this->$name)) return false;
+	return $this->$name;
+	
+  }
 
 }
 // EOF

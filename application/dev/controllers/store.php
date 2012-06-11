@@ -20,7 +20,7 @@ class Store extends MM_controller {
   }
   
   function renderHTMLEntity() {
-	
+
 	$this->load->model('m_supplier_freights');
 	$this->load->model('m_metas');
 	
@@ -28,13 +28,15 @@ class Store extends MM_controller {
     $this->m_product_metas->productsID = $this->entityID;
 	
 	$product = $this->m_products->get();
+	$this->load->vars('product', $product);
 	$this->load->vars('productJSON', json_encode($product));
 	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsWithQtyJSON());
 	$this->load->vars('priceJSON', $this->m_product_metas->priceJSON());
 	$this->load->vars('imageJSON', $this->m_product_metas->imageJSON());
 
 	$this->m_supplier_freights->suppliersID = $product->suppliersID;
-	$this->m_supplier_freights->zonesID = User::zoneID();
+//print 'renderHTMLEntity'; exit;
+	$this->m_supplier_freights->zonesID = $this->user->zoneID();
 	$this->load->vars('freightJSON', json_encode($this->m_supplier_freights->getJoined()));
 
 	$this->load->vars('js_tpl_entity', $this->load->view('store/js_tpl_entity','',true));

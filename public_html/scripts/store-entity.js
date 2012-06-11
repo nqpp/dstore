@@ -82,6 +82,9 @@ $(function(){
   
   App.ImageView = Backbone.View.extend({
 	tagName: 'li',
+	attributes: {
+	  class:"span2"
+	},
 	template: _.template($('#tpl-image-list').html()),
 	events: { 
 	},
