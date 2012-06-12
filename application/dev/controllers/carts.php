@@ -12,6 +12,16 @@ class Carts extends MM_Controller {
 	
   }
 
+	function renderJSON() {
+		
+		$data = $this->m_carts->fetchUserCart(); 
+		
+		$rtn = array();
+		foreach($data as $item) $rtn[] = $item;
+		
+		echo json_encode($rtn);
+	}
+
   function formJSONNew() {
 
 	$json = json_decode(file_get_contents('php://input'));

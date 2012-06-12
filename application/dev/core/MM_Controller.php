@@ -209,9 +209,10 @@ class MM_Controller extends CI_Controller {
 	$this->m_metas->metaKey = $this->user->adminGroup();
 	$meta = reset($this->m_metas->fetch());
 	$this->m_metas->reset();
-	
+
 	if (count($meta)) {
-	  $this->pageTemplate = $meta->metaValue;	  
+		$this->pageTemplate = 'page_bootstrap';
+//	  $this->pageTemplate = $meta->metaValue;	  
 	}
 	else {
 	  $this->pageTemplate = 'page_bootstrap';

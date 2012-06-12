@@ -13,10 +13,14 @@ class Store extends MM_controller {
 	$this->m_products->parentID = '0';
 	$this->load->vars('productsJSON', $this->m_products->fetchWithImageJSON());
 	$this->load->vars('js_tpl_list', $this->load->view('store/js_tpl_list','',true));
-	$this->load->vars('content',$this->load->view('store/list', '', true));
 
 	$this->jsFiles('/scripts/store-list.js');
 
+	$this->load->vars('js_tpl_cart', $this->load->view('store/js_tpl_cart','',true));
+	$this->jsFiles('/scripts/cart.js');
+	$this->jsFiles('/scripts/jquery-ui-1.8.21.min.js');
+	
+	$this->load->vars('content',$this->load->view('store/list', '', true));
   }
   
   function renderHTMLEntity() {
@@ -45,6 +49,10 @@ class Store extends MM_controller {
 
 	$this->m_metas->schemaName = 'tax';
 	$this->load->vars('taxes', $this->m_metas->fetchKVPairObj());
+	
+	$this->load->vars('js_tpl_cart', $this->load->view('store/js_tpl_cart','',true));
+	$this->jsFiles('/scripts/cart.js');
+	$this->jsFiles('/scripts/jquery-ui-1.8.21.min.js');
 
 	$this->load->vars('content',$this->load->view('store/entity','', true));
 

@@ -16,6 +16,7 @@
 
   <div class="span4 pull-right">
 	<a class="btn pull-right" href="/store.html"><span class="icon-list"> </span> list</a>
+	<div id="cart-contain" class="pull-right"></div>
   </div>
   
 </div>
@@ -114,11 +115,6 @@
 
 
   </div>
-
-
-  <div class="span-4 last">
-	<a href="/store_cart">View Cart</a>
-  </div>
 	  
 
 
@@ -139,3 +135,4 @@
 <?= $js_tpl_subproduct_list ?>
 <?= $js_tpl_price_list ?>
 <?= $js_tpl_image_list ?>
+<?= $js_tpl_cart ?>
