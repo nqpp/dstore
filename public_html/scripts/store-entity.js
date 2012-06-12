@@ -323,7 +323,6 @@ $(function(){
 	  this.$el.find('#gst_total').html(this.gstTotal.toFixed(2));
 	  this.$el.find('#price_total').html(this.priceTotal.toFixed(2));
 	  
-		this.$el.find("#add_to_cart").html('Update');
 	  this.$el.find("#add_to_cart").attr('disabled',false);
 	},
 	calcTotals:function() {

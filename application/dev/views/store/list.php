@@ -1,12 +1,11 @@
 <div id="productApp">
   
   <div class="row row-padded">
-	<div class="span4">
-	  <h1>Product Store</h1>
-	</div>
-
+		<div class="span4">
+		  <h1>Product Store</h1>
+		</div>
+		<div class="span4 pull-right" id="cart-contain"></div>
   </div>
-
 
   <ul class="thumbnails" id="products"></ul>
 
@@ -19,3 +18,4 @@ var productsJSON = <?= $productsJSON ?>;
 </script>
 
 <?= $js_tpl_list ?>
+<?= $js_tpl_cart ?>
