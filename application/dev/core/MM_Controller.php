@@ -198,7 +198,7 @@ class MM_Controller extends CI_Controller {
 	$errorMethod = $this->method['type'].'Error';
 	$uri = $this->uri->segment(1).$this->access;
 	
-	if (!in_array($uri,$this->user->allowedPages())) $this->{$errorMethod}('403');
+	if ($this->user->allowedPages() && !in_array($uri,$this->user->allowedPages())) $this->{$errorMethod}('403');
 	
   }
   
@@ -210,9 +210,8 @@ class MM_Controller extends CI_Controller {
 	$meta = reset($this->m_metas->fetch());
 	$this->m_metas->reset();
 
-	if (count($meta)) {
-		$this->pageTemplate = 'page_bootstrap';
-//	  $this->pageTemplate = $meta->metaValue;	  
+	if ($meta && count($meta)) {
+	  $this->pageTemplate = $meta->metaValue;	  
 	}
 	else {
 	  $this->pageTemplate = 'page_bootstrap';
