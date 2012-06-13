@@ -10,7 +10,12 @@ class Carts extends MM_Controller {
 
   function renderHTML() {
 	
+		$this->calculateTotals();
   }
+
+	function renderHTMLEntity() {
+		$this->calculateTotals();
+	}
 
 	function renderJSON() {
 		
@@ -83,4 +88,58 @@ class Carts extends MM_Controller {
 		$this->m_carts->delete();
 	}
 
+	function calculateTotals() {	
+
+		$this->m_carts->id = $this->entityID;
+		$cart = $this->m_carts->get();
+		
+		$cart->itemPrice = NULL; // Set to null initially; if an appropriate price point matches, this will be overwritten.
+
+		$this->load->model('m_product_metas');
+		$this->m_product_metas->productsID = $cart->productsID;
+		$prices = $this->m_product_metas->prices();
+		
+		foreach($prices as $price) {
+			
+			if($cart->qtyTotal >= $price->metaKey()) {
+				
+				$cart->itemPrice = $price->metaValue();
+			}
+		}
+		
+		$cart->freightTotal = $this->calculateFreight();
+
+		// Totals, for JSON response.
+		$cart->subtotal = number_format($cart->itemPrice * $cart->qtyTotal, 2);
+		$cart->gst = number_format(($cart->subtotal + $cart->freightTotal) * $cart->taxRate, 2);
+		$cart->total = number_format($cart->subtotal + $cart->freightTotal + $cart->gst, 2);
+		
+		return json_encode($cart);
+	}
+	
+	function calculateFreight() {
+		
+		$this->load->model('m_products');
+		$this->load->model('m_supplier_freights');
+		
+		$this->m_carts->id = $this->entityID;
+		$cart = $this->m_carts->get();
+		
+		$this->m_products->id = $cart->productsID;
+		$product = $this->m_products->get();
+		
+		$this->m_supplier_freights->suppliersID = $product->suppliersID;
+		$this->m_supplier_freights->zonesID = $this->user->zoneID(); // TODO: Change this, as multiple zones can be selected...
+		$freightTable = $this->m_supplier_freights->getJoined();
+
+		// Calculate weighted total		
+		$itemWeight = ($product->cubicWeight > $product->deadWeight) ? $product->cubicWeight : $product->deadWeight;
+		$totalWeight = $itemWeight * $cart->qtyTotal;
+		$freightTotal = ($totalWeight * $freightTable->kgRate) + $freightTable->baseRate;
+		
+		// Minimum charge
+		if($freightTotal < $freightTable->minCharge) $freightTotal = $freightTable->minCharge;
+		
+		return number_format($freightTotal, 2);
+	}
 }
