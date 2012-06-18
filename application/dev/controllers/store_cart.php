@@ -13,7 +13,10 @@ class Store_cart extends MM_controller {
 		$this->load->vars('cartJSON',json_encode($this->compileCart()));
 		$this->load->vars('js_tpl_cart_item', $this->load->view('store_cart/js_tpl_cart_item','',true));
 		$this->load->vars('content',$this->load->view('store_cart/entity', '', true));
-		$this->jsFiles('/scripts/store_cart-entity.js');
+//		$this->jsFiles('/scripts/store_cart-entity.js');
+		$this->jsFiles('/scripts/cart.js');
+		$this->jsFiles('/scripts/jquery-ui-1.8.21.min.js');
+		
 		$this->load->vars('scriptFiles', $this->jsFiles());
   }
   

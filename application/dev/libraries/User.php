@@ -99,7 +99,7 @@ class User {
   
   function zoneID($zoneID = false) {
 	
-	if ($this->usePseudoMode()) return pseudoZoneID($zoneID);
+	if (self::usePseudoMode()) return pseudoZoneID($zoneID);
 	
 	if ($zoneID) $this->setField('zoneID', $zoneID);
 	return $this->session->userdata('user_zoneID');

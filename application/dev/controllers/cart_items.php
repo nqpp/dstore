@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php header('Content-type: application/json');  if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Cart_items extends MM_Controller {
 
@@ -13,33 +13,24 @@ class Cart_items extends MM_Controller {
 
   function formJSONNew() {
 
-	$json = json_decode(file_get_contents('php://input'));
+		$json = json_decode(file_get_contents('php://input'));
 
-	// Cannot have multiple instances of cart items in DB
-	// Check for prescence.
-	$this->m_cart_items->cartsID = $json->cartsID;
-	$this->m_cart_items->productsID = $json->productsID;
+		$this->load->model('m_carts');
+		$this->m_carts->usersID = User::id();
+		$this->m_carts->productsID = $json->parentID;
+	
+		$cart = $this->m_carts->fetch();
+	
+		$json->cartsID = $cart[0]->cartID;
+		$json->productsID = $json->productID;
 
-	$test = $this->m_cart_items->fetch();
-	$this->m_cart_items->reset();
-
-	foreach ($json as $k => $v) {
-	  $this->m_cart_items->{$k} = $v;
-	}
-
-	if (count($test) > 0) {
-
-	  // Already exists in Db, update
-	  $this->m_cart_items->id = $test[0]->cartItemID;
-	  $this->m_cart_items->update();
-	} else {
-
-	  // Doesn't exist, create.
-	  $this->m_cart_items->add();
-	}
-
-	$row = $this->m_cart_items->get();
-	print json_encode($row);
+		foreach ($json as $k => $v) {
+		  $this->m_cart_items->{$k} = $v;
+		}
+	
+		$this->m_cart_items->add();
+		$row = $this->m_cart_items->get();
+		print json_encode($row);
   }
 
   function formJSONEntity() {
