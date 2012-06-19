@@ -128,8 +128,6 @@ class M_carts extends MM_Model {
 		
 		return $cart;
 	}
-<<<<<<< HEAD
+
+	
 }
-=======
-}
->>>>>>> 6ba9351df4d3bdd122f094001d6d13ff1b00d9a2
