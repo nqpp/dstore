@@ -118,13 +118,13 @@ class M_carts extends MM_Model {
 		// Minimum charge
 		if($freightTotal < $freightTable->minCharge) $freightTotal = $freightTable->minCharge;
 		
-		$cart->freightTotal = $freightTotal;
+		$cart->freightTotal = money_format('%.2n', $freightTotal);
 		
 		// Totals, for JSON response.
 		$cart->taxRate = $gst;
-		$cart->subtotal = $cart->itemPrice * $this->qtyTotal;
-		$cart->gst = ($cart->subtotal + $cart->freightTotal) * $gst;
-		$cart->total = $cart->subtotal + $cart->freightTotal + $cart->gst;
+		$cart->subtotal = money_format('%.2n', $cart->itemPrice * $this->qtyTotal);
+		$cart->gst = money_format('%.2n', ($cart->subtotal + $cart->freightTotal) * $gst);
+		$cart->total = money_format('%.2n', $cart->subtotal + $cart->freightTotal + $cart->gst);
 		
 		return $cart;
 	}
