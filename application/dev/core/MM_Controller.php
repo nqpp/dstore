@@ -209,11 +209,7 @@ class MM_Controller extends CI_Controller {
 	$this->m_metas->metaKey = $this->user->adminGroup();
 	$meta = reset($this->m_metas->fetch());
 	$this->m_metas->reset();
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> orders
 	if ($meta && count($meta)) {
 	  $this->pageTemplate = $meta->metaValue;	  
 	}
