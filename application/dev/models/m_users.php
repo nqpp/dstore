@@ -2,8 +2,8 @@
 
 class M_users extends MM_Model {
 
-  private $confirm_password;
-  private $password;
+  public $confirm_password;
+  public $password;
   
   function __construct() {
 	$this->pk = 'userID';
@@ -42,7 +42,7 @@ class M_users extends MM_Model {
   
   function add() {
 	
-    $pw = $this->passwords_match();
+    $this->passwords_match();
 	parent::add();
 
   }
@@ -62,11 +62,17 @@ class M_users extends MM_Model {
   
   private function passwords_match() {
 	
-    $pw = trim($this->input->post('password'));
-    $cpw = trim($this->input->post('confirm_password'));
+	if ($this->password) { // allows for set by JSON
+	  $pw = $this->password;
+	  $cpw = $this->confirm_password;	  
+	}
+	else {
+	  $pw = trim($this->input->post('password'));
+	  $cpw = trim($this->input->post('confirm_password'));
+	}
 
 	$this->passwd = false;
-	$this->confirm_passwd = false;
+//	$this->confirm_password = false;
 
     if($pw) {
 

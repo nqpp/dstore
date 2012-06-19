@@ -8,15 +8,15 @@
   <label>Email</label>
   <input type="text" name="email" value="<%=email%>">
 <% 
-var plc = passwd == '' ? 'Type to set the password':'Type to reset the password';
+var plc = pwSet ? 'Type to reset the password':'Type to set the password';
 %>
   <label>
 	Password
-	<%= passwd == '' ? '<span class="label label-important">Not Currently Set</span>':'' %>
+	<%= pwSet ? '':'<span class="label label-important">Not Currently Set</span>' %>
   </label>
-  <input type="text" name="password" value="" placeholder="<%= plc %>">
+  <input type="text" class="password" name="password" value="" placeholder="<%= plc %>">
   
   <label>Confirm Password</label>
-  <input type="text" name="confirm_password" value="" placeholder="Type to confirm the password">
+  <input type="text" class="password" name="confirm_password" value="" placeholder="Type to confirm the password">
   
 </script>
