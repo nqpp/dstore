@@ -10,6 +10,12 @@ class M_contacts extends M_users {
 	$this->model = 'users';
   }
   
+  function get() {
+	$row = parent::get();
+	$row->pwSet = trim($row->passwd) != '' ? true: false;
+	unset($row->passwd);
+	return $row;
+  }
   
 }
 // EOF

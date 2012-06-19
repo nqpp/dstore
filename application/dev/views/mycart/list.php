@@ -7,7 +7,7 @@
 	  <a href="/mycart.html?clear" class="btn">
 		<i class="icon-trash"> </i> Empty Cart
 	  </a>
-	  <a href="#" class="btn">
+	  <a href="/myorders.html?new" class="btn"<?php if (!count($carts)) {echo ' disabled';} ?>>
 		<i class="icon-shopping-cart"> </i> Order
 	  </a>
 	</div>
@@ -110,7 +110,7 @@
 </div>
 
 <script type="text/javascript">
-  //  var cartJSON = <?= $cartJSON ?>;
+  //  var cartJSON = <?//= $cartJSON ?>;
 </script>
 <?
 //= $js_tpl_cart_item ?>

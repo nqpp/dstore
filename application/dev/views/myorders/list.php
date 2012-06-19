@@ -11,42 +11,70 @@
 	<div class="accordion-group">
 	  <div class="accordion-heading">
 		<a class="accordion-toggle" data-toggle="collapse" href="#collapse<?= $i ?>">
-		  <?= sprintf("%04s",$o->orderID) ?> <span class="label label-<?= $o->label ?>"><?= $o->status ?></span>
+		  <div class="row">
+			<div class="span1">
+			  <span class="label label-<?= $o->status ?>"><?= ucfirst($o->status) ?></span>
+			</div>
+			<div class="span1">
+			  <?= sprintf("%04s",$o->orderID) ?> 
+			</div>
+			<div class="span2">
+			  <?= $o->name ?>
+			</div>
+			<div class="span2">
+			  <?= $o->firstName.' '.$o->lastName ?>
+			</div>
+		  </div>
 		</a>
 	  </div>
 	  <div id="collapse<?= $i ?>" class="accordion-body collapse">
 		<table class="table table-striped">
 		  <thead>
 			<tr>
-			  <th width="100">Code</th>
 			  <th>Name</th>
 			  <th width="60">Qty</th>
-			  <th width="60">Sub Total</th>
-			  <th width="60">Freight</th>
-			  <th width="40">GST</th>
-			  <th width="60">Total</th>
+			  <th width="80">Sub Total</th>
+			  <th width="80">Freight</th>
+			  <th width="60">GST</th>
+			  <th width="80">Total</th>
 			</tr>
 		  </thead>
 		  <tbody>
+			<?php 
+			$orderTotal = 0;
+			?>
 			<?php if (count($orderProducts) && isset($orderProducts[$o->orderID])): ?>
 			<?php foreach ($orderProducts[$o->orderID] as $op): ?>
 			<?php
 			$subTotal = $op->qtyTotal * $op->itemPrice;
 			$gst = ($subTotal + $op->freightTotal) * $op->taxRate;
 			$total = $subTotal + $op->freightTotal + $gst;
+			$orderTotal += $total;
 			?>
 			<tr>
-			  <td><?= $op->code ?></td>
 			  <td><?= $op->name ?></td>
 			  <td><?= $op->qtyTotal ?></td>
-			  <td><?= $subTotal ?></td>
-			  <td><?= $op->freightTotal ?></td>
-			  <td><?= $gst ?></td>
-			  <td><?= $total ?></td>
+			  <td><span class="pull-right"><?= number_format($subTotal,2,'.',',') ?></span></td>
+			  <td><span class="pull-right"><?= number_format($op->freightTotal,2,'.',',') ?></td>
+			  <td><span class="pull-right"><?= number_format($gst,2,'.',',') ?></td>
+			  <td><span class="pull-right"><?= number_format($total,2,'.',',') ?></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php endif; ?>
 		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td>
+				<a class="btn btn-mini" href="/orders/<?= $o->orderID ?>.html">
+				  <i class="icon-edit"> </i>
+				</a>
+			  </td>
+			  <td colspan="4">
+				<span class="pull-right"><strong>Order Total</strong></span>
+			  </td>
+			  <td><span class="pull-right"><strong>$<?= number_format($orderTotal,2,'.',',') ?></strong></span></td>
+			</tr>
+		  </tfoot>
 		</table>
 	  </div>
 	</div>

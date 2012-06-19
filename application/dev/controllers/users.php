@@ -67,7 +67,7 @@ class Users extends MM_Controller {
   
   function formHTMLProfile() {
 	
-	$this->m_users->id = User::$id;
+	$this->m_users->id = $this->user->id();
 	$this->m_users->update();
 	
 	die(header('Location: /users.html?profile'));
@@ -75,8 +75,14 @@ class Users extends MM_Controller {
   
   function formHTMLNew() {
 	
+<<<<<<< HEAD
 		$this->m_users->add();
 		die(header("Location: /users/{$this->m_users->id}.html"));
+=======
+	$this->m_users->add();
+	die(header("Location: /users/{$this->m_users->id}.html"));
+	
+>>>>>>> orders
   }
 
 }

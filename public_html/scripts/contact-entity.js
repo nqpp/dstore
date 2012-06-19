@@ -32,18 +32,43 @@ $(function() {
 	
 	events:{
 	  "click .contact-delete" : "clear",
-	  "keypress input" : "updateOnEnter",
+	  "keypress input[class!=password]" : "updateOnEnter",
+	  "keypress input.password" : "updatePasswordOnEnter",
+	  "change input.password" : "updatePassword",
 	  "change select" : "updateOnChange",
 	  "blur textarea" : "updateOnBlur"
 	},
 	
 	initialize:function() {
+	  
 	  this.model.bind('change', this.render, this);
 	},
 	render: function() {
 	  
 	  this.$el.html(this.template(this.model.toJSON()));
+	  
+	  this.pwInput = $('input[name=password]');
+	  this.cpwInput = $('input[name=confirm_password]');
+	  
 	  return this;
+	},
+	updatePasswordOnEnter:function(ev) {
+	  if (ev.keyCode != 13) return;
+	  
+	  this.updatePassword();
+	},
+	updatePassword:function() {
+
+	  if ($.trim(this.pwInput.val()) == '') return;
+	  if (this.pwInput.val() !== this.cpwInput.val()) return;
+
+	  var data = {
+		password:this.pwInput.val(),
+		confirm_password:this.cpwInput.val()
+	  };
+	  
+	  this.model.set(data).save();
+	  
 	},
 	updateOnEnter: function(ev) {
 	  if (ev.keyCode == 13) {

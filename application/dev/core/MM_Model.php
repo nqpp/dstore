@@ -61,7 +61,7 @@ class MM_Model extends CI_Model {
 
     foreach ($this->fields as $f) {
       if ($this->$f === false) continue;
-      $this->db->where($f,$this->$f);
+      $this->db->where($this->model.'.'.$f,$this->$f);
     }
 
   }
