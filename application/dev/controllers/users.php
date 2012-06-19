@@ -75,6 +75,8 @@ class Users extends MM_Controller {
   
   function formHTMLNew() {
 	
+		$this->m_users->add();
+		die(header("Location: /users/{$this->m_users->id}.html"));
   }
 
 }
