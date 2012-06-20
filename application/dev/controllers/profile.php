@@ -1,18 +1,39 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Products extends MM_controller {
+class Profile extends MM_controller {
 
   function __construct() {
     parent::__construct();
     $this->load->model('m_contacts');
     $this->load->model('m_contact_metas');
+    $this->load->model('m_contact_addresses');
   }
   
   function renderHTML() {
 	
-	$this->m_contacts->userID = $this->user->userID();
+	$this->m_contacts->id = $this->user->userID();
 	$this->m_contact_metas->usersID = $this->user->userID();
-	$this->load->vars('contact',$this->m_contacts->get());
+	$this->m_contact_addresses->usersID = $this->user->userID();
+	
+	$this->load->vars('contactJSON',$this->m_contacts->getJSON());
+	$this->load->vars('addressJSON', $this->m_contact_addresses->fetchJSON());
+	$this->load->vars('phoneJSON', $this->m_contact_metas->fetchPhoneJSON());
+
+	$this->m_metas->schemaName = 'phoneTypes';
+	$this->load->vars('phoneTypes', $this->m_metas->fetch());
+
+	$this->m_metas->schemaName = 'addressTypes';
+	$this->load->vars('addressTypes', $this->m_metas->fetch());
+
+	$this->m_metas->schemaName = 'states';
+	$this->load->vars('states', $this->m_metas->fetch());
+	
+	$this->load->vars('js_tpl_entity',$this->load->view('profile/js_tpl_entity','',true));
+	$this->load->vars('js_addresslist', $this->load->view('profile/js_tpl_addresslist','',true));
+	$this->load->vars('js_phonelist', $this->load->view('profile/js_tpl_phonelist','',true));
+	$this->load->vars('content', $this->load->view('profile/entity','', true));
+	$this->jsFiles('/scripts/contact-entity.js');
+	
   }
 
 }
