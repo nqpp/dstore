@@ -12,10 +12,15 @@
 	  </li>
 	</ul>
   </div>
-  <div class="span4 pull-right">
-	<a class="btn pull-right" href="/store.html"><span class="icon-list"> </span> list</a>
-	<div id="cart-contain" class="pull-right"></div>
+  
+  <div class="span3">
+	<div class="btn-group pull-right" id="cart-contain"></div>
   </div>
+  
+  <div class="span1">
+	<a class="btn pull-right" href="/store.html"><span class="icon-list"> </span> list</a>
+  </div>
+
 </div>
 <div class="row row-padded">
   <div class="span8">

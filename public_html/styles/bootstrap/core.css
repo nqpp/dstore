@@ -249,6 +249,9 @@ div.thumbnail h5 {
   
 }
 
+ul#cart li a span {
+  padding-right: 50px;
+}
 
 /*
 	Entity Page
