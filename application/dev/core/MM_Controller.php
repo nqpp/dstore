@@ -263,10 +263,12 @@ class MM_Controller extends CI_Controller {
    * determine content type for AJAX request
    */
   private function get_content_type() {
-	
+
 	  $ct = $this->content_types();
 	  $a = trim(reset(explode(',',$_SERVER['HTTP_ACCEPT'])));
 	  
+		header('Content-type:'.$a); // Set header
+	
 	  if (array_key_exists($a,$ct)) return $ct[$a];
 	  // throw error
 	  throw new Exception('Content type unknown - '.$a);

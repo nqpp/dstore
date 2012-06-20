@@ -9,7 +9,7 @@ class Store extends MM_controller {
   }
  
   function renderHTML() {
-	
+
 	$this->m_products->parentID = '0';
 	$this->load->vars('productsJSON', $this->m_products->fetchWithImageJSON());
 	$this->load->vars('js_tpl_list', $this->load->view('store/js_tpl_list','',true));
@@ -38,7 +38,7 @@ class Store extends MM_controller {
 		$this->load->vars('images', $this->m_product_metas->images());
 		
 		$this->m_carts->productsID = $this->entityID;
-		$this->load->vars('cartJSON', $this->m_carts->fetchUserCartJSON());
+		$this->load->vars('cartJSON', $this->m_carts->fetchUserCartTotalledJSON());
 		$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsWithQtyJSON());
 		$this->load->vars('js_tpl_subproduct_list', $this->load->view('store/js_tpl_subproduct_list','',true));
 

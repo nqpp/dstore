@@ -127,5 +127,5 @@ $(function() {
 	
 	new App.CartView({model: new App.Cart(cartJSON)});
 	App.CartItems.reset(subProductJSON);
-	$(".fb").fancybox();s
+	$(".fb").fancybox();
 });
