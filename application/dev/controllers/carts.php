@@ -1,4 +1,4 @@
-<?php header('Content-type: application/json');  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Carts extends MM_Controller {
 	
@@ -20,21 +20,8 @@ class Carts extends MM_Controller {
 	} 
 
 	function renderJSON() {
-		
-		$data = $this->m_carts->fetchUserCart(); 
-		
-		$rtn = array();
-		foreach($data as $item) $rtn[] = $item;
-		
-		$totals = $this->calculateTotals($data->productsID, $data->qtyTotal);
-		if($totals) {
-			$rtn[]['subtotal'] = $totals->subtotal;
-			$rtn[]['freightTotal'] = $totals->freightTotal;
-			$rtn[]['gst'] = $totals->gst;
-			$rtn[]['total'] = $totals->total;
-		}
-		
-		echo json_encode($rtn);
+
+		echo $this->m_carts->fetchUserCartJSON();
 	}
 
   function formJSONNew() {

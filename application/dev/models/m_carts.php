@@ -28,12 +28,18 @@ class M_carts extends MM_Model {
 	$cart = $this->fetch();
 	return $cart;
   }
-  
-  function fetchUserCartJSON() {
+
+	function fetchUserCartJSON() {
 	
 		$cart = $this->fetchUserCart();
+		return json_encode($cart);
+  }
+
+	function fetchUserCartTotalled() {
 		
-		
+		$this->usersID = $this->user->id();
+		$cart = $this->fetch();
+
 		if(count($cart)) {
 			
 			$cart = $cart[0];
@@ -45,9 +51,15 @@ class M_carts extends MM_Model {
 				foreach($totals as $k=>$v) $cart->{$k} = $v;
 			}
 		}
+
+		return $cart;
+	}
+  
+  function fetchUserCartTotalledJSON() {
 		
+		$cart = $this->fetchUserCartTotalled();
 		return json_encode($cart);
-  }
+	}
   
   function deleteUserCart() {
 	
