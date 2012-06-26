@@ -3,29 +3,40 @@
 	<div class="span4">
 	  <h1>Locations</h1>
 	</div>
-
-	<div class="span4 pull-right">
-	  <div class="input-prepend pull-right">
-		<span class="add-on">Add new</span><input class="span3" type="text" name="postcode" id="new-location" placeholder="Type postcode and press Enter"/>
-	  </div>
+  </div>
+  
+  <div class="row-padded well">
+	<div class="span1">
+	  <strong>Suburb</strong>
 	</div>
-	
+	<a href="/locations.html?filter=" class="btn btn-mini<?= $filter == 'num'?' btn-inverse':'' ?>">Numeric</a>
+	<?php foreach (range('A','Z') as $char): ?>
+	<a href="/locations.html?filter=<?= $char ?>" class="btn btn-mini<?= $filter == $char?' btn-inverse':'' ?>"><?= $char ?></a>
+	<?php endforeach; ?>
   </div>
 
-  <div class="span6">
- 
-  <table id="locations" class="table table-striped table-bordered">
-	<thead>
-	  <tr>
-		<th width="50">Zone</th>
-		<th width="60">Postcode</th>
-		<th>Suburb</th>
-		<th width="30"></th>
-	  </tr>
-	</thead>
-	<tbody></tbody>
-  </table>
-  
+  <div class="row">
+	
+	<div class="span6">
+
+	<table id="locations" class="table table-striped table-bordered">
+	  <thead>
+		<tr>
+		  <th width="70">Postcode</th>
+		  <th>Suburb</th>
+		  <th width="50">Depot</th>
+		  <th width="50">Zone</th>
+		</tr>
+	  </thead>
+	  <tbody></tbody>
+	</table>
+
+	</div>
+	
+	<div class="span6">
+	  <div id="pagination"></div>
+	</div>
+	
   </div>
   
 </div>
@@ -36,3 +47,4 @@ var locationsJSON = <?= $locationsJSON ?>;
 </script>
 
 <?= $js_tpl_list ?>
+<?= $js_tpl_pagination ?>

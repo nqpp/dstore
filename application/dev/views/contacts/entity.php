@@ -70,3 +70,4 @@
 <?= $js_tpl_entity ?>
 <?= $js_addresslist ?>
 <?= $js_phonelist ?>
+<?= $js_tpl_typeahead_list ?>

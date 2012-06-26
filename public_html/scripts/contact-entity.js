@@ -98,18 +98,91 @@ $(function() {
   var view = new App.ContactView({model:contact});
   view.render();
   
+  
+  
+  
+  App.Location = Backbone.Model.extend({});
+  
+  App.LocationList = Backbone.Collection.extend({
 
+	model:App.Location,
+	url: '/locations?filtered'
+	
+  });
+
+  
+  App.LocationView = Backbone.View.extend({
+
+	tagName: 'li',
+	template: _.template($('#tpl-typeahead-list').html()),
+	events: {
+	  "click a":"locationSelected"
+	},
+
+	initialize: function(options) {
+	  this.model.bind('change', this.render, this);
+	},
+	
+	locationSelected: function() {
+
+	  App.vent.trigger(this.options.namespace+":locationSelected",this.model);
+	  
+	},
+
+	render: function() {
+	  var data = this.model.toJSON();
+	  this.$el.html(this.template(data));
+	  return this;
+	}
+
+  });
+	
+  App.LocationsView = Backbone.View.extend({
+	
+	initialize: function() {
+	  
+	  _(this).bindAll('add');
+	  this.collection.bind('add', this.add, this);
+	  this.collection.bind('reset', this.addAll, this);
+	  
+	},
+	
+	add: function(model) {
+	  var data = model.toJSON();
+	  var view = new App.LocationView({model:model, namespace:this.options.namespace});
+	  this.$el.append(view.render().el);
+	  
+	},	
+	addAll: function() {
+	  
+	  this.$el.empty();
+	  
+	  if (this.collection.length == 0) {
+		this.$el.hide();
+		return;
+	  }
+	  
+	  this.collection.each(this.add);
+	  this.$el.show();
+	}
+
+  });
+	
+  
   /*
    * ======================================================================
    * ADDRESS
    * ======================================================================
    */
   
+  App.vent = _.extend({},Backbone.Events);
+  
   App.Address = Backbone.Model.extend({
 	
 	idAttribute: 'userAddressID',
 	defaults: {
 	  usersID:contactJSON.userID,
+	  userAddressID:'',
 	  type:'',
 	  address:'',
 	  city:'',
@@ -135,17 +208,65 @@ $(function() {
 	template: _.template($('#tpl-address-list').html()),
 	events: {
 	  "keypress input" : "updateOnEnter",
+	  "keyup input[name=city]" : "doTypeAhead",
 	  "click a.delete": "clear",
-	  "click td.editable" : "edit",
+	  "click td.editable" : "show",
 	  "change select.change-update": "update",
 	  "click a.save": "update"
 	},
+	
 	initialize: function() {
+
+	  this.recordLimit = 10;
 	  this.model.bind('change', this.render, this);
+	  
+	  _.bindAll(this, "locationSelected");
+	  App.vent.bind(this.cid+":locationSelected", this.locationSelected); // use name space
+
+	  this.collection = new App.LocationList();
+	  
 	},
+	
 	render: function() {
 	  this.$el.html(this.template(this.model.toJSON()));
+	  this.setTypeAhead();
+	  this.streetInput = this.$el.find('input[name=address]')[0];
 	  return this;
+	},
+	
+	setTypeAhead: function() {
+	  
+	  this.location = new App.LocationsView({
+		el: '#typeahead-'+this.model.get('userAddressID'),
+		collection:this.collection,
+		namespace:this.cid
+	  });
+
+	},
+	doTypeAhead: function(ev) {
+
+	  var input = ev.currentTarget;
+	  
+	  if (ev.keyCode == 8 || ev.keyCode == 46) return; // backspace or delete
+	  if (input.value.length < 2) return;
+
+	  var data = {}
+	  data.filter = input.value;
+	  data.limit = this.recordLimit;
+	  this.collection.fetch({data:data})	  
+
+	},
+	locationSelected: function(model) {
+	  var data = model.toJSON();
+	  
+	  data.city = data.suburb;
+	  data.locationsID = data.locationID;
+	  data.address = this.streetInput.value;
+	  
+	  this.model.set(data).save();
+	  this.collection.reset();
+	  this.hide();
+
 	},
 	updateOnEnter:function(ev) {
 	  
@@ -167,12 +288,15 @@ $(function() {
 	  });
 	  
 	  this.model.set(data).save();
-	  this.$el.find('.edit').hide();
-	  this.$el.find('.display').show();
+	  this.hide();
 	},
-	edit:function() {
+	show:function() {
 	  this.$el.find('.edit').show();
 	  this.$el.find('.display').hide();
+	},
+	hide: function() {
+	  this.$el.find('.edit').hide();
+	  this.$el.find('.display').show();
 	},
 	clear: function() {
 	  if (confirm('Really Delete?')) {
@@ -192,13 +316,13 @@ $(function() {
 	  App.Addresses.bind('add', this.add, this);
 	},
 	createOne: function() {
-//console.log(this)
 	  App.Addresses.create({wait:true});
 	  return false;
 	},
-	add: function(address) {
-	  var view = new App.AddressView({model: address});
+	add: function(model) {
+	  var view = new App.AddressView({model: model,vent:App.vent});
 	  $('#address tbody').append(view.render().el);
+	  view.setTypeAhead();
 	},
 	addAll: function() {
 	  App.Addresses.each(this.add);
@@ -214,6 +338,7 @@ $(function() {
    *  PHONE	 
    * ======================================================================
    */
+  
   App.Phone = Backbone.Model.extend({
 	idAttribute: 'userMetaID',
 	defaults: {

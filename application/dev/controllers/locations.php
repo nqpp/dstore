@@ -10,36 +10,32 @@ class Locations extends MM_controller {
   
   function renderHTML() {
 
-	$this->load->vars('locationsJSON', $this->m_locations->fetchJoinedJSON());
-	$this->m_zones->setSort('code');
-	$this->load->vars('zones', $this->m_zones->fetch());
+	$this->m_locations->filter();
+	$locations = $this->m_locations->fetch();
+	$this->load->vars('locationsJSON', json_encode($locations));
+	$this->load->vars('filter', $this->m_locations->getFilter());
+	
 	$this->load->vars('js_tpl_list', $this->load->view('locations/js_tpl_list','',true));
+	$this->load->vars('js_tpl_pagination', $this->load->view('locations/js_tpl_pagination','',true));
 	$this->load->vars('content',$this->load->view('locations/list', '', true));
 
+	$this->jsFiles('/scripts/backbone.paginator.js');
 	$this->jsFiles('/scripts/location-list.js');
 
   }
   
-  
-//  function renderHTMLEntity() {
-//	
-//    $this->m_locations->id = $this->entityID;
-//	$this->load->vars('locationJSON', $this->m_locations->getJoinedJSON());
-//
-//	$this->m_zones->setSort('code');
-//	$this->load->vars('zones', $this->m_zones->fetch());
-//	$this->load->vars('js_tpl_entity', $this->load->view('locations/js_tpl_entity','',true));
-//	$this->load->vars('content',$this->load->view('locations/entity','', true));
-//
-//	$this->jsFiles('/scripts/location-entity.js');
-//	
-//  }
-
-
   function renderJSONDelete() {
 	
     $this->m_locations->id = $this->entityID;
 	$this->m_locations->delete();
+	
+  }
+  
+  function renderJSONFiltered() {
+
+	$this->m_locations->filter();
+	$this->m_locations->limit();
+	print json_encode($this->m_locations->fetch());
 	
   }
   

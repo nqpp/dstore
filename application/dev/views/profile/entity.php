@@ -1,4 +1,4 @@
-<div class="row row-padded">
+<div class="row-padded">
   <h1>My Profile</h1>
 </div>
 
@@ -56,3 +56,4 @@
 <?= $js_tpl_entity ?>
 <?= $js_addresslist ?>
 <?= $js_phonelist ?>
+<?= $js_tpl_typeahead_list ?>

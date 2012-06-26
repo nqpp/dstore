@@ -12,6 +12,7 @@ class M_user_addresses extends MM_Model {
   private function fields() {
     return array(
       'usersID',
+      'locationsID',
       'type',
       'address',
       'city',

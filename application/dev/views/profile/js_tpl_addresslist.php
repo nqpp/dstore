@@ -20,6 +20,9 @@
 	  <input class="span2" type="text" name="address" value="<%=address%>">
 	  <label for="city">City</label>
 	  <input class="span2" type="text" name="city" value="<%=city%>">
+	  <div class="dropdown" style="display:block">
+		<ul id="typeahead-<%=userAddressID%>" class="dropdown-menu"></ul>
+	  </div>
 	  <label for="state">State</label>
 	  <select class="span2" name="state">
 		<?php if (count($states)): ?>
