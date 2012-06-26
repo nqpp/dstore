@@ -33,6 +33,7 @@ class Profile extends MM_controller {
 	$this->load->vars('js_phonelist', $this->load->view('contacts/js_tpl_phonelist','',true));
 	$this->load->vars('js_tpl_typeahead_list', $this->load->view('contacts/js_tpl_typeahead_list','',true));
 	$this->load->vars('content', $this->load->view('profile/entity','', true));
+	$this->jsFiles('/scripts/location-lookup.js');
 	$this->jsFiles('/scripts/contact-entity.js');
 	
   }

@@ -41,6 +41,7 @@ class Contacts extends MM_Controller {
 	$this->load->vars('js_tpl_typeahead_list', $this->load->view('contacts/js_tpl_typeahead_list','',true));
 	
 	$this->load->vars('content',$this->load->view('contacts/entity', '', true));
+	$this->jsFiles('/scripts/location-lookup.js');
 	$this->jsFiles('/scripts/contact-entity.js');
 
   }
