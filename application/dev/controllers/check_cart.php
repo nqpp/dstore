@@ -1,4 +1,4 @@
-<?php header('Content-type: application/json'); if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Check_cart extends MM_Controller {
 
@@ -13,7 +13,7 @@ class Check_cart extends MM_Controller {
 
 		$json = json_decode(file_get_contents('php://input'));
 
-		$this->m_carts->usersID = User::id();
+		$this->m_carts->usersID = $this->user->id();
 		$this->m_carts->productsID = $json->productsID;
 		$this->m_carts->qtyTotal = $json->qtyTotal;
 	
