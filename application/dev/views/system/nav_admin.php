@@ -4,7 +4,6 @@
 	<a class="btn btn-info" href="/clients.html">Clients</a>
 	<a class="btn btn-info" href="/orders.html">Orders</a>
 	<a class="btn btn-info" href="/locations.html">Locations</a>
-	<a class="btn btn-info" href="/zones.html">Zones</a>
 	<a class="btn btn-info" href="/suppliers.html">Suppliers</a>
 
 </div>
