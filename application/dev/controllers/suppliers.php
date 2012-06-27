@@ -5,34 +5,57 @@ class Suppliers extends MM_controller {
   function __construct() {
     parent::__construct();
     $this->load->model('m_suppliers');
-    $this->load->model('m_supplier_freights');
+    $this->load->model('m_supplier_metas');
+    $this->load->model('m_supplier_addresses');
   }
   
   function renderHTML() {
+	$this->m_suppliers->setSort('name');
+	$this->load->vars('suppliers', $this->m_suppliers->fetch());
+
+	$this->m_supplier_metas->schemaName = "phone";
+	$this->m_supplier_metas->index = "suppliersID";
+	$this->load->vars('phones', $this->m_supplier_metas->fetchGrouped());
 	
-	$this->load->vars('suppliersJSON', $this->m_suppliers->fetchJSON());
-	$this->load->vars('js_tpl_list', $this->load->view('suppliers/js_tpl_list','',true));
+	$this->m_supplier_addresses->index = "suppliersID";
+	$this->load->vars('addresses', $this->m_supplier_addresses->fetchGrouped());
+
 	$this->load->vars('content', $this->load->view('suppliers/list', '', true));
 
-	$this->jsFiles('/scripts/jquery.dragsort-0.5.1.js');
-	$this->jsFiles('/scripts/supplier-list.js');
+//	$this->jsFiles('/scripts/jquery.dragsort-0.5.1.js');
+//	$this->jsFiles('/scripts/supplier-list.js');
 	
   }
   
   function renderHTMLEntity() {
-	
-//    $this->load->model('m_supplier_freights');
-	
 	$this->m_suppliers->id = $this->entityID;
-	$this->m_supplier_freights->suppliersID = $this->entityID;
+	$this->m_supplier_addresses->suppliersID = $this->entityID;
+	$this->m_supplier_metas->suppliersID = $this->entityID;
 	
+	$this->m_suppliers->setSort('name');
+	$this->load->vars('suppliers', $this->m_suppliers->fetch());
 	$this->load->vars('supplierJSON', $this->m_suppliers->getJSON());
-	$this->load->vars('supplierFreightsJSON', json_encode($this->m_supplier_freights->fetchJoined()));
+	$this->load->vars('addressJSON', $this->m_supplier_addresses->fetchJSON());
+	$this->load->vars('phoneJSON', $this->m_supplier_metas->fetchPhoneJSON());
+
+	$this->m_metas->schemaName = 'phoneTypes';
+	$this->load->vars('phoneTypes', $this->m_metas->fetch());
+
+	$this->m_metas->schemaName = 'addressTypes';
+	$this->load->vars('addressTypes', $this->m_metas->fetch());
+
+	$this->m_metas->schemaName = 'states';
+	$this->load->vars('states', $this->m_metas->fetch());
 
 	$this->load->vars('js_tpl_entity', $this->load->view('suppliers/js_tpl_entity','',true));
-	$this->load->vars('js_tpl_supplier_freights', $this->load->view('suppliers/js_tpl_supplier_freights','',true));
+	$this->load->vars('js_addresslist', $this->load->view('suppliers/js_tpl_addresslist','',true));
+	$this->load->vars('js_phonelist', $this->load->view('contacts/js_tpl_phonelist','',true));
+	$this->load->vars('js_tpl_typeahead_list', $this->load->view('contacts/js_tpl_typeahead_list','',true));
 	$this->load->vars('content',$this->load->view('suppliers/entity','',true));
 
+	$this->jsFiles('/scripts/location-lookup.js');
+	$this->jsFiles('/scripts/phone-view.js');
+	$this->jsFiles('/scripts/address-view.js');
 	$this->jsFiles('/scripts/supplier-entity.js');
 	
   }
@@ -40,9 +63,11 @@ class Suppliers extends MM_controller {
   function renderHTMLDelete() {
 
 	$this->m_suppliers->id = $this->entityID;
-    $this->m_supplier_freights->suppliersID = $this->entityID;
+    $this->m_supplier_metas->suppliersID = $this->entityID;
+    $this->m_supplier_addresses->suppliersID = $this->entityID;
 
-	$this->m_supplier_freights->deleteSupplier();
+	$this->m_supplier_metas->deleteSupplier();
+	$this->m_supplier_addresses->deleteSupplier();
 	$this->m_suppliers->delete();
 	
 	die(header("Location:/suppliers.html"));

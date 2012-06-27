@@ -17,7 +17,7 @@
   </a>
 	
   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-	<span class="caret"></span>
+	<i class="caret"> </i>
   </a>
   <ul class="dropdown-menu">
 	<li><a href="/metas.html">Metadata</a></li>

@@ -12,7 +12,7 @@ class M_suppliers extends MM_Model {
   private function fields() {
     return array(
       'name',
-      'postcode'
+      'entityName'
     );
   }
 

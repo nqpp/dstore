@@ -13,10 +13,5 @@ class M_contact_addresses extends M_user_addresses {
 	$this->deleteUser();
   }
   
-//  function fetchJSON() {
-//	$result = $this->fetch();
-//	return json_encode($result);
-//  }
-  
 }
 // EOF
