@@ -17,6 +17,8 @@ class M_contact_metas extends M_user_metas {
   
   function fetchUsersMetasGrouped() {
 	
+	if (!count($this->userIDs)) return array();
+	
 	$this->index = 'usersID';
 	$this->db->where_in('usersID',$this->userIDs);
 	return $this->fetchGrouped();

@@ -5,7 +5,7 @@ class Locations extends MM_controller {
   function __construct() {
     parent::__construct();
     $this->load->model('m_locations');
-    $this->load->model('m_zones');
+//    $this->load->model('m_zones');
   }
   
   function renderHTML() {

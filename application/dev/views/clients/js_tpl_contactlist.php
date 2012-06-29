@@ -1,6 +1,14 @@
 <script type="text/template" id="tpl-contact">
   <div class="accordion-heading">
-	<a class="accordion-toggle" data-toggle="collapse" href="#collapse<%=id%>"><%=firstName+' '+lastName%></a>
+	<a class="accordion-toggle" data-toggle="collapse" href="#collapse<%=id%>">
+	  <div class="row">
+	  <div class="span3">
+		<%=firstName+' '+lastName%>
+	  </div>
+	  <div class="span4"><%=(jobTitle ? jobTitle:'')+(department ? ' - '+department:'')%>
+	  </div>
+	  </div>
+	</a>
   </div>
   <div id="collapse<%=id%>" class="accordion-body collapse">
 	  

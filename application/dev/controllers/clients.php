@@ -40,15 +40,10 @@ class Clients extends MM_Controller {
 	$this->m_client_contacts->clientsID = $this->m_clients->id;
 	$this->m_client_contacts->index = 'usersID';
 	$contacts = $this->m_client_contacts->fetchIndexed();
-	
+
 	$this->m_contact_metas->schemaName = 'phone';
 	$this->m_contact_metas->userIDs = array_keys($contacts);
 	$contactPhones = $this->m_contact_metas->fetchUsersMetasGroupedJSON();
-//print '<xmp>';
-////print_r($contacts);
-//print_r($contactPhones);
-//print '</xmp>';
-//exit;
 	
 	$this->load->vars('contactPhonesJSON',$contactPhones); 
 	$this->load->vars('contactsJSON', $this->m_client_contacts->fetchJSON());

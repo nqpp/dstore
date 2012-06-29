@@ -89,6 +89,8 @@ $(function() {
 	  clientsID: clientJSON.clientID,
 	  firstName:'',
 	  lastName:'',
+	  jobTitle:'',
+	  department:'',
 	  email:'',
 	  contactPhones:[]
 	},

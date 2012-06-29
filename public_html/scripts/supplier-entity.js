@@ -31,7 +31,6 @@ $(function(){
 	template: _.template($('#tpl-entity').html()),
 	
 	events:{
-//	  "click .handle" : "openEdit",
 	  "keypress input" : "updateOnEnter",
 	  "change input" : "updateOnChange",
 	  "change select" : "updateOnChange",
@@ -66,18 +65,6 @@ $(function(){
 	  this.model.set(data).save();
 	  return true;
 	}
-//	openEdit: function(ev) {
-//	  $(ev.currentTarget).removeClass('handle');
-//	  $(ev.currentTarget).children('.edit').show().children('input').focus();
-//	  $(ev.currentTarget).children('.display').hide();
-//	},
-//	
-//	closeEdit:function(ev) {
-//	  $(ev.target).parent().hide();
-//	  $(ev.target).parent().siblings('.display').show();
-//	  $(ev.target).parent().parent().addClass('handle');
-//	}
-
   });
 
   var supplier = new App.Supplier(supplierJSON);

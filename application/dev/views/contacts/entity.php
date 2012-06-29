@@ -19,9 +19,26 @@
   
   <div class="span4">
 	<div id="contact"></div>
+	
   </div>
   
   <div class="span4">
+	
+	  <h4>Employment Data</h4>
+	  <table id="employment-data" class="table table-striped table-bordered">
+		<thead>
+		  <tr>
+			<th width="80">Type</th>
+			<th>Detail</th>
+			<th width="30">
+			  <a class="btn btn-mini addContact" href="#"><i class="icon-plus"> </i></a>
+			</th>
+		  </tr>
+		</thead>
+		<tbody>
+		</tbody>
+	  </table>
+	
 	  <h4>Addresses</h4>
 	  <table id="address" class="table table-striped table-bordered">
 		<thead>
@@ -64,10 +81,12 @@
   var clientJSON = <?= $clientJSON ?>;
   var addressJSON = <?= $addressJSON ?>;
   var phoneJSON = <?= $phoneJSON ?>;
+  var employmentDataJSON = <?= $employmentDataJSON ?>;
 
 </script>
 
 <?= $js_tpl_entity ?>
-<?= $js_addresslist ?>
-<?= $js_phonelist ?>
+<?= $js_tpl_addresslist ?>
+<?= $js_tpl_phonelist ?>
+<?= $js_tpl_employmentdatalist ?>
 <?= $js_tpl_typeahead_list ?>
