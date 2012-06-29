@@ -16,13 +16,10 @@
 			  <span class="label label-<?= $o->status ?>"><?= ucfirst($o->status) ?></span>
 			</div>
 			<div class="span1">
-			  <?= sprintf("%04s",$o->orderID) ?> 
+			  <?= sprintf("#%04s",$o->orderID) ?> 
 			</div>
 			<div class="span2">
-			  <?= $o->name ?>
-			</div>
-			<div class="span2">
-			  <?= $o->firstName.' '.$o->lastName ?>
+			  <?= date("d M Y",strtotime($o->createdAt)) ?>
 			</div>
 		  </div>
 		</a>
@@ -64,11 +61,7 @@
 		  </tbody>
 		  <tfoot>
 			<tr>
-			  <td>
-				<a class="btn btn-mini" href="/orders/<?= $o->orderID ?>.html">
-				  <i class="icon-edit"> </i>
-				</a>
-			  </td>
+			  <td></td>
 			  <td colspan="4">
 				<span class="pull-right"><strong>Order Total</strong></span>
 			  </td>

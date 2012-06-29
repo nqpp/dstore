@@ -22,12 +22,18 @@ class M_user_addresses extends MM_Model {
     );
   }
   
-  function getLocationJoined() {
+  function getLocationsJoined() {
 	
 	$this->db->select('locations.*');
-	$this->db->join('locations', 'locations.postcode = userAddresses.postcode', 'left outer');
+	$this->db->join('locations', 'locationID = locationsID', 'left outer');
 	
-	$result = $this->fetch();
+	return $this->fetch();
+	
+  }
+  
+  function getLocationJoined() {
+	
+	$result = $this->getLocationsJoined();
 	
 	if (!count($result)) return false;
 	

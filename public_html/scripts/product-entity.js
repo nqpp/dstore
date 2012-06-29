@@ -126,8 +126,9 @@ $(function(){
 	url: '/products',
 	
 	comparator:function(model) {
-	  return model.get('code');
-	}	
+	  return model.get('sort');
+	}
+	
   });
   
   App.SubProducts = new App.SubProductList;
@@ -153,6 +154,7 @@ $(function(){
 	  var data = {};
 	  data.code = this.$el.find('input[name=code]').val();
 	  data.name = this.$el.find('input[name=name]').val();
+	  data.sort = this.$el.find('input[name=sort]').val();
 	  this.model.set(data).save();
 	  this.$el.find('.edit').hide();
 	  this.$el.find('.display').show();
@@ -281,7 +283,8 @@ $(function(){
   App.PricesView = Backbone.View.extend({
 	el: $("#price"),
 	events: {
-	  "click .addOne": "createOne"
+	  "click .addOne": "createOne",
+	  "click #save_sort": "saveSort"
 	},
 	initialize: function() {
 	  App.Prices.bind('reset', this.addAll, this);
@@ -290,6 +293,13 @@ $(function(){
 	createOne: function() {
 	  App.Prices.create({wait:true});
 	  return false;
+	},
+	saveSort: function() {
+	  var sort = 1;
+	  App.Prices.each(function(model) {
+		model.set({sort:sort}).save();
+		sort++;
+	  })
 	},
 	add: function(model) {
 	  var view = new App.PriceView({model: model});
@@ -419,6 +429,11 @@ $(function(){
 	element: $('#image-uploader')[0],
 	action: '/fileUploader.php?dir=images',
 	debug: false,
+	template: '<div class="qq-uploader">' + 
+			  '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
+			  '<div class="qq-upload-button btn btn-info"><i class="icon-upload icon-white"> </i> Upload a file</div>' +
+			  '<ul class="qq-upload-list"></ul>' +
+			  '</div>',
 	
 	onComplete:function(id, filename, responseJSON){
 	  var imgDir = filename.split('.').slice(0,-1)

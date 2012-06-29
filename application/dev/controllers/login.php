@@ -38,8 +38,20 @@ class Login extends Unsecure {
 	  
 	  $this->m_user_addresses->usersID = $data->userID;
 	  $this->m_user_addresses->type = 'delivery';
-	  $address = $this->m_user_addresses->getLocationJoined();
-	  $data->zoneID = $address ? $address->zonesID : -1;
+	  $addresses = $this->m_user_addresses->getLocationsJoined();
+	  if (count($addresses)) {
+		$primary = reset($addresses);
+		
+		$data->czone = $primary->czone;
+		$data->postcode = $primary->postcode;
+		$data->suburb = $primary->suburb;
+		$data->state = $primary->state;
+		
+		$data->allAddresses = $addresses;
+	  }
+	  else {
+		$data->czone -1;		
+	  }
 
 	  $this->user->set($data);
 	  
