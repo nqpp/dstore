@@ -7,14 +7,13 @@ class M_locations extends MM_Model {
 
   function __construct() {
 	$this->pk = 'locationID';
-	$this->fields = $this->fields();
     parent::__construct();
 	$this->setFilter();
 	$this->setLimit();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
 	  'postcode',
 	  'suburb',

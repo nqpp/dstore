@@ -41,7 +41,7 @@ class MM_Controller extends CI_Controller {
   }
   
   function _remap($id = false) {
-	
+
 	if ($id == 'index') $id = false;
 	$this->entityID = $id;
 	

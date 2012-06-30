@@ -4,9 +4,8 @@ class M_client_contacts extends MM_Model {
 
   function __construct() {
 	$this->pk = 'clientContactID';
-	$this->fields = $this->fields();
     parent::__construct();
-	$this->adminGroup = 4;
+	$this->adminGroup = 32;
   }
   
   function fields() {

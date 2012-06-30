@@ -15,7 +15,7 @@ class M_syslogs extends CI_Model {
     $data = scandir($this->path,1);
     $result = array();
     foreach ($data as $filename) {
-      if ($filename == '.' OR $filename == '..' OR $filename == 'index.html')
+      if (strpos($filename,'.') === 0 OR $filename == 'index.html')
         continue;
 
       $result[] = reset(explode('.',$filename));

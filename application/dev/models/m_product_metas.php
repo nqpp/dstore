@@ -8,12 +8,11 @@ class M_product_metas extends MM_Model {
   
   function __construct() {
 	$this->pk = 'productMetaID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'productsID',
       'schemaName',

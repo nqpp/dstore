@@ -4,7 +4,6 @@ class M_orders extends MM_Model {
 
   function __construct() {
 	$this->pk = 'orderID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 

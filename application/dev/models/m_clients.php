@@ -7,7 +7,6 @@ class M_clients extends MM_Model {
   function __construct() {
 	
 	$this->pk = 'clientID';
-	$this->fields = $this->fields();
     parent::__construct();
 	
   }

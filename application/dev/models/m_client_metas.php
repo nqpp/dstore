@@ -7,7 +7,6 @@ class M_client_metas extends MM_Model {
   function __construct() {
 	
 	$this->pk = 'clientMetaID';
-	$this->fields = $this->fields();
     parent::__construct();
 	
   }

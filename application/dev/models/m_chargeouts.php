@@ -6,7 +6,6 @@ class M_chargeouts extends MM_Model {
 
   function __construct() {
 	$this->pk = 'chargeoutID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 

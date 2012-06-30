@@ -4,12 +4,11 @@ class M_carts extends MM_Model {
 
   function __construct() {
 	$this->pk = 'cartID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'usersID',
       'createdAt',

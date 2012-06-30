@@ -5,15 +5,14 @@ class M_order_product_quantities extends MM_Model {
   public $cartItems = array();
 
   function __construct() {
-	$this->pk = 'orderProductID';
-	$this->fields = $this->fields();
+	$this->pk = 'orderProductQuantityID';
     parent::__construct();
   }
 
   // db field names
   function fields() {
     return array(
-      'orderproductsID',
+      'orderProductsID',
       'productsID',
       'code',
       'name',

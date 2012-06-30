@@ -4,12 +4,11 @@ class M_suppliers extends MM_Model {
 
   function __construct() {
 	$this->pk = 'supplierID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'name',
       'entityName'

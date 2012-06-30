@@ -4,7 +4,6 @@ class M_user_metas extends MM_Model {
 
   function __construct() {
 	$this->pk = 'userMetaID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
