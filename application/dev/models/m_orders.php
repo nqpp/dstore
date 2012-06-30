@@ -13,7 +13,8 @@ class M_orders extends MM_Model {
     return array(
       'usersID',
       'createdAt',
-	  'status'
+	  'status',
+	  'purchaseOrder'
     );
   }
   
@@ -22,6 +23,17 @@ class M_orders extends MM_Model {
 	$this->setSort('createdAt DESC');
 	return parent::fetch();
 	
+  }
+  
+  function fetchWithClient() {
+
+	$this->db->select('firstName, lastName');
+	$this->db->select('clients.name');
+	$this->db->join('users', 'userID = orders.usersID', 'left outer');
+	$this->db->join('clientContacts', 'orders.usersID = clientContacts.usersID', 'left outer');
+	$this->db->join('clients', 'clientID = clientsID', 'left outer');
+	
+	return $this->fetch();
   }
   
   function add() {

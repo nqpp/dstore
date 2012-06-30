@@ -11,7 +11,7 @@ class Orders extends MM_Controller {
   
   function renderHTML() {
 	
-	$this->load->vars('orders', $this->m_orders->fetch());
+	$this->load->vars('orders', $this->m_orders->fetchWithClient());
 //	$this->load->vars('ordersJSON', $this->m_orders->fetchJSON());
 	
 	$this->m_order_products->index = "ordersID";

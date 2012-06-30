@@ -14,10 +14,6 @@ class Myorders extends MM_Controller {
 	
 	$this->m_orders->usersID = $this->user->userID();
 	$orders = $this->m_orders->fetchIndexed();
-//	$orders = $this->m_orders->fetchJoinedUserIndexed();
-//print_r($this->db->last_query()); exit;
-//print_r($orders); exit;
-//	$orders = $this->m_orders->fetchIndexed();
 	$this->m_order_products->orderIDs = array_keys($orders);
 	$this->m_order_products->index = 'ordersID';
 	$orderProducts = $this->m_order_products->fetchGrouped();
