@@ -11,11 +11,18 @@ class Orders extends MM_Controller {
   
   function renderHTML() {
 	
-	$this->load->vars('orders', $this->m_orders->fetchWithClient());
-//	$this->load->vars('ordersJSON', $this->m_orders->fetchJSON());
+	$orders = $this->m_orders->fetchIndexedWithClient();
 	
 	$this->m_order_products->index = "ordersID";
-	$this->load->vars('orderProducts', $this->m_order_products->fetchGrouped());
+	$orderProducts = $this->m_order_products->fetchGrouped();
+	
+	$this->m_order_product_quantities->index = "orderProductsID";
+	$this->m_order_product_quantities->orderIDs = array_keys($orders);
+	$orderProductQuantities = $this->m_order_product_quantities->fetchForOrdersGrouped();
+
+	$this->load->vars('orders', $orders);
+	$this->load->vars('orderProducts', $orderProducts);
+	$this->load->vars('orderProductQuantities', $orderProductQuantities);
 	
 	$this->load->vars('content', $this->load->view('orders/list', '', true));
 	

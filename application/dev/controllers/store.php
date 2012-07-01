@@ -40,6 +40,7 @@ class Store extends MM_controller {
 
 	$this->load->vars('dispatchLocation', $dispatchLocation);
 	$this->load->vars('product', $product);
+	$this->load->vars('productJSON', json_encode($product));
 	$this->load->vars('prices', $this->m_product_metas->prices());
 	$this->load->vars('images', $this->m_product_metas->images());
 

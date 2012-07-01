@@ -24,7 +24,7 @@ class M_orders extends MM_Model {
 	
   }
   
-  function fetchWithClient() {
+  function fetchIndexedWithClient() {
 
 	$this->db->select('firstName, lastName');
 	$this->db->select('clients.name');
@@ -32,7 +32,7 @@ class M_orders extends MM_Model {
 	$this->db->join('clientContacts', 'orders.usersID = clientContacts.usersID', 'left outer');
 	$this->db->join('clients', 'clientID = clientsID', 'left outer');
 	
-	return $this->fetch();
+	return $this->fetchIndexed();
   }
   
   function add() {

@@ -1,5 +1,20 @@
 <?php
 
+/*
+ *	Cartcalc class
+ * 
+ *	Calculate data for a cart item based on product data and freight data
+ *	submittted to the class. 
+ *	Product object passed as argument to product method.
+ *	Freight object passed as argument to freight method.
+ *	Result returned via calc() method.
+ * 
+ *	Multiple cart items and freight rows accommodated. 
+ *	Submit products array / cart items to carts method.
+ *	Submit freights array to freights method with czone as array index.
+ * 
+ */
+
 class Cartcalc {
   
   private $product = false;
@@ -12,7 +27,7 @@ class Cartcalc {
   // array of products
   function products($products = false) {
 	
-	if ($products) $this->setField('products', $products);
+	if ($products) $this->products = $products;
 	return $this->products;
 	
   }
@@ -32,7 +47,7 @@ class Cartcalc {
   // array of freight rows
   function freights($freights = false) {
 	
-	if ($freights) $this->setField('freights', $freights);
+	if ($freights) $this->freights = $freights;
 	return $this->freights;
 	
   }
@@ -163,7 +178,7 @@ class Cartcalc {
   // calculated field
   function gst() {
 	
-	$this->gst = ($this->subtotal() + $this->freightTotal()) * $this->taxRate() / 100;
+	$this->gst = round(($this->subtotal() + $this->freightTotal()) * $this->taxRate() / 100, 2);
 	return $this->gst;
 	
   }
@@ -171,7 +186,7 @@ class Cartcalc {
   // calculated field
   function subtotal() {
 	
-	$this->subtotal = $this->qtyTotal() * $this->itemPrice();
+	$this->subtotal = round($this->qtyTotal() * $this->itemPrice(), 2);
 	return $this->subtotal;
 	
   }
@@ -179,7 +194,7 @@ class Cartcalc {
   // calculated field
   function freightTotal() {
 	
-	$this->freightTotal = $this->unitWeight() * $this->qtyTotal() * $this->unitrate() + $this->basic();
+	$this->freightTotal = round($this->unitWeight() * $this->qtyTotal() * $this->unitrate() + $this->basic(), 2);
 	return $this->freightTotal;
 	
   }
@@ -214,32 +229,22 @@ class Cartcalc {
   function calcAll() {
 	
 	if (! count($this->carts())) return false;
+	if (! count($this->freights())) return false;
 	
 	$calculated = array();
 	foreach ($this->carts() as $czone=>$items) {
-	  
-	  $this->set($this->czoneFreight($czone));
-	  
-	  foreach ($items as $cart) {
-		
-		$calculated[] = $this->calcOne($cart);
+	  $this->freight($this->czoneFreight($czone));
+	  	  
+	  foreach ($items as $product) {
+		$this->product($product);
+		$calculated[] = $this->calc();
 	  }
+	  
 	}
 	
 	return $calculated;
   }
   
-  function calcOne() {
-	
-	$cart = new stdClass();
-	$cart->itemPrice = $this->itemPrice();
-	$cart->qtyTotal = $this->qtyTotal();
-	
-	$cart->freightTotal = $this->freightTotal();
-	
-  }
-  
-
   function set($data) {
 	
 	if (! is_object($data)) {
@@ -254,11 +259,6 @@ class Cartcalc {
 
   }
   
-//  private function setField($field, $value) {
-//	
-//	$this->$field = $value;
-//	
-//  }
 
 }
 //EOF

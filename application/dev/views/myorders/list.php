@@ -49,7 +49,29 @@
 			$orderTotal += $total;
 			?>
 			<tr>
-			  <td><?= $op->name ?></td>
+			  <td>
+				<?= $op->name ?>
+				<table class="table table-striped table-condensed table-bordered">
+				  <thead>
+					<tr>
+					  <th width="70">Code</th>
+					  <th>Name</th>
+					  <th width="60">Qty</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<?php if (count($orderProductQuantities) && isset($orderProductQuantities[$op->orderProductID])): ?>
+					<?php foreach ($orderProductQuantities[$op->orderProductID] as $opq): ?>
+					<tr>
+					  <td><?= $opq->code ?></td>
+					  <td><?= $opq->name ?></td>
+					  <td><?= $opq->qty ?></td>
+					</tr>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				  </tbody>
+				</table>
+			  </td>
 			  <td><?= $op->qtyTotal ?></td>
 			  <td><span class="pull-right"><?= number_format($subTotal,2,'.',',') ?></span></td>
 			  <td><span class="pull-right"><?= number_format($op->freightTotal,2,'.',',') ?></td>

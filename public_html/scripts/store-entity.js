@@ -49,9 +49,7 @@ $(function() {
 		
 	update: function(ev) {
 			
-	  this.model.set({
-		qty: $(ev.target).val()
-		});
+	  this.model.set({qty: $(ev.target).val()});
 	}
   });
 	
@@ -117,25 +115,25 @@ $(function() {
 		}
 	  });
 			
-	return this.render();
-  },
+	  return this.render();
+	},
 		
-  check: function() {
+	check: function() {
 			
-	var qty = 0;
+	  var qty = 0;
 
-	App.CartItems.each(function(item) {
+	  App.CartItems.each(function(item) {
 
-	  itemQty = parseInt(item.get('qty'));
-	  if(!isNaN(itemQty)) qty += itemQty;
-	});
+		itemQty = parseInt(item.get('qty'));
+		if(!isNaN(itemQty)) qty += itemQty;
+	  });
 
-	this.model.save({
-	  qtyTotal: qty
-	}, {
-	  wait: true
-	});			
-  }
+	  this.model.save({
+		qtyTotal: qty
+	  }, {
+		wait: true
+	  });			
+	}
   });
 	
 	
@@ -145,7 +143,7 @@ $(function() {
 	
   new App.CartView({
 	model: new App.Cart(cartJSON)
-	});
+  });
   App.CartItems.reset(subProductJSON);
   $(".fb").fancybox();
 });

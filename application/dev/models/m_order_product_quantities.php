@@ -3,6 +3,7 @@
 class M_order_product_quantities extends MM_Model {
   
   public $cartItems = array();
+  public $orderIDs = array();
 
   function __construct() {
 	$this->pk = 'orderProductQuantityID';
@@ -18,6 +19,17 @@ class M_order_product_quantities extends MM_Model {
       'name',
       'qty'
     );
+  }
+  
+  function fetchForOrdersGrouped() {
+	
+	if (!$this->orderIDs || !count($this->orderIDs)) return array();
+	
+	$this->db->join('orderProducts','orderProductID = orderProductsID', 'left outer');
+	$this->db->join('orders','orderID = ordersID', 'left outer');
+	$this->db->where_in('orderID', $this->orderIDs);
+	
+	return $this->fetchGrouped();
   }
   
   function addCart() {

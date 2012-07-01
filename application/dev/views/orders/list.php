@@ -19,6 +19,9 @@
 			<div class="span6">
 			  <?= "$o->name [$o->firstName $o->lastName]" ?>
 			</div>
+			<div class="span2 pull-right">
+			  <span class="pull-right">order total</span>
+			</div>
 		  </div>
 		</a>
 	  </div>
@@ -27,11 +30,11 @@
 		  <thead>
 			<tr>
 			  <th>Name</th>
-			  <th width="60">Qty</th>
-			  <th width="80">Sub Total</th>
-			  <th width="80">Freight</th>
-			  <th width="60">GST</th>
-			  <th width="80">Total</th>
+			  <th width="60"><span class="pull-right">Qty</span></th>
+			  <th width="80"><span class="pull-right">Sub Total</span></th>
+			  <th width="80"><span class="pull-right">Freight</span></th>
+			  <th width="60"><span class="pull-right">GST</span></th>
+			  <th width="80"><span class="pull-right">Total</span></th>
 			</tr>
 		  </thead>
 		  <tbody>
@@ -47,8 +50,30 @@
 			$orderTotal += $total;
 			?>
 			<tr>
-			  <td><?= $op->name ?></td>
-			  <td><?= $op->qtyTotal ?></td>
+			  <td>
+				<?= $op->name ?>
+				<table class="table table-striped table-condensed table-bordered">
+				  <thead>
+					<tr>
+					  <th width="70">Code</th>
+					  <th>Name</th>
+					  <th width="60">Qty</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<?php if (count($orderProductQuantities) && isset($orderProductQuantities[$op->orderProductID])): ?>
+					<?php foreach ($orderProductQuantities[$op->orderProductID] as $opq): ?>
+					<tr>
+					  <td><?= $opq->code ?></td>
+					  <td><?= $opq->name ?></td>
+					  <td><?= $opq->qty ?></td>
+					</tr>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				  </tbody>
+				</table>
+			  </td>
+			  <td><span class="pull-right"><?= $op->qtyTotal ?></span></td>
 			  <td><span class="pull-right"><?= number_format($subTotal,2,'.',',') ?></span></td>
 			  <td><span class="pull-right"><?= number_format($op->freightTotal,2,'.',',') ?></td>
 			  <td><span class="pull-right"><?= number_format($gst,2,'.',',') ?></td>
