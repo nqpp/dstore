@@ -4,7 +4,6 @@ class M_user_metas extends MM_Model {
 
   function __construct() {
 	$this->pk = 'userMetaID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
@@ -20,11 +19,10 @@ class M_user_metas extends MM_Model {
   }
   
   
-  function fetchAddressJSON() {
+  function fetchEmploymentDataJSON() {
 	
 	$this->setSort('userMetas.sort');
-//	$this->db->select('clientMetaID as entityID');
-	$this->schemaName = 'address';
+	$this->schemaName = 'employmentdata';
 	$result = parent::fetch();
 	
 	return json_encode($result);

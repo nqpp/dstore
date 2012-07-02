@@ -12,11 +12,11 @@
 	  </li>
 	</ul>
   </div>
-  
+
   <div class="span3">
 	<div class="btn-group pull-right" id="cart-contain"></div>
   </div>
-  
+
   <div class="span1">
 	<a class="btn pull-right" href="/store.html"><span class="icon-list"> </span> list</a>
   </div>
@@ -24,56 +24,57 @@
 </div>
 <div class="row row-padded">
   <div class="span8">
-	  <h1><?= $product->name ?></h1>
-	  <p><?= nl2br($product->description); ?></p>
+	<h1><?= $product->name ?></h1>
+	<p><?= nl2br($product->description); ?></p>
 	<div class="row">
 	  <div class="span3">
-			<h3>Pricing</h3>
-			<table id="price" class="table table-striped table-bordered">
-			  <thead>
-				<tr>
-				  <th width="60">Qty</th>
-				  <th>Price ea</th>
-				</tr>
-			  </thead>
-			  <tbody>
-				<?php foreach($prices as $price) : ?>
-					<tr>
-						<td><?php echo $price->metaKey() ?></td>
-						<td><?php echo $price->metaValue() ?></td>
-					</tr>
-					<?php endforeach; ?>
-			  </tbody>
-			</table>
+		<h3>Pricing</h3>
+		<table id="price" class="table table-striped table-bordered">
+		  <thead>
+			<tr>
+			  <th width="60">Qty</th>
+			  <th>Price ea</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<?php foreach ($prices as $price) : ?>
+  			<tr>
+  			  <td><?php echo $price->metaKey() ?></td>
+  			  <td><?php echo $price->metaValue() ?></td>
+  			</tr>
+			<?php endforeach; ?>
+		  </tbody>
+		</table>
 	  </div>
 	  <div class="span5">
-			<h3>Ordering</h3>
-			<table id="cart_prep" class="table table-striped table-bordered"></table>
+		<h3>Ordering</h3>
+		<table id="cart_prep" class="table table-striped table-bordered"></table>
 	  </div>
 	</div>
   </div>
   <div class="span4">
-		<h3>Gallery</h3>
-		<ul id="image" class="thumbnails">
-			<?php foreach($images as $image) : ?>
-			<li><a href="/images/<?=substr($image->metaKey(), 0, -4) ?>/2/600/600/<?=$image->metaKey() ?>" rel="gallery" class="fb thumbnail"><img src="/images/<?=substr($image->metaKey(), 0, -4) ?>/2/120/120/<?=$image->metaKey() ?>"></a></li>
-			<?php endforeach; ?>
-		</ul>
+	<h3>Gallery</h3>
+	<ul id="image" class="thumbnails">
+	  <?php foreach ($images as $image) : ?>
+  	  <li><a href="/images/<?= substr($image->metaKey(), 0, -4) ?>/2/600/600/<?= $image->metaKey() ?>" rel="gallery" class="fb thumbnail"><img src="/images/<?= substr($image->metaKey(), 0, -4) ?>/2/120/120/<?= $image->metaKey() ?>"></a></li>
+	  <?php endforeach; ?>
+	</ul>
   </div>
 </div>
 <?= $js_tpl_subproduct_list ?>
 <?= $js_tpl_cart ?>
 <script type="text/javascript">
-	var subProductJSON = <?php echo $subProductJSON ?>;
-	var cartJSON = <?php echo $cartJSON ?>;
-	var productsID = <?php echo $product->productID ?>;
+  var productJSON = <?php echo $productJSON ?>;
+  var subProductJSON = <?php echo $subProductJSON ?>;
+  var cartJSON = <?php echo $cartJSON ?>;
+  var productsID = <?php echo $product->productID ?>;
 </script>
 <script type="text/template" id="tpl-subproduct">
-	<thead>
+  <thead>
 	<tr>
 	  <th width="50">Code</th>
-	  <th width="120">Colour</th>
-	  <th width="89">Qty</th>
+	  <th>Colour</th>
+	  <th width="90">Qty</th>
 	</tr>
   </thead>
   <tbody></tbody>

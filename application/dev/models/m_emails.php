@@ -6,12 +6,11 @@ class M_emails extends MM_Model {
 
   function __construct() {
 	$this->pk = 'emailID';
-	$this->fields = $this->fields();
     parent::__construct();
     $this->attachmentPath = realpath(BASEPATH.'../artwork').'/';
   }
 
-  private function fields() {
+  function fields() {
     return array(
       'to',
       'cc',

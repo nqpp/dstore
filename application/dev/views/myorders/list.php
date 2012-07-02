@@ -16,13 +16,10 @@
 			  <span class="label label-<?= $o->status ?>"><?= ucfirst($o->status) ?></span>
 			</div>
 			<div class="span1">
-			  <?= sprintf("%04s",$o->orderID) ?> 
+			  <?= sprintf("#%04s",$o->orderID) ?> 
 			</div>
 			<div class="span2">
-			  <?= $o->name ?>
-			</div>
-			<div class="span2">
-			  <?= $o->firstName.' '.$o->lastName ?>
+			  <?= date("d M Y",strtotime($o->createdAt)) ?>
 			</div>
 		  </div>
 		</a>
@@ -52,7 +49,29 @@
 			$orderTotal += $total;
 			?>
 			<tr>
-			  <td><?= $op->name ?></td>
+			  <td>
+				<?= $op->name ?>
+				<table class="table table-striped table-condensed table-bordered">
+				  <thead>
+					<tr>
+					  <th width="70">Code</th>
+					  <th>Name</th>
+					  <th width="60">Qty</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<?php if (count($orderProductQuantities) && isset($orderProductQuantities[$op->orderProductID])): ?>
+					<?php foreach ($orderProductQuantities[$op->orderProductID] as $opq): ?>
+					<tr>
+					  <td><?= $opq->code ?></td>
+					  <td><?= $opq->name ?></td>
+					  <td><?= $opq->qty ?></td>
+					</tr>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				  </tbody>
+				</table>
+			  </td>
 			  <td><?= $op->qtyTotal ?></td>
 			  <td><span class="pull-right"><?= number_format($subTotal,2,'.',',') ?></span></td>
 			  <td><span class="pull-right"><?= number_format($op->freightTotal,2,'.',',') ?></td>
@@ -64,11 +83,7 @@
 		  </tbody>
 		  <tfoot>
 			<tr>
-			  <td>
-				<a class="btn btn-mini" href="/orders/<?= $o->orderID ?>.html">
-				  <i class="icon-edit"> </i>
-				</a>
-			  </td>
+			  <td></td>
 			  <td colspan="4">
 				<span class="pull-right"><strong>Order Total</strong></span>
 			  </td>

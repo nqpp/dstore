@@ -4,7 +4,6 @@
 	<a class="btn btn-info" href="/clients.html">Clients</a>
 	<a class="btn btn-info" href="/orders.html">Orders</a>
 	<a class="btn btn-info" href="/locations.html">Locations</a>
-	<a class="btn btn-info" href="/zones.html">Zones</a>
 	<a class="btn btn-info" href="/suppliers.html">Suppliers</a>
 
 </div>
@@ -17,7 +16,7 @@
   </a>
 	
   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-	<span class="caret"></span>
+	<i class="caret"> </i>
   </a>
   <ul class="dropdown-menu">
 	<li><a href="/metas.html">Metadata</a></li>

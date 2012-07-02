@@ -30,6 +30,10 @@ class Products extends MM_controller {
 
 	$this->load->vars('productJSON', $this->m_products->getJoinedJSON());
 	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsJSON());
+	
+    $this->m_products->parentID = 0;
+    $this->m_products->index = 'category';
+	$this->load->vars('products', $this->m_products->fetchGrouped());
 	$this->load->vars('priceJSON', $this->m_product_metas->priceJSON());
 	$this->load->vars('imageJSON', $this->m_product_metas->imageJSON());
 

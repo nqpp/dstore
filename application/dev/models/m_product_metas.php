@@ -4,14 +4,15 @@ require_once(APPPATH.'libraries/do_product_metas.php');
 
 class M_product_metas extends MM_Model {
 
+  public $qtyTotal = false;
+  
   function __construct() {
 	$this->pk = 'productMetaID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'productsID',
       'schemaName',
@@ -66,6 +67,33 @@ class M_product_metas extends MM_Model {
 	return $this->fetchGrouped();
 	
   }
+  
+  // used for store cart calculation to determine price point for qty
+  // return row on success or false on fail
+  function getPricePoint() {
+	
+	if (!$this->productsID) return false;
+	if (!$this->qtyTotal) return false;
+
+	$this->index = "metaKey";
+	$this->db->where('schemaName', 'price');
+	$this->db->where('productsID', $this->productsID);
+	$this->db->order_by('sort');
+	$result = $this->fetchIndexed();
+
+	if(! count($result)) return false;
+
+	$point = 0;
+	foreach ($result as $row) {
+	  if ($row->metaKey <= $this->qtyTotal && $row->metaKey > $point) $point = $row->metaKey;
+	}
+
+	if (!isset($result[$point])) return false;
+
+	return $result[$point];
+
+  }
+  
   
   function deleteProduct() {
 	

@@ -4,12 +4,11 @@ class M_client_addresses extends MM_Model {
 
   function __construct() {
 	$this->pk = 'clientAddressID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'clientsID',
       'type',

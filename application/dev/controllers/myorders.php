@@ -13,14 +13,19 @@ class Myorders extends MM_Controller {
   function renderHTML() {
 	
 	$this->m_orders->usersID = $this->user->userID();
-	$orders = $this->m_orders->fetchJoinedUserIndexed();
-//	$orders = $this->m_orders->fetchIndexed();
+	$orders = $this->m_orders->fetchIndexed();
+	
 	$this->m_order_products->orderIDs = array_keys($orders);
 	$this->m_order_products->index = 'ordersID';
 	$orderProducts = $this->m_order_products->fetchGrouped();
 	
+	$this->m_order_product_quantities->index = "orderProductsID";
+	$this->m_order_product_quantities->orderIDs = array_keys($orders);
+	$orderProductQuantities = $this->m_order_product_quantities->fetchForOrdersGrouped();
+	
 	$this->load->vars('orders', $orders);
 	$this->load->vars('orderProducts', $orderProducts);
+	$this->load->vars('orderProductQuantities', $orderProductQuantities);
 	
 	$this->load->vars('content', $this->load->view('myorders/list','',true));
   }
@@ -66,7 +71,7 @@ class Myorders extends MM_Controller {
 	
 	// get delivery address
 //	$this->m_contact_addresses->id = $this->input->post('deliveryAddressID');
-$this->m_contact_addresses->id = 1;
+	$this->m_contact_addresses->id = 1;
 	$deliveryAddress = $this->m_contact_addresses->get();
 	// write delivery address
 	$this->m_order_addresses->ordersID = $this->m_orders->id;

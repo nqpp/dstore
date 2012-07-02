@@ -36,17 +36,33 @@ class MM_Model extends CI_Model {
   // initialise properties
   private function init() {
 
-	if (!count($this->fields)) return;
+	if (!count($this->fields())) return;
 	
-    foreach ($this->fields as $f) {
+    foreach ($this->fields() as $f) {
       $this->$f = false;
     }
+  }
+  
+  function fields() {
+	return array();
   }
   
   function reset() {
 	$this->id = false;
 	$this->index = false;
 	$this->init();
+  }
+  
+  // set class properties from an object
+  function set($data) {
+	if (! is_object($data)) throw new Exception('Supplied argument is not an object.');
+	
+	foreach (get_object_vars($data) as $prop=>$val) {
+	  if (property_exists($this,$prop)) {
+		$this->$prop = $val;
+	  }
+	}
+	
   }
   
   // set properties according to post value if not set already
@@ -59,7 +75,8 @@ class MM_Model extends CI_Model {
   // filter record data per class property
   function dbWhereVars() {
 
-    foreach ($this->fields as $f) {
+//    foreach ($this->fields as $f) {
+    foreach ($this->fields() as $f) {
       if ($this->$f === false) continue;
       $this->db->where($this->model.'.'.$f,$this->$f);
     }
@@ -69,7 +86,7 @@ class MM_Model extends CI_Model {
   // set record data per class property
   function dbSetVars() {
 
-    foreach ($this->fields as $f) {
+    foreach ($this->fields() as $f) {
       if ($this->$f === false) continue;
       $this->db->set($f,$this->$f);
     }
@@ -88,7 +105,7 @@ class MM_Model extends CI_Model {
   }
   
   function fetch() {
-	
+
 	$this->db->select($this->model.'.*');
 	$this->dbSort();
 	$this->dbWhereVars();

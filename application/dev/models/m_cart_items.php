@@ -6,12 +6,11 @@ class M_cart_items extends MM_Model {
 
   function __construct() {
 	$this->pk = 'cartItemID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'cartsID',
       'productsID',

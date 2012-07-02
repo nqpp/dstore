@@ -26,7 +26,7 @@ class Change_view extends MM_controller {
 	
 	$this->user->pseudoMode('client');
 	$this->user->pseudoAdminGroup(4);
-	$this->user->zoneID(12);
+//	$this->user->zoneID(12);
 	die (header("Location:dashboards.html?client"));
 	
   }

@@ -98,6 +98,7 @@ $(function() {
   var view = new App.ContactView({model:contact});
   view.render();
   
+  
 
   /*
    * ======================================================================
@@ -105,11 +106,14 @@ $(function() {
    * ======================================================================
    */
   
+  App.vent = _.extend({},Backbone.Events);
+  
   App.Address = Backbone.Model.extend({
 	
 	idAttribute: 'userAddressID',
 	defaults: {
 	  usersID:contactJSON.userID,
+	  userAddressID:'',
 	  type:'',
 	  address:'',
 	  city:'',
@@ -130,80 +134,6 @@ $(function() {
   
   App.Addresses = new App.AddressList;
   
-  App.AddressView = Backbone.View.extend({
-	tagName: 'tr',
-	template: _.template($('#tpl-address-list').html()),
-	events: {
-	  "keypress input" : "updateOnEnter",
-	  "click a.delete": "clear",
-	  "click td.editable" : "edit",
-	  "change select.change-update": "update",
-	  "click a.save": "update"
-	},
-	initialize: function() {
-	  this.model.bind('change', this.render, this);
-	},
-	render: function() {
-	  this.$el.html(this.template(this.model.toJSON()));
-	  return this;
-	},
-	updateOnEnter:function(ev) {
-	  
-	  if (ev.keyCode == 13) {
-		this.update()
-	  }
-	},
-	update: function() {
-	  var data = {};
-
-	  this.$el.find('.edit input').each(function() {
-		data[this.name] = this.value
-	  });
-	  this.$el.find('.edit select').each(function() {
-		data[this.name] = this.value
-	  });
-	  this.$el.find('.edit textarea').each(function() {
-		data[this.name] = this.value
-	  });
-	  
-	  this.model.set(data).save();
-	  this.$el.find('.edit').hide();
-	  this.$el.find('.display').show();
-	},
-	edit:function() {
-	  this.$el.find('.edit').show();
-	  this.$el.find('.display').hide();
-	},
-	clear: function() {
-	  if (confirm('Really Delete?')) {
-		this.model.clear();
-		this.remove();
-	  }
-	}
-  });
-  
-  App.AddressesView = Backbone.View.extend({
-	el: $("#address"),
-	events: {
-	  "click .addContact": "createOne"
-	},
-	initialize: function() {
-	  App.Addresses.bind('reset', this.addAll, this);
-	  App.Addresses.bind('add', this.add, this);
-	},
-	createOne: function() {
-//console.log(this)
-	  App.Addresses.create({wait:true});
-	  return false;
-	},
-	add: function(address) {
-	  var view = new App.AddressView({model: address});
-	  $('#address tbody').append(view.render().el);
-	},
-	addAll: function() {
-	  App.Addresses.each(this.add);
-	}
-  });
   
   new App.AddressesView;
   App.Addresses.reset(addressJSON);
@@ -211,9 +141,10 @@ $(function() {
   
   /*
    * ======================================================================
-   *  PHONE	 
+   *  PHONES
    * ======================================================================
    */
+  
   App.Phone = Backbone.Model.extend({
 	idAttribute: 'userMetaID',
 	defaults: {
@@ -235,82 +166,40 @@ $(function() {
   
   App.Phones = new App.PhoneList;
   
-  App.PhoneView = Backbone.View.extend({
-	tagName: 'tr',
-	template: _.template($('#tpl-phone-list').html()),
-	events: {
-	  "click .editable" : "edit",
-	  "click a.delete": "clear",
-	  "keypress input" : "updateOnEnter",
-	  "change select.change-update": "update",
-	  "click a.save": "update"
-	},
-	initialize: function() {
-	  this.model.bind('change', this.render, this);
-	},
-	render: function() {
-	  this.$el.html(this.template(this.model.toJSON()));
-	  return this;
-	},
-	updateOnEnter:function(ev) {
-	  
-	  if (ev.keyCode == 13) {
-		this.update()
-	  }
-	},
-	update: function() {
-	  var data = {};
-
-	  this.$el.find('.edit input').each(function() {
-		data[this.name] = this.value
-	  });
-	  this.$el.find('.edit select').each(function() {
-		data[this.name] = this.value
-	  });
-	  this.$el.find('.edit textarea').each(function() {
-		data[this.name] = this.value
-	  });
-	  
-	  this.model.set(data).save();
-	  this.$el.find('.edit').hide();
-	  this.$el.find('.display').show();
-	},
-	edit:function() {
-	  this.$el.find('.edit').show();
-	  this.$el.find('.display').hide();
-	},
-	clear: function() {
-	  if (confirm('Really Delete?')) {
-		this.model.clear();
-		this.remove();
-	  }
-	}
-  });
-
-  App.PhonesView = Backbone.View.extend({
-	el: $("#phone"),
-	events: {
-	  "click .addContact": "createOne"
-	},
-	initialize: function() {
-	  App.Phones.bind('reset', this.addAll, this);
-	  App.Phones.bind('add', this.add, this);
-	},
-	createOne: function() {
-	  App.Phones.create({wait:true});
-	  return false;
-	},
-	add: function(phone) {
-	  var view = new App.PhoneView({model: phone});
-	  $('#phone tbody').append(view.render().el);
-	},
-	addAll: function() {
-	  App.Phones.each(this.add);
-	}
-  });
   
   new App.PhonesView;
   App.Phones.reset(phoneJSON);
   
+  
+  /*
+   * ======================================================================
+   *  EMPLOYMENT DATAS
+   * ======================================================================
+   */
+  
+  App.EmploymentData = Backbone.Model.extend({
+	idAttribute: 'userMetaID',
+	defaults: {
+	  usersID:contactJSON.userID,
+	  schemaName:'employmentdata',
+	  metaKey:'',
+	  metaValue:'',
+	  sort:'1'
+	},
+	clear: function() {
+	  this.destroy();
+	}
+  });
+  
+  App.EmploymentDataList = Backbone.Collection.extend({
+	model: App.EmploymentData,
+	url: '/contact_metas'
+  });
+  
+  App.EmploymentDatas = new App.EmploymentDataList;
+  
+  
+  new App.EmploymentDatasView;
+  App.EmploymentDatas.reset(employmentDataJSON);
+  
 });
-

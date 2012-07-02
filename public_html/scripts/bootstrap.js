@@ -1626,9 +1626,24 @@
         return this.shown ? this.hide() : this
       }
 
-      items = $.grep(this.source, function (item) {
-        return that.matcher(item)
-      })
+      var isFunction = function (object) {
+        var getClass = {}.toString;
+        return object && getClass.call(object) == "[object Function]";
+      }
+
+      if(isFunction(this.source)) {
+        // run source and get items
+        items = this.source(this.query);
+
+      } else { // presume an array
+        items = $.grep(this.source, function (item) {
+          if (that.matcher(item)) return item
+        })
+      }
+
+//      items = $.grep(this.source, function (item) {
+//        return that.matcher(item)
+//      })
 
       items = this.sorter(items)
 
@@ -1648,7 +1663,9 @@
         , caseSensitive = []
         , caseInsensitive = []
         , item
-
+/*
+ *	replace this section with collection and work with methods for that.
+ */
       while (item = items.shift()) {
         if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
         else if (~item.indexOf(this.query)) caseSensitive.push(item)
@@ -1667,7 +1684,9 @@
 
   , render: function (items) {
       var that = this
-
+/*
+ *manipulate to work with collection
+ */ 
       items = $(items).map(function (i, item) {
         i = $(that.options.item).attr('data-value', item)
         i.find('a').html(that.highlighter(item))

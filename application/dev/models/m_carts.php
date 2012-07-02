@@ -4,12 +4,11 @@ class M_carts extends MM_Model {
 
   function __construct() {
 	$this->pk = 'cartID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'usersID',
       'createdAt',
@@ -34,6 +33,22 @@ class M_carts extends MM_Model {
 		$cart = $this->fetchUserCart();
 		return json_encode($cart);
   }
+  
+  function fetchGroupedForCalculated() {
+	
+	$this->db->select('cubicWeight,deadWeight');
+	$this->db->join('products', 'productID = productsID', 'left outer');
+	
+	$this->db->join('supplierAddresses', 'products.suppliersID = supplierAddresses.suppliersID', 'left outer');
+	$this->db->where('type','Dispatch');
+	
+	$this->db->select('czone');
+	$this->db->join('locations', 'locationID = locationsID', 'left outer');
+	
+	return $this->fetchGrouped();
+	
+  }
+  
 
 	function fetchUserCartTotalled() {
 		

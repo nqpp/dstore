@@ -7,12 +7,11 @@ class M_supplier_freights extends MM_Model {
 
   function __construct() {
 	$this->pk = 'supplierFreightID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
 	  'suppliersID',
 	  'zonesID',

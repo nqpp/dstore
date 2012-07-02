@@ -31,8 +31,8 @@ $(function(){
 	template: _.template($('#tpl-entity').html()),
 	
 	events:{
-	  "click .handle" : "openEdit",
 	  "keypress input" : "updateOnEnter",
+	  "change input" : "updateOnChange",
 	  "change select" : "updateOnChange",
 	  "blur textarea" : "updateOnBlur"
 	},
@@ -49,23 +49,14 @@ $(function(){
 	
 	updateOnEnter: function(ev) {
 	  if (ev.keyCode == 13) {
-		if (this.update(ev)) {
-		  this.closeEdit(ev);
-		}
-		
+		this.update(ev)
 	  }
 	},
 	updateOnChange:function(ev) {
-	  if (this.update(ev)) {
-		this.closeEdit(ev);
-	  }
-	  
+	  this.update(ev)
 	},
 	updateOnBlur:function(ev) {
-	  if (this.update(ev)) {
-		this.closeEdit(ev);
-	  }
-	  
+	  this.update(ev)
 	},
 	update: function(ev) {
 	  var data = {};
@@ -73,116 +64,81 @@ $(function(){
 	  data[ev.target.name] = ev.target.value;
 	  this.model.set(data).save();
 	  return true;
-	},
-	openEdit: function(ev) {
-	  $(ev.currentTarget).removeClass('handle');
-	  $(ev.currentTarget).children('.edit').show().children('input').focus();
-	  $(ev.currentTarget).children('.display').hide();
-	},
-	
-	closeEdit:function(ev) {
-	  $(ev.target).parent().hide();
-	  $(ev.target).parent().siblings('.display').show();
-	  $(ev.target).parent().parent().addClass('handle');
 	}
-
   });
 
   var supplier = new App.Supplier(supplierJSON);
   var view = new App.SupplierView({model:supplier});
   view.render();
+
+
+/*
+ * ==========================================================================
+ * PHONES
+ * ==========================================================================
+ */
   
-  
-  /*
-   * ======================================================================
-   * SUPPLIER FREIGHT
-   * ======================================================================
-   */
-  
-  App.Freight = Backbone.Model.extend({
-	
-	idAttribute: 'supplierFreightID',
-	
+  App.Phone = Backbone.Model.extend({
+	idAttribute: 'supplierMetaID',
 	defaults: {
+	  suppliersID:supplierJSON.supplierID,
+	  schemaName:'phone',
+	  metaKey:'',
+	  metaValue:'',
+	  sort:'1'
 	},
+	clear: function() {
+	  this.destroy();
+	}
+  });
+  
+  App.PhoneList = Backbone.Collection.extend({
+	model: App.Phone,
+	url: '/supplier_metas'
+  });
+  
+  App.Phones = new App.PhoneList;
+
+  new App.PhonesView;
+  App.Phones.reset(phoneJSON);
+
+
+
+/*
+ * ==========================================================================
+ * PHONES
+ * ==========================================================================
+ */
+  
+  App.Address = Backbone.Model.extend({
 	
-	clear:function() {
+	idAttribute: 'supplierAddressID',
+	defaults: {
+	  supplierAddressID:'',
+	  suppliersID:supplierJSON.supplierID,
+	  type:'',
+	  locationsID:'',
+	  address:'',
+	  city:'',
+	  state:'',
+	  postcode:'',
+	  sort:'1'
+	},
+	clear: function() {
 	  this.destroy();
 	}
 	
   });
   
-  App.FreightList = Backbone.Collection.extend({
-	model: App.Freight,
-	url: '/supplier_freights',
-	
-	comparator:function(model) {
-	  return model.get('code');
-	}	
+  App.AddressList = Backbone.Collection.extend({
+	model: App.Address,
+	url: '/supplier_addresses'
   });
   
-  App.Freights = new App.FreightList;
+  App.Addresses = new App.AddressList;
   
-  App.FreightView = Backbone.View.extend({
-	tagName: 'tr',
-	template: _.template($('#tpl-supplier_freights').html()),
-	events: {
-	  "click td.editable" : "edit",
-	  "click a.save": "update"
-	},
-	initialize: function() {
-	  this.model.bind('change', this.render, this);
-	},
-	render: function() {
-	  var data = this.model.toJSON();
-	  data['id'] = this.model.cid;
-	  this.$el.html(this.template(data));
-	  return this;
-	},
-	update: function() {
-	  var data = {};
-
-	  this.$el.find('.edit input').each(function() {
-		data[this.name] = this.value
-	  });
-	  this.$el.find('.edit select').each(function() {
-		data[this.name] = this.value
-	  });
-	  this.$el.find('.edit textarea').each(function() {
-		data[this.name] = this.value
-	  });
-	  
-	  this.model.set(data).save();
-	  this.$el.find('.edit').hide();
-	  this.$el.find('.display').show();
-	},
-	edit:function() {
-	  this.$el.find('.edit').show();
-	  this.$el.find('.display').hide();
-	},
-	clear: function() {
-	}
-  });
-
-  App.FreightsView = Backbone.View.extend({
-	el: $("#freight"),
-	events: {
-	},
-	initialize: function() {
-	  App.Freights.bind('reset', this.addAll, this);
-	  App.Freights.bind('add', this.add, this);
-	},
-	add: function(model) {
-	  var view = new App.FreightView({model: model});
-	  $('#freight tbody').append(view.render().el);
-	},
-	addAll: function() {
-	  App.Freights.each(this.add);
-	}
-  });
+  new App.AddressesView;
+  App.Addresses.reset(addressJSON);
   
-  new App.FreightsView;
-  App.Freights.reset(supplierFreightsJSON);
-
 
 });

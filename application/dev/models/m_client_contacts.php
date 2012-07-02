@@ -4,9 +4,8 @@ class M_client_contacts extends MM_Model {
 
   function __construct() {
 	$this->pk = 'clientContactID';
-	$this->fields = $this->fields();
     parent::__construct();
-	$this->adminGroup = 4;
+	$this->adminGroup = 32;
   }
   
   function fields() {
@@ -28,6 +27,22 @@ class M_client_contacts extends MM_Model {
   
   function fetchJSON() {
 
+	$select = "(
+	  SELECT metaValue 
+	  FROM userMetas 
+	  WHERE usersID = userID AND schemaName = 'employmentdata' AND metaKey = 'Job Title' 
+	  GROUP By sort
+	  ) as jobTitle, ";
+	
+	$select .= "(
+	  SELECT metaValue 
+	  FROM userMetas 
+	  WHERE usersID = userID AND schemaName = 'employmentdata' AND metaKey = 'Department' 
+	  GROUP By sort
+	  ) as department, ";
+	
+	$this->db->select($select,false);
+	
 	$result = $this->fetch();
 	return json_encode($result);
 

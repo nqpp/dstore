@@ -25,7 +25,7 @@ class User {
   
   function id() {
 	
-	return $this->session->userdata('user_userID');
+	return $this->userID();
 	
   }
   
@@ -97,19 +97,47 @@ class User {
 	
   }
   
-  function zoneID($zoneID = false) {
+  function czone($czone = false) {
 	
-	if (self::usePseudoMode()) return pseudoZoneID($zoneID);
+//	if ($this->usePseudoMode()) return pseudoCzone($czone);
 	
-	if ($zoneID) $this->setField('zoneID', $zoneID);
-	return $this->session->userdata('user_zoneID');
+	if ($czone) $this->setField('czone', $czone);
+	return $this->session->userdata('user_czone');
 	
   }
   
-  function pseudoZoneID($pseudoZoneID = false) {
+//  function pseudoCzone($pseudoCzone = false) {
+//	
+//	if ($pseudoCzone) $this->setField('pseudoCzone', $pseudoCzone);
+//	return $this->session->userdata('user_pseudoCzone');
+//	
+//  }
+  
+  function postcode($postcode = false) {
 	
-	if ($pseudoZoneID) $this->setField('pseudoZoneID', $pseudoZoneID);
-	return $this->session->userdata('user_pseudoZoneID');
+	if ($postcode) $this->setField('postcode', $postcode);
+	return $this->session->userdata('user_postcode');
+	
+  }
+  
+  function suburb($suburb = false) {
+	
+	if ($suburb) $this->setField('suburb', $suburb);
+	return $this->session->userdata('user_suburb');
+	
+  }
+  
+  function state($state = false) {
+	
+	if ($state) $this->setField('state', $state);
+	return $this->session->userdata('user_state');
+	
+  }
+  
+  function alladdresses($alladdresses = false) {
+	
+	if ($alladdresses) $this->setField('alladdresses', $alladdresses);
+	return $this->session->userdata('user_alladdresses');
 	
   }
   

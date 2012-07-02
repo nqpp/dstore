@@ -41,16 +41,18 @@ class MM_Controller extends CI_Controller {
   }
   
   function _remap($id = false) {
-	
+
 	if ($id == 'index') $id = false;
 	$this->entityID = $id;
 	
 	$req = $_SERVER['REQUEST_METHOD'];
-	$qs = strtolower($_SERVER['QUERY_STRING']);
+	$qs = false;
 	
-	if (strpos($qs,'=') !== false) {
-	  // there are name value pairs present so is not an extension
-	  $qs = false; 
+	$_qsarray = explode('&',$_SERVER['QUERY_STRING']);
+	
+	if (count($_qsarray)) {
+	  // if there are name value pairs present is not an extension
+	  $qs = (strpos($_qsarray[0],'=') !== false) ? false: $_qsarray[0];
 	}
 
 	$this->method = array(

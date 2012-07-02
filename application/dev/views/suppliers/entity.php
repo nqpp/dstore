@@ -6,8 +6,23 @@
 
   <div class="span4 pull-right">
 	<div class="btn-group pull-right">
-	  <a class="btn" href="/suppliers.html"><span class="icon-list"> </span> list</a>
+	  
 	  <a class="btn" href="/suppliers/<?= $this->m_suppliers->id ?>.html?delete"><span class="icon-trash"> </span> delete</a>
+	  
+	  <a class="btn" href="/suppliers.html">
+		<i class="icon-list"> </i> list
+	  </a>
+	  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+		<i class="caret"> </i>
+	  </a>
+	  <ul class="dropdown-menu">
+		<?php if (count($suppliers)): ?>
+		<?php foreach ($suppliers as $s): ?>
+		<li><a href="/suppliers/<?= $s->supplierID ?>"><?= $s->name ?></a></li>
+		<?php endforeach; ?>
+		<?php endif; ?>
+	  </ul>
+	  
 	</div>
 
   </div>
@@ -23,38 +38,49 @@
 
   </div>
   
-  <div class="span7">
-	<h3>Zone Freight Rates</h3>
-	<p class="help-block">Use variable charges or flat rate exclusively</p>
-	<table id="freight" class="table table-striped table-bordered">
-	  <thead>
-		<tr>
-		  <th></th>
-		  <th colspan="3">Variable</th>
-		  <th>Flat</th>
-		  <th></th>
-		</tr>
-		<tr>
-		  <th width="40">Zone</th>
-		  <th width="90" class="border-left-dashed">Base Rate</th>
-		  <th width="90">KG Rate</th>
-		  <th width="90">Min Charge</th>
-		  <th class="border-left-dashed">Flat Rate</th>
-		  <th width="20"></th>
-		</tr>
-	  </thead>
-	  <tbody></tbody>
-	</table>
-	
+  <div class="span4">
+	  <h4>Addresses</h4>
+	  <table id="address" class="table table-striped table-bordered">
+		<thead>
+		  <tr>
+			<th width="80">Type</th>
+			<th>Address</th>
+			<th width="30">
+			  <a class="btn btn-mini addContact" href="#"><i class="icon-plus"> </i></a>
+			</th>
+		  </tr>
+		</thead>
+		<tbody>
+		</tbody>
+	  </table>
+
+	  <h4>Phone Numbers</h4>
+	  <table id="phone" class="table table-striped table-bordered">
+		<thead>
+		  <tr>
+			<th width="80">Type</th>
+			<th>Number</th>
+			<th width="30">
+			  <a class="btn btn-mini addContact" href="#"><i class="icon-plus"> </i></a>
+			</th>
+		  </tr>
+		</thead>
+		<tbody>
+		</tbody>
+	  </table>
   </div>
   
 </div>
 
 <script type="text/javascript">
 var supplierJSON = <?= $supplierJSON ?>;
-var supplierFreightsJSON = <?= $supplierFreightsJSON ?>;
+var addressJSON = <?= $addressJSON ?>;
+var phoneJSON = <?= $phoneJSON ?>;
 
 </script>
 
 <?= $js_tpl_entity ?>
-<?= $js_tpl_supplier_freights ?>
+<?= $js_addresslist ?>
+<?= $js_phonelist ?>
+<?= $js_tpl_typeahead_list ?>
+

@@ -6,12 +6,11 @@ class M_products extends MM_Model {
 
   function __construct() {
 	$this->pk = 'productID';
-	$this->fields = $this->fields();
     parent::__construct();
   }
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'parentID',
       'suppliersID',
@@ -88,21 +87,21 @@ class M_products extends MM_Model {
 	return $this->fetch();
   }
 
-	function fetchSubProductsWithQty() {
-		
-		$this->db->select('products.*, cartItems.qty, cartItems.cartItemID');
+  function fetchSubProductsWithQty() {
+
+	$this->db->select('products.*, cartItems.qty, cartItems.cartItemID');
 //		$this->db->join('cartItems', 'products.code = cartItems.code AND cartItems.cartsID IN (SELECT cartID FROM carts WHERE usersID = 1)', 'left outer');
-		$this->db->join('cartItems', 'products.code = cartItems.code AND cartItems.cartsID IN (SELECT cartID FROM carts WHERE usersID = ' . User::id() . ')', 'left outer');
-		$this->db->where('products.parentID', $this->id);
-		
-		return $this->fetch();
-	}
-	
-	function fetchSubProductsWithQtyJSON() {
-		
-		$result = $this->fetchSubProductsWithQty();
-		return json_encode($result);
-	}
+	$this->db->join('cartItems', 'products.code = cartItems.code AND cartItems.cartsID IN (SELECT cartID FROM carts WHERE usersID = ' . $this->user->id() . ')', 'left outer');
+	$this->db->where('products.parentID', $this->id);
+
+	return $this->fetch();
+  }
+
+  function fetchSubProductsWithQtyJSON() {
+
+	$result = $this->fetchSubProductsWithQty();
+	return json_encode($result);
+  }
   
   function fetchSubProductsJSON() {
 	
@@ -126,6 +125,17 @@ class M_products extends MM_Model {
   
   function getJoinedJSON() {
 	return json_encode($this->getJoined());
+  }
+  
+  function getSupplierCzone() {
+	
+	$this->db->join('supplierAddresses', 'products.suppliersID = supplierAddresses.suppliersID', 'left outer');
+	$this->db->where('type','Dispatch');
+	
+	$this->db->select('czone');
+	$this->db->join('locations', 'locationID = locationsID', 'left outer');
+
+	return $this->get();
   }
   
 }

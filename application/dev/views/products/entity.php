@@ -6,8 +6,26 @@
 
   <div class="span4 pull-right">
 	<div class="btn-group pull-right">
-	  <a class="btn" href="/products.html"><span class="icon-list"> </span> list</a>
-	  <a class="btn" href="/products/<?= $this->m_products->id ?>.html?delete"><span class="icon-trash"> </span> delete</a>
+	  <a class="btn" href="/products/<?= $this->m_products->id ?>.html?delete"><i class="icon-trash"> </i> delete</a>
+
+	  <a class="btn" href="/products.html"><i class="icon-list"> </i> list</a>
+	  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+		<i class="caret"> </i>
+	  </a>
+	  <ul class="dropdown-menu">
+		<?php if (count($products)): ?>
+		<?php $f = true; foreach ($products as $cat=>$items): ?>
+		<?php if (!$f): ?>
+		<li class="divider"></li>
+		<?php endif; ?>
+		<li><div class="span2"><strong><?= $cat ?></strong></div></li>
+		<?php foreach ($items as $s): ?>
+		<li><a href="/products/<?= $s->productID ?>"><?= $s->name ?></a></li>
+		<?php endforeach; ?>
+		<?php $f = false; endforeach; ?>
+		<?php endif; ?>
+	  </ul>
+	  
 	</div>
 
   </div>
@@ -41,11 +59,20 @@
 		  <th width="60">Qty</th>
 		  <th>Price per Unit</th>
 		  <th width="20">
-			<a href="javascript:void(0);" class="addOne">+</a>
+			<a href="javascript:void(0);" class="addOne btn btn-mini"><i class="icon-plus"> </i></a>
 		  </th>
 		</tr>
 	  </thead>
 	  <tbody></tbody>
+	  <tfoot>
+		<tr>
+		  <td colspan="3">
+			<span class="pull-right">
+			  <a class="btn btn-small" href="#" id="save_sort"><i class="icon-list-alt"> </i> Sort</a>
+			</span>
+		  </td>
+		</tr>
+	  </tfoot>
 	</table>
 
   </div>
@@ -59,7 +86,7 @@
 		  <th width="60">Code</th>
 		  <th>Colour</th>
 		  <th width="20">
-			<a href="javascript:void(0);" class="addOne">+</a>
+			<a href="javascript:void(0);" class="addOne btn btn-mini"><i class="icon-plus"> </i></a>
 		  </th>
 		</tr>
 	  </thead>

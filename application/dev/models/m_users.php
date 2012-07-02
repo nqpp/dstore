@@ -7,14 +7,13 @@ class M_users extends MM_Model {
   
   function __construct() {
 	$this->pk = 'userID';
-	$this->fields = $this->fields();
     parent::__construct();
 	$this->active = 1;
   }
 
 
   // db field names
-  private function fields() {
+  function fields() {
     return array(
       'firstName',
       'lastName',
@@ -28,12 +27,12 @@ class M_users extends MM_Model {
 
   function fetch() {
 
-    $this->setSort('firstName');
+    $this->setSort('lastNAme, firstName');
 	return parent::fetch();
   }
   
   function fetchJoined() {
-	
+
     $this->db->select('metas.metaValue as groupName');
 	$this->db->join('metas','metaKey = adminGroup', 'left outer');
     $this->db->where('metas.schemaName','adminGroup');
