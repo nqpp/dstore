@@ -113,6 +113,9 @@ class User {
 //	
 //  }
   
+  // TODO add method for addressID
+  // TODO add method to distribute address properties to methods
+  
   function postcode($postcode = false) {
 	
 	if ($postcode) $this->setField('postcode', $postcode);

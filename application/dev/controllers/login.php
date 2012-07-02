@@ -43,6 +43,7 @@ class Login extends Unsecure {
 	  if (count($addresses)) {
 		$primary = reset($addresses);
 		
+		// add primary address through single method in User library
 		$data->czone = $primary->czone;
 		$data->postcode = $primary->postcode;
 		$data->suburb = $primary->suburb;

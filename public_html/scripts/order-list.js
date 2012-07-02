@@ -229,9 +229,14 @@ $(function() {
   App.StatusFilterView = Backbone.View.extend({
 	tagName: 'a',
 	attributes: function(){
+	  var self = this;
 	  var data = {}
 	  data['href'] = '#';
-	  data['class'] = 'btn pull-right';
+	  data['class'] = function() {
+		var className = 'btn pull-right';
+		className += (self.model.get('preference') == '1') ? ' active':''
+		return className;
+	  }
 	  return data;
 	},
 	template: _.template($("#tpl-status-filter").html()),
@@ -246,14 +251,15 @@ $(function() {
 	setPref: function(ev) {
 	  var node,self;
 	  self = this;
+	  // sodding thing needs to wait for DOM to catch up.
 	  setTimeout(function() {
 		node = ev.target.parentNode;
 		
 		if ($(node).hasClass('active')) {
-		  self.model.save({'preference':1});
+		  self.model.save({'preference':1},{wait:true});
 		}
 		else {
-		  self.model.save({'preference':0},{silent:true});
+		  self.model.save({'preference':0},{wait:true});
 		}
 		
 	  },10)
@@ -272,9 +278,6 @@ $(function() {
 
   App.OrdersView = Backbone.View.extend({
 	el: $("#orderAccordion"),
-	events: {
-//	  "click #statusFilter a": "filterStatus"
-	},
 	
 	initialize: function() {
 	  
@@ -284,11 +287,12 @@ $(function() {
 	  App.Orders.bind('add', this.add, this);
 	},
 	
-	filterStatus: function(ev) {
-console.log(this)
+	reload: function() {
+	  App.Orders.fetch();
 	},
 	
 	addFilters: function() {
+	  var self = this;
 	  
 	  if (orderStatusFilterJSON.length) {
 		this.StatusFilters = new App.StatusFilterList(orderStatusFilterJSON);
@@ -298,7 +302,7 @@ console.log(this)
 		console.log('using fallback status filters')
 	  }
 	  
-	  this.StatusFilters.bind('change', this.filterStatus,this);
+	  this.StatusFilters.bind('change', this.reload,this);
 
 	  this.StatusFilters.each(function(model) {
 		var view = new App.StatusFilterView({model:model});
@@ -317,6 +321,7 @@ console.log(this)
 	  $('#orderAccordion').append(view.render().el);
 	},
 	addAll: function() {
+	  $('#orderAccordion').html('');
 	  App.Orders.each(this.add);
 	}
 
