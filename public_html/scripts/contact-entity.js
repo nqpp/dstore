@@ -180,7 +180,7 @@ el: $('#typeahead-13'),
    * ======================================================================
    */
   
-  App.vent = _.extend({},Backbone.Events);
+//  App.vent = _.extend({},Backbone.Events);
   
   App.Address = Backbone.Model.extend({
 	
