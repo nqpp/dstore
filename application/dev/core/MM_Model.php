@@ -67,7 +67,7 @@ class MM_Model extends CI_Model {
   
   // set properties according to post value if not set already
   function postToVar() {
-    foreach ($this->fields as $f) {
+    foreach ($this->fields() as $f) {
       if ($this->$f === false) $this->$f = $this->input->post($f);
     }
   }
@@ -75,7 +75,6 @@ class MM_Model extends CI_Model {
   // filter record data per class property
   function dbWhereVars() {
 
-//    foreach ($this->fields as $f) {
     foreach ($this->fields() as $f) {
       if ($this->$f === false) continue;
       $this->db->where($this->model.'.'.$f,$this->$f);

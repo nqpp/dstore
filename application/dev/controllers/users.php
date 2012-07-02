@@ -40,8 +40,7 @@ class Users extends MM_Controller {
   
   function renderHTMLProfile() {
 
-    $this->m_users->id = User::$id;
-
+    $this->m_users->id = $this->$user->id();
 	$data = $this->m_users->get();
 	$this->load->vars('content', $this->load->view('users/profile',$data, true));
 
@@ -55,6 +54,14 @@ class Users extends MM_Controller {
 	$this->session->set_flashdata('msg',array('type'=>'success','text'=>'User deleted.'));
 
     die(header('Location: /users.html'));
+  }
+  
+  function renderJSONCurrent() {
+	
+    $this->m_users->id = $this->user->id();
+	$data = $this->m_users->getRestricted();
+
+	die (print (json_encode($data)));
   }
 
   function formHTMLEntity() {

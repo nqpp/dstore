@@ -65,12 +65,6 @@
 	  
 	</div>
 	
-<script type="text/javascript" src="/scripts/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="/scripts/underscore.js"></script>
-<script type="text/javascript" src="/scripts/backbone.js"></script>
-<script type="text/javascript" src="/scripts/common.js"></script>
-<script type="text/javascript" src="/scripts/bootstrap.js"></script>
-
 		
 <?php if (isset($jsFiles) && count($jsFiles)): ?>
 <?php foreach ($jsFiles as $file): ?>

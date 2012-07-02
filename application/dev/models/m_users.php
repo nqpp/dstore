@@ -27,7 +27,7 @@ class M_users extends MM_Model {
 
   function fetch() {
 
-    $this->setSort('lastNAme, firstName');
+    $this->setSort('lastName, firstName');
 	return parent::fetch();
   }
   
@@ -37,6 +37,20 @@ class M_users extends MM_Model {
 	$this->db->join('metas','metaKey = adminGroup', 'left outer');
     $this->db->where('metas.schemaName','adminGroup');
 	return $this->fetch();
+  }
+  
+  // get only fields required for presentation
+  function getRestricted() {
+
+	if (!$this->id) throw new Exception("No id supplied.[{$this->className}:get]");
+	
+	$this->db->select('userID, firstName, lastName, email, adminGroup');
+	$this->db->where($this->pk,$this->id);
+	$data = $this->db->get($this->model);
+
+    if (!$data->num_rows()) throw new Exception("No record for ID.[{$this->className}:get]");
+
+	return $data->row();	
   }
   
   function add() {

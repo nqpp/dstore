@@ -26,8 +26,7 @@ class M_order_product_quantities extends MM_Model {
 	if (!$this->orderIDs || !count($this->orderIDs)) return array();
 	
 	$this->db->join('orderProducts','orderProductID = orderProductsID', 'left outer');
-	$this->db->join('orders','orderID = ordersID', 'left outer');
-	$this->db->where_in('orderID', $this->orderIDs);
+	$this->db->where_in('ordersID', $this->orderIDs);
 	
 	return $this->fetchGrouped();
   }
