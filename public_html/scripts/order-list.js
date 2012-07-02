@@ -236,16 +236,28 @@ $(function() {
 	},
 	template: _.template($("#tpl-status-filter").html()),
 	events: {
-	  "click a": "setPref"
+	  "click span": "setPref"
 	},
 	
 	initialize: function() {
-	  
 	  this.model.bind('change', this.render, this);
 	},
 	
 	setPref: function(ev) {
-console.log(this.model)
+	  var node,self;
+	  self = this;
+	  setTimeout(function() {
+		node = ev.target.parentNode;
+		
+		if ($(node).hasClass('active')) {
+		  self.model.save({'preference':1});
+		}
+		else {
+		  self.model.save({'preference':0},{silent:true});
+		}
+		
+	  },10)
+
 	},
 	
 	render: function() {
@@ -261,7 +273,7 @@ console.log(this.model)
   App.OrdersView = Backbone.View.extend({
 	el: $("#orderAccordion"),
 	events: {
-	  "click #statusFilter a": "filterStatus"
+//	  "click #statusFilter a": "filterStatus"
 	},
 	
 	initialize: function() {
@@ -273,7 +285,7 @@ console.log(this.model)
 	},
 	
 	filterStatus: function(ev) {
-console.log(ev)
+console.log(this)
 	},
 	
 	addFilters: function() {
@@ -285,6 +297,8 @@ console.log(ev)
 		this.StatusFilters = new App.StatusFilterList(orderStatusTypesJSON);
 		console.log('using fallback status filters')
 	  }
+	  
+	  this.StatusFilters.bind('change', this.filterStatus,this);
 
 	  this.StatusFilters.each(function(model) {
 		var view = new App.StatusFilterView({model:model});
@@ -292,7 +306,7 @@ console.log(ev)
 		
 		// prefs not set for this user. time to set them.
 		if (model.get('metasID') == '') {
-		  model.save();
+		  model.save({silent:true});
 		}
 	  });
 	  

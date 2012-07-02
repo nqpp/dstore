@@ -19,7 +19,7 @@ class User_prefs extends MM_Controller {
   
   function formJSONEntity() {
 	
-	$this->m_user_prefs->id = $this->entiyID;
+	$this->m_user_prefs->id = $this->entityID;
 	$json = json_decode(file_get_contents('php://input'));
 	$this->m_user_prefs->set($json);
 	$this->m_user_prefs->update();
