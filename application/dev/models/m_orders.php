@@ -72,10 +72,20 @@ class M_orders extends MM_Model {
   function filter() {
 	
 	$pref = $this->userpref->get('orderStatusFilter');
-	
-	if (!$pref) return;
+	$s = array();
 
-	$this->db->where_in('status',array_keys($pref));
+	if (!count($pref)) return;
+	
+	foreach ($pref as $p) {
+	  if ($p->preference == "1") {
+		$s[] = $p->metaKey;
+	  }
+	}
+	
+	if (!count($s)) return;
+
+//print_r($s); return;	
+	$this->db->where_in('status',$s);
   }
   
 }
