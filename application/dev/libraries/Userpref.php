@@ -2,21 +2,14 @@
 
 class Userpref {
   
-//  private $model;
   private $prefs = array();
   
   function __construct() {
-//    $ci =& get_instance();
-//	$ci->load->model('m_user_prefs');
-//	$this->model = $ci->m_user_prefs;
+
   }
   
-//  function init($userID) {
   function init($pref) {
 	$this->prefs = $pref;
-//	$this->model->userID = $userID;
-//	$this->model->index = 'schemaName';
-//	$this->prefs = $this->model->fetchJoined();
   }
   
   
@@ -38,13 +31,14 @@ class Userpref {
 	
 	if (!isset($this->prefs['orderStatusFilter'])) return array();
 	
-	$result = false;
-//	$result = array();
-	foreach ($this->prefs['orderStatusFilter'] as $p) {
-	  $result[$p->metasID] = $p;
-//	  if ($p->metaValue == 1) $result[$p->metaKey] = $p;
-	}
-	return $result;
+//	$result = false;
+//	foreach ($this->prefs['orderStatusFilter'] as $p) {
+//	  $result[$p->metasID] = $p;
+////	  if ($p->metaValue == 1) $result[$p->metaKey] = $p;
+//	}
+	
+	return $this->prefs['orderStatusFilter'];
+//	return $result;
   }
   
 }

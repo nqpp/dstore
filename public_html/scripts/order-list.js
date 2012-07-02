@@ -66,11 +66,7 @@ $(function() {
 	idAttribute: 'userPrefID',
 
 	defaults: {
-//	  userPrefID: '',
-//	  usersID: '',
-	  usersID: function() {
-		return App.User.get('userID')
-	  },
+	  usersID: App.userID,
 	  prefName: "orderStatusFilter",
 	  metasID: "",
 	  preference: "0" 
@@ -239,10 +235,17 @@ $(function() {
 	  return data;
 	},
 	template: _.template($("#tpl-status-filter").html()),
+	events: {
+	  "click a": "setPref"
+	},
 	
 	initialize: function() {
 	  
 	  this.model.bind('change', this.render, this);
+	},
+	
+	setPref: function(ev) {
+console.log(this.model)
 	},
 	
 	render: function() {
@@ -258,7 +261,7 @@ $(function() {
   App.OrdersView = Backbone.View.extend({
 	el: $("#orderAccordion"),
 	events: {
-	  "click #statusFilter button": "filterStatus"
+	  "click #statusFilter a": "filterStatus"
 	},
 	
 	initialize: function() {
@@ -270,7 +273,7 @@ $(function() {
 	},
 	
 	filterStatus: function(ev) {
-	  
+console.log(ev)
 	},
 	
 	addFilters: function() {
@@ -280,13 +283,17 @@ $(function() {
 	  }
 	  else {
 		this.StatusFilters = new App.StatusFilterList(orderStatusTypesJSON);
+		console.log('using fallback status filters')
 	  }
 
 	  this.StatusFilters.each(function(model) {
-//console.log(model)
 		var view = new App.StatusFilterView({model:model});
 		$('#statusFilter').append(view.render().el);
 		
+		// prefs not set for this user. time to set them.
+		if (model.get('metasID') == '') {
+		  model.save();
+		}
 	  });
 	  
 	},

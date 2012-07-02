@@ -35,6 +35,7 @@ class MM_Controller extends CI_Controller {
 	  $this->userNav();
 	  $this->pageTemplate();
 	  $this->clientAutoload();
+	  $this->jsSetUserID();
 	}
 	catch (Exception $e) {
 	  die ($e->getMessage().'<br>'.$e->getFile().'<br>'.$e->getLine());
@@ -310,6 +311,11 @@ class MM_Controller extends CI_Controller {
 	  }
 	}
 	
+  }
+  
+  function jsSetUserID() {
+	$s = "App.userID = {$this->user->id()};\n";
+	$this->jsScripts($s);
   }
   
   /*
