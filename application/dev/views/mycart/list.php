@@ -138,7 +138,7 @@
 							</tr>
 						  </thead>
 						  <tbody>
-							<?php $cartTotal = 0; ?>
+							<?php $cartTotal = 0; $freightTotal = 0; ?>
 							<?php if (count($carts)): ?>
 							<?php foreach ($carts as $c): ?>
 							<?php
@@ -146,6 +146,7 @@
 							$gst = ($subTotal + $c->freightTotal) * $c->taxRate;
 							$total = $subTotal + $c->freightTotal + $gst;
 							$cartTotal += $total;
+							$freightTotal += $c->freightTotal;
 							?>
 							<tr>
 							  <td>
@@ -157,16 +158,13 @@
 							  </td>
 							</tr>
 							<?php endforeach ?>
-							<?php else: ?>
-					  		<tr>
-					  		  <td colspan="4">
-					  			<p>There are no items in your cart.</p>
-					  			<p>You can add new items by viewing their details in the <a href="/store">Store</a></p>
-					  		  </td>
-					  		</tr>
 							<?php endif; ?>
 						  </tbody>
 						  <tfoot>
+							<tr>
+								<td colspan="2"><strong class="pull-right">Freight Total</strong></td>
+								<td><strong class="pull-right"><?= number_format($freightTotal,2,'.',',') ?></strong></td>
+							</tr>
 							<tr>
 							  <td colspan="2">
 								<strong class="pull-right">Cart Total</strong>
@@ -196,10 +194,6 @@
 	  </div>
 	</form>
 </div>
-
 <script type="text/javascript">
-  //  var cartJSON = <?//= $cartJSON ?>;
   var userAddresses = <?=$userAddresses?>;
 </script>
-<?
-//= $js_tpl_cart_item ?>
