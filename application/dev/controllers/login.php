@@ -39,7 +39,8 @@ class Login extends Unsecure {
 	  $this->m_user_addresses->usersID = $data->userID;
 	  $this->m_user_addresses->type = 'delivery';
 	  $address = $this->m_user_addresses->getLocationJoined();
-	  $data->zoneID = $address ? $address->zonesID : -1;
+
+	  $data->zoneID = $address ? $address->czone : -1;
 
 	  $this->user->set($data);
 	  

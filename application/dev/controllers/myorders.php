@@ -40,12 +40,13 @@ class Myorders extends MM_Controller {
 	
 	// get cart row(s)
 	$carts = $this->m_carts->fetchUserCart();
-	
+
 	if (!count($carts)) die (header("Location:/mycart.html"));
 	
 	// get items for cart(s)
 	$this->m_cart_items->cartIDs = array_keys($carts);
 	$cartItems = $this->m_cart_items->fetchCartItems();
+
 	// add the order
 	$this->m_orders->add();
 	// cycle through carts and add product for each

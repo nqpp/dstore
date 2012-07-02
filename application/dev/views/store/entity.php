@@ -73,7 +73,7 @@
 	<tr>
 	  <th width="50">Code</th>
 	  <th width="120">Colour</th>
-	  <th>Qty</th>
+	  <th width="89">Qty</th>
 	</tr>
   </thead>
   <tbody></tbody>
@@ -91,7 +91,12 @@
 	  <td class="display" id="sub_total"><% if(subtotal) { %>$<%=subtotal %><% } %></td>			  
 	</tr>
 	<tr>
-	  <th colspan="2" class="text-right">Freight</th>			  
+	  <th colspan="2" class="text-right">Freight to:
+			<select name="deliveryAddressID" class="input-xlarge">
+				<option value="11">52B Comport St, Cairns QLD 4870</option>
+				<option value="12">27 Boyce St, Edmonton QLD 4869</option>
+			</select>
+		</th>			  
 	  <td class="display" id="freight"><% if(freightTotal) { %>$<%=freightTotal %><% } %></td>			  
 	</tr>
 	<tr>
@@ -104,7 +109,7 @@
 	</tr>
 	<tr>
 	  <th colspan="2"></th>
-	  <td class="text-right"><button id="add_to_cart" type="button" class="btn btn-success cart" disabled>Add to Cart</button></td>
+	  <td class="text-right" width="89"><button id="add_to_cart" type="button" class="btn btn-success cart" disabled>Add to Cart</button></td>
 	</tr>
   </tfoot>
 </script>
