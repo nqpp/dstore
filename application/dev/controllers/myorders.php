@@ -37,11 +37,12 @@ class Myorders extends MM_Controller {
 	
   }
   
-  function renderHTMLNew() {
+  function formHTMLNew() {
 	
 	$this->load->model('m_carts');
 	$this->load->model('m_cart_items');
 	$this->load->model('m_contact_addresses');
+	$this->load->model('m_user_addresses');
 	
 	// get cart row(s)
 	$carts = $this->m_carts->fetchUserCart();
@@ -51,7 +52,10 @@ class Myorders extends MM_Controller {
 	// get items for cart(s)
 	$this->m_cart_items->cartIDs = array_keys($carts);
 	$cartItems = $this->m_cart_items->fetchCartItems();
-
+	
+	// specify PO No.
+	$this->m_orders->purchaseOrder = $this->input->post('purchaseOrder');
+	
 	// add the order
 	$this->m_orders->add();
 	// cycle through carts and add product for each
@@ -70,9 +74,8 @@ class Myorders extends MM_Controller {
 	}
 	
 	// get delivery address
-//	$this->m_contact_addresses->id = $this->input->post('deliveryAddressID');
-	$this->m_contact_addresses->id = 1;
-	$deliveryAddress = $this->m_contact_addresses->get();
+	$this->m_user_addresses->id = $this->input->post('deliveryAddressID');
+	$deliveryAddress = $this->m_user_addresses->get();
 	// write delivery address
 	$this->m_order_addresses->ordersID = $this->m_orders->id;
 	$this->m_order_addresses->userAddress = $deliveryAddress;
@@ -83,8 +86,7 @@ class Myorders extends MM_Controller {
 	$this->m_cart_items->removeByCartIDs();
 	
 	die (header("Location:/myorders.html"));
-	
-  }
+}
   
   
 

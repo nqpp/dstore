@@ -16,7 +16,7 @@ class Cart_items extends MM_Controller {
 		$json = json_decode(file_get_contents('php://input'));
 
 		$this->load->model('m_carts');
-		$this->m_carts->usersID = User::id();
+		$this->m_carts->usersID = $this->user->id();
 		$this->m_carts->productsID = $json->parentID;
 	
 		$cart = $this->m_carts->fetch();

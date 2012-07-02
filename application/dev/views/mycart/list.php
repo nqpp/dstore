@@ -109,8 +109,97 @@
 
 </div>
 
+<div class="modal" id="myModal">
+	<form class="form-horizontal" action="/myorders.html?new" method="POST">
+  	<div class="modal-header">
+	    <h3>Order</h3>
+	  </div>
+	  <div class="modal-body">
+		  <fieldset>
+		    <div class="control-group">
+		      <label class="control-label" for="input01">Select Delivery Address</label>
+		      <div class="controls">
+						<select name="deliveryAddressID" class="input-xlarge">
+							<option value="12">52B Comport St, Cairns QLD 4870</option>
+							<option value="13">27 Boyce St, Edmonton QLD 4869</option>
+						</select>
+		      </div>
+		    </div>
+				<hr />
+				<div class="control-group">
+		      <label class="control-label" for="input01">Double Check Cart</label>
+		      <div class="controls">
+		        <table id="cart" class="table table-striped table-bordered">
+						  <thead>
+							<tr>
+							  <th>Item</th>
+							  <th width="60">Qty</th>
+							  <th width="80">Subtotal</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<?php $cartTotal = 0; ?>
+							<?php if (count($carts)): ?>
+							<?php foreach ($carts as $c): ?>
+							<?php
+							$subTotal = $c->qtyTotal * $c->itemPrice;
+							$gst = ($subTotal + $c->freightTotal) * $c->taxRate;
+							$total = $subTotal + $c->freightTotal + $gst;
+							$cartTotal += $total;
+							?>
+							<tr>
+							  <td>
+								<strong><?= $c->name ?></strong>
+							  </td>
+							  <td><?= $c->qtyTotal ?></td>
+							  <td>
+								<span class="pull-right"><?= number_format($total,2,'.',',') ?></span>
+							  </td>
+							</tr>
+							<?php endforeach ?>
+							<?php else: ?>
+					  		<tr>
+					  		  <td colspan="4">
+					  			<p>There are no items in your cart.</p>
+					  			<p>You can add new items by viewing their details in the <a href="/store">Store</a></p>
+					  		  </td>
+					  		</tr>
+							<?php endif; ?>
+						  </tbody>
+						  <tfoot>
+							<tr>
+							  <td colspan="2">
+								<strong class="pull-right">Cart Total</strong>
+							  </td>
+							  <td>
+								<strong class="pull-right"><?= number_format($cartTotal,2,'.',',') ?></strong>
+							  </td>
+							</tr>
+						  </tfoot>
+						</table>
+		        <p class="help-block"><i class="icon-question-sign"></i> <strong>Why did the price change?</strong><br />
+						As you updated your delivery address, we re-calculated your freight to deliver to the new address.</p>
+		      </div>
+		    </div>
+				<hr />
+				<div class="control-group">
+		      <label class="control-label" for="purchaseOrder">Enter Purchase Order Number</label>
+		      <div class="controls">
+		        <input type="text" class="input-xlarge" id="purchaseOrder" name="purchaseOrder">
+		      </div>
+		    </div>
+		  </fieldset>
+	  </div>
+	  <div class="modal-footer">
+	    <a href="#" class="btn" data-dismiss="modal">Close</a>
+	    <button type="submit" class="btn btn-success btn-large">Order</button>
+	  </div>
+	</form>
+</div>
+
 <script type="text/javascript">
   //  var cartJSON = <?//= $cartJSON ?>;
+  var userAddresses = <?=$userAddresses?>;
 </script>
 <?
 //= $js_tpl_cart_item ?>

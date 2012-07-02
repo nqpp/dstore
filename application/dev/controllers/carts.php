@@ -9,15 +9,10 @@ class Carts extends MM_Controller {
 		parent::__construct();
 		$this->load->model('m_carts');
 		$this->load->model('m_cart_items');
+		$this->load->model('m_product_metas');
+		$this->load->model('m_products');
+		$this->load->model('m_chargeouts');
   }
-
-  function renderHTML() {
-	
-  }
-
-	function renderHTMLEntity() {
-
-	} 
 
 	function renderJSON() {
 
@@ -26,27 +21,47 @@ class Carts extends MM_Controller {
 
   function formJSONNew() {
 
+		$this->load->library('cartcalc');
 		$json = json_decode(file_get_contents('php://input'));
+		
+		$this->m_product_metas->productsID = $json->productsID;
+		$this->m_product_metas->qtyTotal = $json->qtyTotal;
+		$pricePoint = $this->m_product_metas->getPricePoint();
 
-		$this->m_carts->usersID = User::id();
-		$this->m_carts->productsID = $json->productsID;
-		$this->m_carts->qtyTotal = $json->qtyTotal;
-	
-		if(!$this->m_carts->reachedMOQ()) die(header('HTTP/1.0 400 Bad Request'));
-	
-		foreach ($json as $k => $v) $this->m_carts->{$k} = $v;
-	
-		$totals = $this->m_carts->calculateTotals();
+		if (!$pricePoint) die(header('HTTP/1.0 400 Bad Request'));
 
-		$this->load->model('m_products');
+		$this->m_metas->schemaName = "tax";
+		$tax = $this->m_metas->fetchKVPairObj();
+		$gst = isset($tax->GST) ? $tax->GST : 10;
+
 		$this->m_products->id = $json->productsID;
-		$product = $this->m_products->get();
-	
+
+		$product = $this->m_products->getSupplierCzone();
+
+		$product->productsID = $json->productsID;
+		$product->taxRate = $gst;
+		$product->itemPrice = $pricePoint->metaValue;
+		$product->qtyTotal = $json->qtyTotal;
+
+		$this->cartcalc->product($product);
+
+		$this->m_chargeouts->xto = $this->user->czone();
+		$this->m_chargeouts->xfrom = $product->czone;
+		$freight = reset($this->m_chargeouts->fetch());
+
+		$this->cartcalc->freight($freight);
+		
+		$totals = $this->cartcalc->calc();
+
 		$this->m_carts->name = $product->name;
 	  $this->m_carts->createdAt = date("Y-m-d H:i:s");
 		$this->m_carts->itemPrice = $totals->itemPrice;
 		$this->m_carts->freightTotal = $totals->freightTotal;
 		$this->m_carts->taxRate = $totals->taxRate;
+		$this->m_carts->usersID = $this->user->id();
+		$this->m_carts->productsID = $json->productsID;
+		$this->m_carts->qtyTotal = $json->qtyTotal;
+		
 
 	  $this->m_carts->add();
 	
@@ -66,15 +81,43 @@ class Carts extends MM_Controller {
 		$this->m_carts->id = $this->entityID;
 		$json = json_decode(file_get_contents('php://input'));
 		
-		foreach ($json as $k => $v) $this->m_carts->{$k} = $v;
-	
-		if(!$this->m_carts->reachedMOQ()) die(header('HTTP/1.0 400 Bad Request'));
-	
-		$totals = $this->m_carts->calculateTotals();
+		$this->m_product_metas->productsID = $json->productsID;
+		$this->m_product_metas->qtyTotal = $json->qtyTotal;
+		$pricePoint = $this->m_product_metas->getPricePoint();
 
+		if (!$pricePoint) die(header('HTTP/1.0 400 Bad Request'));
+
+		$this->m_metas->schemaName = "tax";
+		$tax = $this->m_metas->fetchKVPairObj();
+		$gst = isset($tax->GST) ? $tax->GST : 10;
+
+		$this->m_products->id = $json->productsID;
+
+		$product = $this->m_products->getSupplierCzone();
+
+		$product->productsID = $json->productsID;
+		$product->taxRate = $gst;
+		$product->itemPrice = $pricePoint->metaValue;
+		$product->qtyTotal = $json->qtyTotal;
+
+		$this->cartcalc->product($product);
+
+		$this->m_chargeouts->xto = $this->user->czone();
+		$this->m_chargeouts->xfrom = $product->czone;
+		$freight = reset($this->m_chargeouts->fetch());
+
+		$this->cartcalc->freight($freight);
+		
+		$totals = $this->cartcalc->calc();
+
+		$this->m_carts->name = $product->name;
+	  $this->m_carts->createdAt = date("Y-m-d H:i:s");
 		$this->m_carts->itemPrice = $totals->itemPrice;
 		$this->m_carts->freightTotal = $totals->freightTotal;
 		$this->m_carts->taxRate = $totals->taxRate;
+		$this->m_carts->usersID = $this->user->id();
+		$this->m_carts->productsID = $json->productsID;
+		$this->m_carts->qtyTotal = $json->qtyTotal;
 
 		$this->m_carts->update();
 		$row = $this->m_carts->get();

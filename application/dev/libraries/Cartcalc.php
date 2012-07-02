@@ -221,6 +221,7 @@ class Cartcalc {
 	$calc->subtotal = $this->subtotal();
 	$calc->gst = $this->gst();
 	$calc->total = $this->total();
+	$calc->taxRate = $this->taxRate();
 	
 	return $calc;
 	
