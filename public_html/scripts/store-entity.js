@@ -52,13 +52,43 @@ $(function() {
 	  this.model.set({qty: $(ev.target).val()});
 	}
   });
+
+	App.UserAddresses = new Backbone.Collection();
+	
+	App.UserAddressesView = Backbone.View.extend({
+		
+		el: $('#deliveryAddressID'),
+		
+		render: function() {
+
+			this.$el.html('');
+			this.addAll();
+			return this;
+		},
+		
+		add: function(item) {
+
+			var tpl = _.template('<option value="<%=userAddressID %>"><%=address %>, <%=suburb %> <%=state %> <%=postcode %></option>');
+			this.$el.append(tpl(item.toJSON()));
+			return this;
+		},
+		
+		addAll: function() {
+
+			App.UserAddresses.each(this.add, this);
+			return this;
+		}
+	});
+	
+	App.UserAddressItemsView = new App.UserAddressesView();
 	
   App.CartView = Backbone.View.extend({
 		
 	el: $('#cart_prep'),
 	template: _.template($('#tpl-subproduct').html()),
 	events: {
-	  'click #add_to_cart': 'update'
+	  'click #add_to_cart': 'update',
+		'change #deliveryAddressID': 'updateAddress'
 	},
 		
 	initialize: function() {
@@ -79,6 +109,9 @@ $(function() {
 
 	  if(this.model.id) this.$el.find('#add_to_cart').html('Update');
 	  if(this.model.get('moqReached')) this.$el.find('#add_to_cart').attr('disabled', false);
+	
+		App.UserAddressItemsView.setElement($('#deliveryAddressID'));
+		App.UserAddressItemsView.render();
 	},
 		
 	addAll: function() {
@@ -117,6 +150,12 @@ $(function() {
 			
 	  return this.render();
 	},
+	
+	updateAddress: function(ev) {
+
+		this.model.set({deliveryAddressID: $(ev.target).val()});
+		console.log(this.model);
+	},
 		
 	check: function() {
 			
@@ -136,14 +175,15 @@ $(function() {
 	}
   });
 	
-	
 });
 
 $(function() {
 	
+	App.UserAddresses.reset(userAddresses);
   new App.CartView({
 	model: new App.Cart(cartJSON)
   });
   App.CartItems.reset(subProductJSON);
+
   $(".fb").fancybox();
 });

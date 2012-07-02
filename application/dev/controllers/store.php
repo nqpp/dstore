@@ -26,7 +26,6 @@ class Store extends MM_controller {
 
   function renderHTMLEntity() {
 
-//	$this->load->model('m_supplier_freights');
 	$this->load->model('m_metas');
 	$this->load->model('m_carts');
 
@@ -43,7 +42,8 @@ class Store extends MM_controller {
 	$this->load->vars('productJSON', json_encode($product));
 	$this->load->vars('prices', $this->m_product_metas->prices());
 	$this->load->vars('images', $this->m_product_metas->images());
-
+	$this->load->vars('userAddresses', json_encode($this->user->alladdresses()));
+	
 	$this->m_carts->productsID = $this->entityID;
 	$this->load->vars('cartJSON', $this->m_carts->fetchUserCartTotalledJSON());
 	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsWithQtyJSON());

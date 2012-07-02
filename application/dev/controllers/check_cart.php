@@ -28,6 +28,7 @@ class Check_cart extends MM_Controller {
 	$gst = isset($tax->GST) ? $tax->GST : 10;
 
 	$this->m_products->id = $json->productsID;
+
 	$product = $this->m_products->getSupplierCzone();
 
 	$product->productsID = $json->productsID;

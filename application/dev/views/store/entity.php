@@ -68,6 +68,7 @@
   var subProductJSON = <?php echo $subProductJSON ?>;
   var cartJSON = <?php echo $cartJSON ?>;
   var productsID = <?php echo $product->productID ?>;
+	var userAddresses = <?php echo $userAddresses ?>;
 </script>
 <script type="text/template" id="tpl-subproduct">
   <thead>
@@ -93,10 +94,7 @@
 	</tr>
 	<tr>
 	  <th colspan="2" class="text-right">Freight to:
-			<select name="deliveryAddressID" class="input-xlarge">
-				<option value="11">52B Comport St, Cairns QLD 4870</option>
-				<option value="12">27 Boyce St, Edmonton QLD 4869</option>
-			</select>
+			<select name="deliveryAddressID" id="deliveryAddressID" class="input-xlarge"></select>
 		</th>			  
 	  <td class="display" id="freight"><% if(freightTotal) { %>$<%=freightTotal %><% } %></td>			  
 	</tr>
