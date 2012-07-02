@@ -78,6 +78,7 @@ class Carts extends MM_Controller {
 
   function formJSONEntity() {
 
+		$this->load->library('cartcalc');
 		$this->m_carts->id = $this->entityID;
 		$json = json_decode(file_get_contents('php://input'));
 		

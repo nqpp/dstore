@@ -112,7 +112,7 @@ class M_carts extends MM_Model {
 		$product = $result->row();
 		
 		$this->db->where('suppliersID', $product->suppliersID);
-		$this->db->where('zonesID', User::zoneID());
+		$this->db->where('zonesID', $this->user->zoneID());
 		$result = $this->db->get('supplierFreights');
 		$freightTable = $result->row();
 

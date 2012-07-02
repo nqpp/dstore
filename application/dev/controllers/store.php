@@ -7,6 +7,9 @@ class Store extends MM_controller {
 	$this->load->model('m_products');
 	$this->load->model('m_product_metas');
 	$this->load->model('m_supplier_addresses');
+	$this->load->model('m_products');
+	$this->load->model('m_chargeouts');
+	$this->load->model('m_carts');
   }
 
   function renderHTML() {
@@ -32,8 +35,8 @@ class Store extends MM_controller {
 	$this->m_products->id = $this->entityID;
 	$this->m_product_metas->productsID = $this->entityID;
 	
-	$product = $this->m_products->get();
-	
+	$product = $this->m_products->getSupplierCzone();
+
 	$this->m_supplier_addresses->suppliersID = $product->suppliersID;
 	$dispatchLocation = $this->m_supplier_addresses->getSupplierDispatchLocation();
 
@@ -44,8 +47,40 @@ class Store extends MM_controller {
 	$this->load->vars('images', $this->m_product_metas->images());
 	$this->load->vars('userAddresses', json_encode($this->user->alladdresses()));
 	
-	$this->m_carts->productsID = $this->entityID;
-	$this->load->vars('cartJSON', $this->m_carts->fetchUserCartTotalledJSON());
+	$this->load->library('cartcalc');
+	$this->load->model('m_chargeouts');
+
+	$this->m_products->id = $this->entityID;
+	$product = $this->m_products->getSupplierCzone();
+
+	$this->m_carts->usersID = $this->user->id();
+	$this->m_carts->productsID = $product->productID;
+	$cart = $this->m_carts->fetch();
+	$cart = reset($cart);
+
+	$this->m_product_metas->productsID = $product->productID;
+	$this->m_product_metas->qtyTotal = $cart->qtyTotal;
+	$pricePoint = $this->m_product_metas->getPricePoint();
+
+	$this->m_metas->schemaName = "tax";
+	$tax = $this->m_metas->fetchKVPairObj();
+	$gst = isset($tax->GST) ? $tax->GST : 10;
+	
+	$product->productsID = $product->productID;
+	$product->taxRate = $gst;
+	$product->itemPrice = $pricePoint->metaValue;
+	$product->qtyTotal = $cart->qtyTotal;
+
+	$this->cartcalc->product($product);
+
+	$this->m_chargeouts->xto = $this->user->czone();
+	$this->m_chargeouts->xfrom = $product->czone;
+	$freight = reset($this->m_chargeouts->fetch());
+
+	$this->cartcalc->freight($freight);
+	
+	$this->load->vars('cartJSON', json_encode($this->cartcalc->calc()));
+
 	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsWithQtyJSON());
 
 	$this->load->vars('js_tpl_subproduct_list', $this->load->view('store/js_tpl_subproduct_list','',true));
