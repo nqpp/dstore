@@ -50,15 +50,8 @@ class MM_Controller extends CI_Controller {
 	
 	$req = $_SERVER['REQUEST_METHOD'];
 	$qs = false;
-<<<<<<< .merge_file_VCdsiJ
-	
 	$_qsarray = explode('&',$_SERVER['QUERY_STRING']);
 	
-=======
-	
-	$_qsarray = explode('&',$_SERVER['QUERY_STRING']);
-	
->>>>>>> .merge_file_LUbGkC
 	if (count($_qsarray)) {
 	  // if there are name value pairs present is not an extension
 	  $qs = (strpos($_qsarray[0],'=') !== false) ? false: $_qsarray[0];
