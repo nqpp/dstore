@@ -19,7 +19,34 @@
   </div>
 
   <div id="collapse<%= cid %>" class="accordion-body collapse">
-  <div class="row">
+  <div class="">
+
+	  <div class="span8_5">
+
+		<table class="table table-striped table-bordered orderProducts">
+		  <thead>
+			<tr>
+			  <th>Name</th>
+			  <th width="40"><span class="pull-right">Qty</span></th>
+			  <th width="70"><span class="pull-right">Sub Total</span></th>
+			  <th width="60"><span class="pull-right">Freight</span></th>
+			  <th width="40"><span class="pull-right">GST</span></th>
+			  <th width="60"><span class="pull-right">Total</span></th>
+			</tr>
+		  </thead>
+		  <tbody></tbody>
+		  <tfoot>
+			<tr>
+			  <td></td>
+			  <td colspan="4">
+				<span class="pull-right"><strong>Order Total</strong></span>
+			  </td>
+			  <td><span class="pull-right"><strong>$ <%= orderTotal.toFixed(2) %></strong></span></td>
+			</tr>
+		  </tfoot>
+		</table>
+
+	  </div>
 
 	  <div class="span3">
 		<div class="well">
@@ -27,6 +54,7 @@
 		  <h5>Deliver To</h5>
 		  <div class="orderAddress"></div>
 		  
+		  <div class="divider">&nbsp;</div>
 		  
 		  <h5>Order Status</h5>
 		  <div class="btn-group">
@@ -45,34 +73,7 @@
 		</div>
 	  </div>
 
-	  <div class="span8">
-
-		<table class="table table-striped table-bordered orderProducts">
-		  <thead>
-			<tr>
-			  <th>Name</th>
-			  <th width="40"><span class="pull-right">Qty</span></th>
-			  <th width="70"><span class="pull-right">Sub Total</span></th>
-			  <th width="60"><span class="pull-right">Freight</span></th>
-			  <th width="40"><span class="pull-right">GST</span></th>
-			  <th width="70"><span class="pull-right">Total</span></th>
-			</tr>
-		  </thead>
-		  <tbody></tbody>
-		  <tfoot>
-			<tr>
-			  <td></td>
-			  <td colspan="4">
-				<span class="pull-right"><strong>Order Total</strong></span>
-			  </td>
-			  <td><span class="pull-right"><strong>$ <%= orderTotal.toFixed(2) %></strong></span></td>
-			</tr>
-		  </tfoot>
-		</table>
-
-	  </div>
-
+  </div>
   </div>
 
-  </div>
 </script>

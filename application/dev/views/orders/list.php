@@ -7,7 +7,10 @@
   </div>
 </div>
 
-<div class="accordion" id="orderAccordion"></div>
+<div class="row">
+  
+<div class="accordion span12" id="orderAccordion"></div>
+</div>
 
 
 <script type="text/javascript">

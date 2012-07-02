@@ -55,29 +55,34 @@ class Store extends MM_controller {
 
 	$this->m_carts->usersID = $this->user->id();
 	$this->m_carts->productsID = $product->productID;
-	$cart = $this->m_carts->fetch();
-	$cart = reset($cart);
-
-	$this->m_product_metas->productsID = $product->productID;
-	$this->m_product_metas->qtyTotal = $cart->qtyTotal;
-	$pricePoint = $this->m_product_metas->getPricePoint();
-
-	$this->m_metas->schemaName = "tax";
-	$tax = $this->m_metas->fetchKVPairObj();
-	$gst = isset($tax->GST) ? $tax->GST : 10;
+	$carts = $this->m_carts->fetch();
 	
-	$product->productsID = $product->productID;
-	$product->taxRate = $gst;
-	$product->itemPrice = $pricePoint->metaValue;
-	$product->qtyTotal = $cart->qtyTotal;
+	if (count($carts)) { // prevent page explosion
+	  
+	  $cart = reset($cart);
 
-	$this->cartcalc->product($product);
+	  $this->m_product_metas->productsID = $product->productID;
+	  $this->m_product_metas->qtyTotal = $cart->qtyTotal;
+	  $pricePoint = $this->m_product_metas->getPricePoint();
 
-	$this->m_chargeouts->xto = $this->user->czone();
-	$this->m_chargeouts->xfrom = $product->czone;
-	$freight = reset($this->m_chargeouts->fetch());
+	  $this->m_metas->schemaName = "tax";
+	  $tax = $this->m_metas->fetchKVPairObj();
+	  $gst = isset($tax->GST) ? $tax->GST : 10;
 
-	$this->cartcalc->freight($freight);
+	  $product->productsID = $product->productID;
+	  $product->taxRate = $gst;
+	  $product->itemPrice = $pricePoint->metaValue;
+	  $product->qtyTotal = $cart->qtyTotal;
+
+	  $this->cartcalc->product($product);
+
+	  $this->m_chargeouts->xto = $this->user->czone();
+	  $this->m_chargeouts->xfrom = $product->czone;
+	  $freight = reset($this->m_chargeouts->fetch());
+
+	  $this->cartcalc->freight($freight);
+	  
+	}
 	
 	$this->load->vars('cartJSON', json_encode($this->cartcalc->calc()));
 
