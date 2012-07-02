@@ -1,4 +1,8 @@
 var App = App || {}
+
+App.vent = _.extend({},Backbone.Events);
+
+
 //App.userID = null;
 
 //App.CurrentUser = Backbone.Model.extend({
