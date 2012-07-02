@@ -40,9 +40,14 @@ class Contacts extends MM_Controller {
 	$this->load->vars('states', $this->m_metas->fetch());
 
 	$this->load->vars('js_tpl_entity',$this->load->view('contacts/js_tpl_entity','',true));
+<<<<<<< .merge_file_lqevW2
 	$this->load->vars('js_tpl_addresslist', $this->load->view('contacts/js_tpl_addresslist','',true));
 	$this->load->vars('js_tpl_employmentdatalist', $this->load->view('contacts/js_tpl_employmentdatalist','',true));
 	$this->load->vars('js_tpl_phonelist', $this->load->view('contacts/js_tpl_phonelist','',true));
+=======
+	$this->load->vars('js_addresslist', $this->load->view('contacts/js_tpl_addresslist','',true));
+	$this->load->vars('js_phonelist', $this->load->view('contacts/js_tpl_phonelist','',true));
+>>>>>>> .merge_file_bAzx2R
 	$this->load->vars('js_tpl_typeahead_list', $this->load->view('contacts/js_tpl_typeahead_list','',true));
 	
 	$this->load->vars('content',$this->load->view('contacts/entity', '', true));
