@@ -14,8 +14,9 @@ class M_user_prefs extends MM_Model {
   function fields() {
 	return array(
 		'usersID',
+		'prefName',
 		'metasID',
-		'state'
+		'preference'
 	);
   }
 
@@ -24,6 +25,13 @@ class M_user_prefs extends MM_Model {
 	$this->db->select('metas.*');
 	$this->db->join('metas', 'metaID = metasID', 'left outer');
 	return $this->fetchGrouped();
+  }
+  
+  function getJoined() {
+
+	$this->db->select('metas.*');
+	$this->db->join('metas', 'metaID = metasID', 'left outer');
+	return $this->get();
   }
 
 }
