@@ -24,15 +24,39 @@ class M_orders extends MM_Model {
 	
   }
   
-  function fetchIndexedWithClient() {
-
+  function joinWithClient() {
+	
+	$this->db->select("DATE_FORMAT(createdAt, '%d %b %Y') as createdDate",false);
+	$this->db->select("LPAD(orderID, 5, '0') as orderNumber",false);
+	
 	$this->db->select('firstName, lastName');
 	$this->db->select('clients.name');
 	$this->db->join('users', 'userID = orders.usersID', 'left outer');
 	$this->db->join('clientContacts', 'orders.usersID = clientContacts.usersID', 'left outer');
 	$this->db->join('clients', 'clientID = clientsID', 'left outer');
 	
+  }
+  
+  function fetchWithClient() {
+	$this->joinWithClient();
+	return $this->fetch();
+  }
+  
+  function fetchIndexedWithClient() {
+	$this->joinWithClient();
 	return $this->fetchIndexed();
+  }
+  
+  function fetchJoinedUserIndexed() {
+	
+	$this->db->select('users.*');
+	$this->db->join('users','userID = orders.usersID');
+	$this->db->join('clientContacts','userID = clientContacts.usersID');
+	$this->db->select('clients.*');
+	$this->db->join('clients','clientID = clientsID');
+	
+	return $this->fetchIndexed();
+	
   }
   
   function add() {
@@ -43,19 +67,15 @@ class M_orders extends MM_Model {
 	parent::add();
 	
   }
-  
-  function fetchJoinedUserIndexed() {
+ 
+  // filter on statuses held in user prefs
+  function filter() {
 	
-	$this->db->select('users.*');
-	$this->db->join('users','userID = orders.usersID');
+	$pref = $this->userpref->get('orderStatusFilter');
 	
-	$this->db->join('clientContacts','userID = clientContacts.usersID');
-	
-	$this->db->select('clients.*');
-	$this->db->join('clients','clientID = clientsID');
-	
-	return $this->fetchIndexed();
-	
+	if (!$pref) return;
+
+	$this->db->where_in('status',array_keys($pref));
   }
   
 }

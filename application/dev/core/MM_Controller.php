@@ -32,7 +32,9 @@ class MM_Controller extends CI_Controller {
 	  $this->check_rest_permission();
 	  $this->load_tpl_vars();
 	  $this->userPrefs();
+	  $this->userNav();
 	  $this->pageTemplate();
+	  $this->clientAutoload();
 	}
 	catch (Exception $e) {
 	  die ($e->getMessage().'<br>'.$e->getFile().'<br>'.$e->getLine());
@@ -236,12 +238,16 @@ class MM_Controller extends CI_Controller {
   
   private function userPrefs() {
 	
-    $this->load->model('m_user_metas');
-	$this->m_user_metas->usersID = $this->user->userID();
-	$this->m_user_metas->schemaName = 'userPref';
-	$userPref = $this->m_user_metas->fetchIndexed();
-    $this->load->vars('userPref',$userPref);
-
+    $this->load->model('m_user_prefs');
+	$this->m_user_prefs->usersID = $this->user->userID();
+	$this->m_user_prefs->index = 'prefName';
+	$userPref = $this->m_user_prefs->fetchJoined();
+    $this->userpref->init($userPref);
+	
+  }
+  
+  private function userNav() {
+	
 	switch ($this->user->pseudoAdminGroup()) {
 	  case 1:
 		$nav = 'nav_admin';
@@ -291,6 +297,19 @@ class MM_Controller extends CI_Controller {
 	  "403"=>"HTTP/1.0 403 Forbidden",
 	  "404"=>"HTTP/1.0 404 Not Found",
 	);
+  }
+  
+  // add jsFiles and cssFiles to ppropriate method from config file
+  function clientAutoload() {
+	
+	foreach ($this->config->item('client_autoload') as $call=>$fileNames) {
+	  if (method_exists($this,$call) && count($fileNames)) {
+		foreach ($fileNames as $f) {
+		  $this->$call($f);
+		}
+	  }
+	}
+	
   }
   
   /*

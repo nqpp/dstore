@@ -23,6 +23,14 @@ class M_order_products extends MM_Model {
     );
   }
   
+  function fetchCalcGrouped() {
+	
+	$this->db->select("(qtyTotal * itemPrice) as subTotal");
+	$this->db->select("TRUNCATE((qtyTotal * itemPrice + freightTotal) * taxRate,2) as gst",false);
+	
+	return $this->fetchGrouped();
+  }
+  
   function addCart() {
 	
 	if (!$this->cart || !count($this->cart)) throw new Exception('No cart data to add to order[m_order_products:addCart]');
