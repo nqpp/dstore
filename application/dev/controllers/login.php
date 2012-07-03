@@ -38,25 +38,27 @@ class Login extends Unsecure {
 	  
 	  $this->m_user_addresses->usersID = $data->userID;
 	  $this->m_user_addresses->type = 'delivery';
-
-	  $addresses = $this->m_user_addresses->getLocationsJoined();
+	  $addresses = $this->m_user_addresses->getLocationsIndexedJoined();
+//print_r($addresses)	  ; exit;
 	  if (count($addresses)) {
 		$primary = reset($addresses);
+		$this->user->set($primary);
+		$this->user->alladdresses($addresses);
 		
-		// add primary address through single method in User library
-		$data->czone = $primary->czone;
-		$data->postcode = $primary->postcode;
-		$data->suburb = $primary->suburb;
-		$data->state = $primary->state;
+//		// add primary address through single method in User library
+//		$data->czone = $primary->czone;
+//		$data->postcode = $primary->postcode;
+//		$data->suburb = $primary->suburb;
+//		$data->state = $primary->state;
 		
-		$data->allAddresses = $addresses;
+//		$data->allAddresses = $addresses;
 	  }
 	  else {
-		$data->czone -1;		
+//		$data->czone -1;		
+		$this->user->czone('-1');
 	  }
-
-	  $this->user->set($data);
 	  
+	  $this->user->set($data);
 	  $this->m_metas->schemaName = 'adminGroupRedirect';
 	  $this->m_metas->metaKey = $data->adminGroup;
 	  $meta = reset($this->m_metas->fetch());

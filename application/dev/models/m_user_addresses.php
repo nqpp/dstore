@@ -21,18 +21,18 @@ class M_user_addresses extends MM_Model {
     );
   }
   
-  function getLocationsJoined() {
+  function getLocationsIndexedJoined() {
 	
 	$this->db->select('locations.*');
 	$this->db->join('locations', 'locationID = locationsID', 'left outer');
 	
-	return $this->fetch();
+	return $this->fetchIndexed();
 	
   }
   
   function getLocationJoined() {
 	
-	$result = $this->getLocationsJoined();
+	$result = $this->getLocationsIndexedJoined();
 	
 	if (!count($result)) return false;
 	
