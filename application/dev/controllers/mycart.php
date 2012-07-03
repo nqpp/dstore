@@ -9,17 +9,17 @@ class Mycart extends MM_controller {
   }
   
   function renderHTML() {
-	
 	$this->load->vars('carts', $this->m_carts->fetchUserCart());
 	$this->m_cart_items->index = 'cartsID';
 	$this->load->vars('cartItems', $this->m_cart_items->fetchGrouped());
 	$this->load->vars('userAddresses', json_encode($this->user->alladdresses()));
 	
 	$this->load->model('m_user_addresses');
-	$this->m_user_addresses->usersID = User::id();
+	$this->m_user_addresses->usersID = $this->user->id();
 	$this->m_user_addresses->type = 'Delivery';
 //var_dump($this->m_user_addresses->fetchForSelectJSON()); exit;
 	$this->load->vars('userAddresses', $this->m_user_addresses->fetchForSelectJSON());
+//print 'mycart'; exit;	
 	
 	$this->load->vars('content',$this->load->view('mycart/list', '', true));
 	$this->jsFiles('/scripts/userAddresses.js');
