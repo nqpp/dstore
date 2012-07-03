@@ -11,11 +11,12 @@ class Mycart extends MM_controller {
   function renderHTML() {
 	
 	$this->load->vars('carts', $this->m_carts->fetchUserCart());
-	
-	$this->m_cart_items->index = "cartsID";
+	$this->m_cart_items->index = 'cartsID';
 	$this->load->vars('cartItems', $this->m_cart_items->fetchGrouped());
+	$this->load->vars('userAddresses', json_encode($this->user->alladdresses()));
 	
 	$this->load->vars('content',$this->load->view('mycart/list', '', true));
+	$this->jsFiles('/scripts/userAddresses.js');
 	$this->jsFiles('/scripts/mycart-list.js');
 	
   }
