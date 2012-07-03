@@ -46,45 +46,32 @@ class Store extends MM_controller {
 	$this->load->vars('prices', $this->m_product_metas->prices());
 	$this->load->vars('images', $this->m_product_metas->images());
 	$this->load->vars('userAddresses', json_encode($this->user->alladdresses()));
+
+	$cart = reset($this->m_carts->fetchUserCart());
+	$totals = false;
 	
-	$this->load->library('cartcalc');
-	$this->load->model('m_chargeouts');
-
-	$this->m_products->id = $this->entityID;
-	$product = $this->m_products->getSupplierCzone();
-
-	$this->m_carts->usersID = $this->user->id();
-	$this->m_carts->productsID = $product->productID;
-	$carts = $this->m_carts->fetch();
+	if($cart) {
 	
-	if (count($carts)) { // prevent page explosion
-	  
-	  $cart = reset($cart);
+		$this->load->library('cartcalc');
 
-	  $this->m_product_metas->productsID = $product->productID;
-	  $this->m_product_metas->qtyTotal = $cart->qtyTotal;
-	  $pricePoint = $this->m_product_metas->getPricePoint();
+		$product->productsID = $product->productID;
+		$product->qtyTotal = $cart->qtyTotal;
+		$product->itemPrice = $cart->itemPrice;
+		$product->taxRate = $cart->taxRate;
 
-	  $this->m_metas->schemaName = "tax";
-	  $tax = $this->m_metas->fetchKVPairObj();
-	  $gst = isset($tax->GST) ? $tax->GST : 10;
+		$this->cartcalc->product($product);
 
-	  $product->productsID = $product->productID;
-	  $product->taxRate = $gst;
-	  $product->itemPrice = $pricePoint->metaValue;
-	  $product->qtyTotal = $cart->qtyTotal;
+		$this->m_chargeouts->xto = $this->user->czone();
+		$this->m_chargeouts->xfrom = $product->czone;
+		$freight = reset($this->m_chargeouts->fetch());
 
-	  $this->cartcalc->product($product);
+		$this->cartcalc->freight($freight);
 
-	  $this->m_chargeouts->xto = $this->user->czone();
-	  $this->m_chargeouts->xfrom = $product->czone;
-	  $freight = reset($this->m_chargeouts->fetch());
+		$totals = $this->cartcalc->calc();
+		$totals->cartID = $cart->cartID;
+	}	
 
-	  $this->cartcalc->freight($freight);
-	  
-	}
-	
-	$this->load->vars('cartJSON', json_encode($this->cartcalc->calc()));
+	$this->load->vars('cartJSON', json_encode($totals));
 
 	$this->load->vars('subProductJSON', $this->m_products->fetchSubProductsWithQtyJSON());
 
@@ -97,6 +84,7 @@ class Store extends MM_controller {
 	$this->jsFiles('/scripts/fancybox/jquery.fancybox.js');
 	$this->jsFiles('/scripts/jquery.mousewheel-3.0.6.pack.js');
 
+	$this->jsFiles('/scripts/userAddresses.js');
 	$this->jsFiles('/scripts/store-entity.js');
 
 	$this->load->vars('content',$this->load->view('store/entity','', true));
