@@ -47,5 +47,29 @@ class M_user_addresses extends MM_Model {
 	$this->db->delete('userAddresses');
 	
   }
+
+	function fetchForSelect() {
+		
+		$this->usersID = User::id();
+		$this->type = 'Delivery';
+
+		$results = array();
+		$rawResults = $this->fetch();
+		
+		foreach($rawResults as $row) {
+			
+			$results[] = array(
+				'userAddressID'=>$row->userAddressID,
+				'address'=>$row->address . ', ' . $row->city . ' ' . $row->state . ' ' . $row->postcode
+			);
+		}
+		
+		return $results;
+	}
+	
+	function fetchForSelectJSON() {
+		
+		return json_encode($this->fetchForSelect());
+	}
   
 }

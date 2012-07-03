@@ -15,13 +15,14 @@ class Orders extends MM_Controller {
 
 	$this->m_orders->filter();
 	$ordersIndexed = $this->m_orders->fetchIndexedWithClient();
-	$orders = $this->m_orders->fetchWithClient();
+	$orderIDs = array_keys($ordersIndexed);
+	$orders = array_values($ordersIndexed);// get rid of indexing
 	
 	$this->m_order_products->index = "ordersID";
 	$orderProducts = $this->m_order_products->fetchCalcGrouped();
 	
 	$this->m_order_product_quantities->index = "orderProductsID";
-	$this->m_order_product_quantities->orderIDs = array_keys($ordersIndexed);
+	$this->m_order_product_quantities->orderIDs = $orderIDs;
 	$orderProductQuantities = $this->m_order_product_quantities->fetchForOrdersGrouped();
 
 	$this->m_order_addresses->index = "ordersID";
@@ -47,6 +48,13 @@ class Orders extends MM_Controller {
 	$this->load->vars('content', $this->load->view('orders/list', '', true));
 	$this->jsFiles('/scripts/order-list.js');
 	
+  }
+  
+  function renderJSON() {
+	
+	$this->m_orders->filter();
+	$orders = $this->m_orders->fetchWithClient();
+	die ( print (json_encode($orders)));
   }
   
   function renderHTMLEntity() {

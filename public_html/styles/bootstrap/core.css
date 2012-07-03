@@ -5,6 +5,13 @@
 	Custom styles and overloads on Bootstrap.
 
 */
+.span9_5 {
+  width: 700px;
+}
+
+.span8_5 {
+  width: 660px;
+}
 
 .lead {
   font-weight: 300;
@@ -250,6 +257,16 @@ ul.lead li {
   background: url(images/DStoreLogoSmall.png) 0px -5px no-repeat;
   text-align:left;
   text-indent:-9999px;
+}
+
+div.divider {
+  *width: 100%;
+  height: 1px;
+  margin: 8px 1px;
+  *margin: -5px 0 5px;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  border-bottom: 1px solid #ffffff;
 }
 
 

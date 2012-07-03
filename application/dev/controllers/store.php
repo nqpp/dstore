@@ -47,7 +47,6 @@ class Store extends MM_controller {
 	$this->load->vars('images', $this->m_product_metas->images());
 	$this->load->vars('userAddresses', json_encode($this->user->alladdresses()));
 
-
 	$cart = reset($this->m_carts->fetchUserCart());
 	$totals = false;
 	

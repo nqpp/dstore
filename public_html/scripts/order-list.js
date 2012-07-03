@@ -229,23 +229,41 @@ $(function() {
   App.StatusFilterView = Backbone.View.extend({
 	tagName: 'a',
 	attributes: function(){
+	  var self = this;
 	  var data = {}
 	  data['href'] = '#';
-	  data['class'] = 'btn pull-right';
+	  data['class'] = function() {
+		var className = 'btn pull-right';
+		className += (self.model.get('preference') == '1') ? ' active':''
+		return className;
+	  }
 	  return data;
 	},
 	template: _.template($("#tpl-status-filter").html()),
 	events: {
-	  "click a": "setPref"
+	  "click span": "setPref"
 	},
 	
 	initialize: function() {
-	  
 	  this.model.bind('change', this.render, this);
 	},
 	
 	setPref: function(ev) {
-console.log(this.model)
+	  var node,self;
+	  self = this;
+	  // sodding thing needs to wait for DOM to catch up.
+	  setTimeout(function() {
+		node = ev.target.parentNode;
+		
+		if ($(node).hasClass('active')) {
+		  self.model.save({'preference':1},{wait:true});
+		}
+		else {
+		  self.model.save({'preference':0},{wait:true});
+		}
+		
+	  },10)
+
 	},
 	
 	render: function() {
@@ -260,9 +278,6 @@ console.log(this.model)
 
   App.OrdersView = Backbone.View.extend({
 	el: $("#orderAccordion"),
-	events: {
-	  "click #statusFilter a": "filterStatus"
-	},
 	
 	initialize: function() {
 	  
@@ -272,11 +287,12 @@ console.log(this.model)
 	  App.Orders.bind('add', this.add, this);
 	},
 	
-	filterStatus: function(ev) {
-console.log(ev)
+	reload: function() {
+	  App.Orders.fetch();
 	},
 	
 	addFilters: function() {
+	  var self = this;
 	  
 	  if (orderStatusFilterJSON.length) {
 		this.StatusFilters = new App.StatusFilterList(orderStatusFilterJSON);
@@ -285,6 +301,8 @@ console.log(ev)
 		this.StatusFilters = new App.StatusFilterList(orderStatusTypesJSON);
 		console.log('using fallback status filters')
 	  }
+	  
+	  this.StatusFilters.bind('change', this.reload,this);
 
 	  this.StatusFilters.each(function(model) {
 		var view = new App.StatusFilterView({model:model});
@@ -292,7 +310,7 @@ console.log(ev)
 		
 		// prefs not set for this user. time to set them.
 		if (model.get('metasID') == '') {
-		  model.save();
+		  model.save({silent:true});
 		}
 	  });
 	  
@@ -303,6 +321,7 @@ console.log(ev)
 	  $('#orderAccordion').append(view.render().el);
 	},
 	addAll: function() {
+	  $('#orderAccordion').html('');
 	  App.Orders.each(this.add);
 	}
 

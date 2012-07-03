@@ -50,7 +50,6 @@ class MM_Controller extends CI_Controller {
 	
 	$req = $_SERVER['REQUEST_METHOD'];
 	$qs = false;
-	
 	$_qsarray = explode('&',$_SERVER['QUERY_STRING']);
 	
 	if (count($_qsarray)) {
