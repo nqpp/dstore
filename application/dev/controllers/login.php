@@ -32,15 +32,12 @@ class Login extends Unsecure {
 	
 	try {
 	  $data = $this->m_users->authenticate();
-	  
 	  $this->m_permissions->adminGroup = $data->adminGroup;
 	  $data->allowedPages = $this->m_permissions->fetchAllowedUris();
 	  
 	  $this->m_user_addresses->usersID = $data->userID;
 	  $this->m_user_addresses->type = 'delivery';
 	  $addresses = $this->m_user_addresses->getLocationsIndexedJoined();
-
-	  $addresses = $this->m_user_addresses->getLocationsJoined();
 	  
 	  if (count($addresses)) {
 		$primary = reset($addresses);
