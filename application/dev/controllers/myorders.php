@@ -23,9 +23,13 @@ class Myorders extends MM_Controller {
 	$this->m_order_product_quantities->orderIDs = array_keys($orders);
 	$orderProductQuantities = $this->m_order_product_quantities->fetchForOrdersGrouped();
 	
+	$this->m_order_addresses->index = "ordersID";
+	$orderAddresses = $this->m_order_addresses->fetchIndexed();
+	
 	$this->load->vars('orders', $orders);
 	$this->load->vars('orderProducts', $orderProducts);
 	$this->load->vars('orderProductQuantities', $orderProductQuantities);
+	$this->load->vars('orderAddresses', $orderAddresses);
 	
 	$this->load->vars('content', $this->load->view('myorders/list','',true));
   }

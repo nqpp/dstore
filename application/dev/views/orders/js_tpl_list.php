@@ -19,9 +19,8 @@
   </div>
 
   <div id="collapse<%= cid %>" class="accordion-body collapse">
-  <div class="">
 
-	  <div class="span8_5">
+	  <div class="span8-5">
 
 		<table class="table table-striped table-bordered orderProducts">
 		  <thead>
@@ -50,6 +49,27 @@
 
 	  <div class="span3">
 		<div class="well">
+
+		  <h5>Deliver To</h5>
+		  <div class="orderAddress"></div>
+		  
+		  
+		  <h5>Order Status</h5>
+		  <div class="btn-group">
+			<a class="btn btn-<%= status %>"><%= status.toUpperCase() %></a>
+			<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+			<ul class="dropdown-menu status">
+			  <?php if (count($orderStatusTypes)): ?>
+				<?php foreach ($orderStatusTypes as $ost): ?>
+				  <li class="<%= '<?= $ost->metaKey ?>' == status ? 'active':'' %>"><a href="#" title="<?= $ost->metaKey ?>"><?= $ost->metaValue ?></a></li>
+				<?php endforeach; ?>
+			  <?php endif; ?>
+			</ul>
+
+		  </div>
+
+		</div>
+	  </div>
 
 		  <h5>Deliver To</h5>
 		  <div class="orderAddress"></div>

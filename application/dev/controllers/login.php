@@ -40,11 +40,12 @@ class Login extends Unsecure {
 	  $this->m_user_addresses->type = 'delivery';
 	  $addresses = $this->m_user_addresses->getLocationsIndexedJoined();
 
+	  $addresses = $this->m_user_addresses->getLocationsJoined();
+	  
 	  if (count($addresses)) {
 		$primary = reset($addresses);
 		$this->user->set($primary);
-		$this->user->alladdresses($addresses);
-		
+		$this->user->allAddresses($addresses);
 	  }
 	  else {
 		$this->user->czone('-1');
