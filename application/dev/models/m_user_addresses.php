@@ -1,51 +1,54 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+  exit('No direct script access allowed');
 
 class M_user_addresses extends MM_Model {
 
   function __construct() {
 	$this->pk = 'userAddressID';
-    parent::__construct();
+	parent::__construct();
   }
 
   // db field names
   function fields() {
-    return array(
-      'usersID',
-      'locationsID',
-      'type',
-      'address',
-      'city',
-      'state',
-      'postcode',
-	  'sort'
-    );
+	return array(
+		'usersID',
+		'locationsID',
+		'type',
+		'address',
+		'city',
+		'state',
+		'postcode',
+		'sort'
+	);
   }
-  
-  function getLocationsJoined() {
-	
+
+  function getLocationsIndexedJoined() {
+
 	$this->db->select('locations.*');
 	$this->db->join('locations', 'locationID = locationsID', 'left outer');
-	
-	return $this->fetch();
-	
+
+	return $this->fetchIndexed();
   }
-  
+
   function getLocationJoined() {
-	
-	$result = $this->getLocationsJoined();
-	
-	if (!count($result)) return false;
-	
+
+	$result = $this->getLocationsIndexedJoined();
+
+	if (!count($result))
+	  return false;
+
 	return reset($result);
   }
-  
+
   function deleteUser() {
-	
-    if (!$this->usersID) throw new Exception('No userID supplied.');
-	
-	$this->db->where('usersID',$this->usersID);
+
+	if (!$this->usersID)
+	  throw new Exception('No userID supplied.');
+
+	$this->db->where('usersID', $this->usersID);
 	$this->db->delete('userAddresses');
-	
   }
 
 	function fetchForSelect() {
@@ -66,10 +69,10 @@ class M_user_addresses extends MM_Model {
 		
 		return $results;
 	}
-	
-	function fetchForSelectJSON() {
-		
-		return json_encode($this->fetchForSelect());
-	}
-  
+
+  function fetchForSelectJSON() {
+
+	return json_encode($this->fetchForSelect());
+  }
+
 }

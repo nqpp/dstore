@@ -19,9 +19,8 @@
   </div>
 
   <div id="collapse<%= cid %>" class="accordion-body collapse">
-  <div class="">
 
-	  <div class="span8_5">
+	  <div class="span8-5">
 
 		<table class="table table-striped table-bordered orderProducts">
 		  <thead>
@@ -72,6 +71,7 @@
 
 		</div>
 	  </div>
+
 
   </div>
   </div>

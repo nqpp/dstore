@@ -9,7 +9,6 @@ class Mycart extends MM_controller {
   }
   
   function renderHTML() {
-	
 	$this->load->vars('carts', $this->m_carts->fetchUserCart());
 	$this->m_cart_items->index = 'cartsID';
 	$this->load->vars('cartItems', $this->m_cart_items->fetchGrouped());

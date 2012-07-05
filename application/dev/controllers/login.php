@@ -38,23 +38,19 @@ class Login extends Unsecure {
 	  
 	  $this->m_user_addresses->usersID = $data->userID;
 	  $this->m_user_addresses->type = 'delivery';
+	  $addresses = $this->m_user_addresses->getLocationsIndexedJoined();
 
 	  $addresses = $this->m_user_addresses->getLocationsJoined();
+	  
 	  if (count($addresses)) {
 		$primary = reset($addresses);
-		
-		// add primary address through single method in User library
-		$data->czone = $primary->czone;
-		$data->postcode = $primary->postcode;
-		$data->suburb = $primary->suburb;
-		$data->state = $primary->state;
-		
-		$data->allAddresses = $addresses;
+		$this->user->set($primary);
+		$this->user->allAddresses($addresses);
 	  }
 	  else {
-		$data->czone -1;		
+		$this->user->czone('-1');
 	  }
-
+	  
 	  $this->user->set($data);
 	  
 	  $this->m_metas->schemaName = 'adminGroupRedirect';

@@ -5,13 +5,10 @@
 	Custom styles and overloads on Bootstrap.
 
 */
-.span9_5 {
-  width: 700px;
-}
-
-.span8_5 {
+.span8-5 {
   width: 660px;
 }
+
 
 .lead {
   font-weight: 300;

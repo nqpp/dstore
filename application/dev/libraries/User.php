@@ -97,24 +97,19 @@ class User {
 	
   }
   
-  function czone($czone = false) {
+  function userAddressID($userAddressID = false) {
 	
-//	if ($this->usePseudoMode()) return pseudoCzone($czone);
+	if ($userAddressID) $this->setField('userAddressID', $userAddressID);
+	return $this->session->userdata('user_userAddressID');
+	
+  }
+  
+  function czone($czone = false) {
 	
 	if ($czone) $this->setField('czone', $czone);
 	return $this->session->userdata('user_czone');
 	
   }
-  
-//  function pseudoCzone($pseudoCzone = false) {
-//	
-//	if ($pseudoCzone) $this->setField('pseudoCzone', $pseudoCzone);
-//	return $this->session->userdata('user_pseudoCzone');
-//	
-//  }
-  
-  // TODO add method for addressID
-  // TODO add method to distribute address properties to methods
   
   function postcode($postcode = false) {
 	
@@ -143,6 +138,7 @@ class User {
 	return $this->session->userdata('user_alladdresses');
 	
   }
+  
   
   function pseudoMode($pseudoMode = false) {
 
