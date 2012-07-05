@@ -6,19 +6,69 @@ class Mycart extends MM_controller {
     parent::__construct();
     $this->load->model('m_carts');
     $this->load->model('m_cart_items');
+		$this->load->library('cartcalc');
+		$this->load->model('m_chargeouts');
   }
   
   function renderHTML() {
-	$this->load->vars('carts', $this->m_carts->fetchUserCart());
+
+	// Calculate Totals
+	$this->m_carts->usersID = $this->user->id();
+	$this->m_carts->index = 'czone';
+	$product = $this->m_carts->fetchGroupedForCalculated();
+	
+	$carts = array();
+
+	if(count($product) > 0) {
+		
+		$deliveryAddress = $this->user->userAddress();
+
+		$this->m_chargeouts->xto = $deliveryAddress->czone;
+		$this->m_chargeouts->xfroms = array_keys($product);
+		$this->m_chargeouts->index = 'xfrom';
+		$freight = $this->m_chargeouts->fetchIndexedForCalc();
+
+		$this->cartcalc->products($product);
+		$this->cartcalc->freights($freight);
+
+		$carts = $this->cartcalc->calcAll();
+	}
+
+	$this->load->vars('carts', $carts);
 	$this->m_cart_items->index = 'cartsID';
 	$this->load->vars('cartItems', $this->m_cart_items->fetchGrouped());
 	$this->load->vars('userAddresses', json_encode(array_values($this->user->alladdresses())));
+	$this->load->vars('userAddressID', $this->user->userAddressID());
 	
 	$this->load->vars('content',$this->load->view('mycart/list', '', true));
 	$this->jsFiles('/scripts/userAddresses.js');
 	$this->jsFiles('/scripts/mycart-list.js');
 	
   }
+
+	function formJSONNew() {
+		
+		$json = json_decode(file_get_contents('php://input'));
+		
+		// Set userAddress/deliveryAddress per client selection.
+		$this->user->userAddressID($json->deliveryAddressID);
+			
+		$this->m_carts->usersID = $this->user->id();
+		$this->m_carts->index = 'czone';
+		$product = $this->m_carts->fetchGroupedForCalculated();
+		
+		$deliveryAddress = $this->user->userAddress($json->deliveryAddressID);
+
+		$this->m_chargeouts->xto = $deliveryAddress->czone;
+		$this->m_chargeouts->xfroms = array_keys($product);
+		$this->m_chargeouts->index = 'xfrom';
+		$freight = $this->m_chargeouts->fetchIndexedForCalc();
+
+		$this->cartcalc->products($product);
+		$this->cartcalc->freights($freight);
+
+		die(json_encode($this->cartcalc->calcAll()));
+	}
   
   /*
    * remove a cart row and assoc items

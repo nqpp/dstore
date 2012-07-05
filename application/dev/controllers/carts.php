@@ -24,6 +24,9 @@ class Carts extends MM_Controller {
 		$this->load->library('cartcalc');
 		$json = json_decode(file_get_contents('php://input'));
 		
+		// Set userAddress/deliveryAddress per client selection.
+		$this->user->userAddressID($json->deliveryAddressID);
+		
 		$this->m_product_metas->productsID = $json->productsID;
 		$this->m_product_metas->qtyTotal = $json->qtyTotal;
 		$pricePoint = $this->m_product_metas->getPricePoint();
@@ -81,6 +84,9 @@ class Carts extends MM_Controller {
 		$this->load->library('cartcalc');
 		$this->m_carts->id = $this->entityID;
 		$json = json_decode(file_get_contents('php://input'));
+		
+		// Set userAddress/deliveryAddress per client selection.
+		$this->user->userAddressID($json->deliveryAddressID);
 		
 		$this->m_product_metas->productsID = $json->productsID;
 		$this->m_product_metas->qtyTotal = $json->qtyTotal;

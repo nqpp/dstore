@@ -213,6 +213,8 @@ class Cartcalc {
 	
 	if (!$this->product()) return false;
 	
+	$calc->name = $this->product()->name; // Love method chaining...
+	if(isset($this->product()->cartID)) $calc->cartID = $this->product()->cartID; // Still love method chaining...
 	$calc->moqReached = true;
 	$calc->productsID = $this->productsID();
 	$calc->qtyTotal = $this->qtyTotal();
@@ -229,11 +231,11 @@ class Cartcalc {
   
   function calcAll() {
 	
-	if (! count($this->carts())) return false;
+	if (! count($this->products())) return false;
 	if (! count($this->freights())) return false;
 	
 	$calculated = array();
-	foreach ($this->carts() as $czone=>$items) {
+	foreach ($this->products() as $czone=>$items) {
 	  $this->freight($this->czoneFreight($czone));
 	  	  
 	  foreach ($items as $product) {

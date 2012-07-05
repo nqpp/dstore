@@ -24,6 +24,7 @@ class M_order_addresses extends MM_Model {
 	
 	if (!$this->userAddress || !count($this->userAddress)) throw new Exception('No address data to add to order[m_order_addreses:addAddress]');
 	
+	$this->locationsID = $this->userAddress->locationsID;
 	$this->address = $this->userAddress->address;
 	$this->city = $this->userAddress->city;
 	$this->state = $this->userAddress->state;

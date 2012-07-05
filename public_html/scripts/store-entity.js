@@ -59,7 +59,6 @@ $(function() {
 	template: _.template($('#tpl-subproduct').html()),
 	events: {
 	  'click #add_to_cart': 'update',
-		'change #deliveryAddressID': 'updateAddress'
 	},
 		
 	initialize: function() {
@@ -68,6 +67,7 @@ $(function() {
 		productsID: productsID
 	  });
 
+		App.UserAddresses.bind('change', this.updateAddress, this);
 	  App.CartItems.bind('reset', this.render, this);
 	  App.CartItems.bind('change', this.check, this);
 	  this.model.bind('change', this.render, this);
@@ -83,6 +83,7 @@ $(function() {
 	
 		App.UserAddressItemsView.setElement($('#deliveryAddressID'));
 		App.UserAddressItemsView.render();
+		this.model.set({deliveryAddressID: userAddressID});
 	},
 		
 	addAll: function() {
@@ -122,9 +123,10 @@ $(function() {
 	  return this.render();
 	},
 	
-	updateAddress: function(ev) {
+	updateAddress: function() {
 
-		this.model.set({deliveryAddressID: $(ev.target).val()});
+		this.model.set({deliveryAddressID: App.UserAddressesView.userAddressID});
+		this.check();
 	},
 		
 	check: function() {

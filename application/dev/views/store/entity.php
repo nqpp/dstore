@@ -69,6 +69,7 @@
   var cartJSON = <?php echo $cartJSON ?>;
   var productsID = <?php echo $product->productID ?>;
 	var userAddresses = <?php echo $userAddresses ?>;
+	var userAddressID = <?php echo $userAddressID ?>;
 </script>
 <script type="text/template" id="tpl-subproduct">
   <thead>

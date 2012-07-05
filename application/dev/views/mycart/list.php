@@ -7,7 +7,7 @@
 	  <a href="/mycart.html?clear" class="btn">
 		<i class="icon-trash"> </i> Empty Cart
 	  </a>
-	  <a href="/myorders.html?new" class="btn"<?php if (!count($carts)) {echo ' disabled';} ?>>
+	  <a href="#orderModal"data-toggle="modal" id="orderAction" class="btn"<?php if (!count($carts)) {echo ' disabled';} ?>>
 		<i class="icon-shopping-cart"> </i> Order
 	  </a>
 	</div>
@@ -32,12 +32,7 @@
 		<?php $cartTotal = 0; ?>
 		<?php if (count($carts)): ?>
 		<?php foreach ($carts as $c): ?>
-		<?php
-		$subTotal = $c->qtyTotal * $c->itemPrice;
-		$gst = ($subTotal + $c->freightTotal) * $c->taxRate;
-		$total = $subTotal + $c->freightTotal + $gst;
-		$cartTotal += $total;
-		?>
+		<? $cartTotal += $c->total ?>
 		<tr>
 		  <td>
 			<a href="/store/<?= $c->productsID ?>.html" title="edit"><?= $c->name ?></a>
@@ -60,7 +55,7 @@
 		  </td>
 		  <td><?= $c->qtyTotal ?></td>
 		  <td>
-			<span class="pull-right"><?= number_format($total,2,'.',',') ?></span>
+			<span class="pull-right"><?= number_format($c->total,2,'.',',') ?></span>
 		  </td>
 		  <td>
 			<div class="btn-group">
@@ -70,16 +65,8 @@
 			</div>
 		  </td>
 		</tr>
-		<?php endforeach ?>
-		<?php else: ?>
-  		<tr>
-  		  <td colspan="4">
-  			<p>There are no items in your cart.</p>
-  			<p>You can add new items by viewing their details in the <a href="/store">Store</a></p>
-  		  </td>
-  		</tr>
-		<?php endif; ?>
-	  </tbody>
+		<?php endforeach; ?>
+		</tbody>
 	  <tfoot>
 		<tr>
 		  <td colspan="2">
@@ -91,6 +78,15 @@
 		  <td></td>
 		</tr>
 	  </tfoot>
+		<?php else: ?>
+  		<tr>
+  		  <td colspan="4">
+  			<p>There are no items in your cart.</p>
+  			<p>You can add new items by viewing their details in the <a href="/store">Store</a></p>
+  		  </td>
+  		</tr>
+	  </tbody>
+		<?php endif; ?>
 	</table>
 
   </div>
@@ -109,7 +105,7 @@
 
 </div>
 
-<div class="modal" id="orderModal">
+<div class="modal hide" id="orderModal">
 	<form class="form-horizontal" action="/myorders.html?new" method="POST">
   	<div class="modal-header">
 	    <h3>Order</h3>
@@ -125,53 +121,8 @@
 				<hr />
 				<div class="control-group">
 		      <label class="control-label" for="input01">Double Check Cart</label>
-		      <div class="controls" id="modalCart">
-		        <table class="table table-striped table-bordered">
-						  <thead>
-							<tr>
-							  <th>Item</th>
-							  <th width="60">Qty</th>
-							  <th width="80">Subtotal</th>
-							</tr>
-						  </thead>
-						  <tbody>
-							<?php $cartTotal = 0; $freightTotal = 0; ?>
-							<?php if (count($carts)): ?>
-							<?php foreach ($carts as $c): ?>
-							<?php
-							$subTotal = $c->qtyTotal * $c->itemPrice;
-							$gst = ($subTotal + $c->freightTotal) * $c->taxRate;
-							$total = $subTotal + $c->freightTotal + $gst;
-							$cartTotal += $total;
-							$freightTotal += $c->freightTotal;
-							?>
-							<tr>
-							  <td>
-								<strong><?= $c->name ?></strong>
-							  </td>
-							  <td><?= $c->qtyTotal ?></td>
-							  <td>
-								<span class="pull-right"><?= number_format($total,2,'.',',') ?></span>
-							  </td>
-							</tr>
-							<?php endforeach ?>
-							<?php endif; ?>
-						  </tbody>
-						  <tfoot>
-							<tr>
-								<td colspan="2"><strong class="pull-right">Freight Total</strong></td>
-								<td><strong class="pull-right"><?= number_format($freightTotal,2,'.',',') ?></strong></td>
-							</tr>
-							<tr>
-							  <td colspan="2">
-								<strong class="pull-right">Cart Total</strong>
-							  </td>
-							  <td>
-								<strong class="pull-right"><?= number_format($cartTotal,2,'.',',') ?></strong>
-							  </td>
-							</tr>
-						  </tfoot>
-						</table>
+		      <div class="controls">
+		        <table class="table table-striped table-bordered" id="orderModalCart"></table>
 		      </div>
 		    </div>
 				<hr />
@@ -190,10 +141,20 @@
 	</form>
 </div>
 <script type="text/javascript">
-  var userAddresses = <?=$userAddresses?>;
+  var userAddresses = <?=$userAddresses ?>;
+	var userAddressID = <?php echo $userAddressID ?>;
+	var carts = <?=json_encode($carts) ?>;
+</script>
+<script type="text/template" id="popCartItem">
+	  <td>
+		<strong><%=name %></strong>
+	  </td>
+	  <td><%=qtyTotal %></td>
+	  <td>
+		<span class="pull-right"><%=total %></span>
+	  </td>
 </script>
 <script type="text/template" id="popCart">
-	<table class="table table-striped table-bordered">
 	  <thead>
 		<tr>
 		  <th>Item</th>
@@ -201,44 +162,21 @@
 		  <th width="80">Subtotal</th>
 		</tr>
 	  </thead>
-	  <tbody>
-		<?php $cartTotal = 0; $freightTotal = 0; ?>
-		<?php if (count($carts)): ?>
-		<?php foreach ($carts as $c): ?>
-		<?php
-		$subTotal = $c->qtyTotal * $c->itemPrice;
-		$gst = ($subTotal + $c->freightTotal) * $c->taxRate;
-		$total = $subTotal + $c->freightTotal + $gst;
-		$cartTotal += $total;
-		$freightTotal += $c->freightTotal;
-		?>
-		<tr>
-		  <td>
-			<strong><?= $c->name ?></strong>
-		  </td>
-		  <td><?= $c->qtyTotal ?></td>
-		  <td>
-			<span class="pull-right"><?= number_format($total,2,'.',',') ?></span>
-		  </td>
-		</tr>
-		<?php endforeach ?>
-		<?php endif; ?>
-	  </tbody>
+	  <tbody></tbody>
 	  <tfoot>
 		<tr>
 			<td colspan="2"><strong class="pull-right">Freight Total</strong></td>
-			<td><strong class="pull-right"><?= number_format($freightTotal,2,'.',',') ?></strong></td>
+			<td><strong class="pull-right" id="freightTotal"></strong></td>
 		</tr>
 		<tr>
 		  <td colspan="2">
 			<strong class="pull-right">Cart Total</strong>
 		  </td>
 		  <td>
-			<strong class="pull-right"><?= number_format($cartTotal,2,'.',',') ?></strong>
+			<strong class="pull-right" id="cartTotal"></strong>
 		  </td>
 		</tr>
 	  </tfoot>
-	</table>
   <p class="help-block"><i class="icon-question-sign"></i> <strong>Why did the price change?</strong><br />
 	As you updated your delivery address, we re-calculated your freight to deliver to the new address.</p>
 </script>
