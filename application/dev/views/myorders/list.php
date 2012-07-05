@@ -47,7 +47,7 @@
 			  <?php foreach ($orderProducts[$o->orderID] as $op): ?>
 			  <?php
 			  $subTotal = $op->qtyTotal * $op->itemPrice;
-			  $gst = ($subTotal + $op->freightTotal) * $op->taxRate;
+			  $gst = ($subTotal + $op->freightTotal) * ($op->taxRate / 100);
 			  $total = $subTotal + $op->freightTotal + $gst;
 			  $orderTotal += $total;
 			  ?>
