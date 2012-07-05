@@ -86,12 +86,7 @@
 </script>
 
 <?= $js_tpl_entity ?>
-<<<<<<< .merge_file_AS75BN
 <?= $js_tpl_addresslist ?>
 <?= $js_tpl_phonelist ?>
 <?= $js_tpl_employmentdatalist ?>
-=======
-<?= $js_addresslist ?>
-<?= $js_phonelist ?>
->>>>>>> .merge_file_DN8bNG
 <?= $js_tpl_typeahead_list ?>

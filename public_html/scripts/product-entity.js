@@ -111,8 +111,9 @@ $(function(){
 	
 	defaults: {
 	  parentID: productJSON.productID,
-	  code:'code',
-	  name:'new colour'
+	  code:'',
+	  name:'',
+	  sort:''
 	},
 	
 	clear:function() {
