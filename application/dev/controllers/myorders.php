@@ -58,7 +58,7 @@ class Myorders extends MM_Controller {
 	$cartItems = $this->m_cart_items->fetchCartItems();
 	
 	// specify PO No.
-	$this->m_orders->purchaseOrder = $this->input->post('purchaseOrder');
+	$this->m_orders->purchaseOrder = $this->input->post('purchaseOrder'); // not required - MM_Model will pick this up.
 	
 	// add the order
 	$this->m_orders->add();
@@ -78,12 +78,14 @@ class Myorders extends MM_Controller {
 	}
 	
 	// get delivery address
-	$this->m_user_addresses->id = $this->input->post('deliveryAddressID');
+	$this->m_user_addresses->id = $this->input->post('deliveryAddressID'); // should be able to get this from user object now.
 	$deliveryAddress = $this->m_user_addresses->get();
 	// write delivery address
 	$this->m_order_addresses->ordersID = $this->m_orders->id;
 	$this->m_order_addresses->userAddress = $deliveryAddress;
 	$this->m_order_addresses->addAddress();	
+	
+	// send an email
 	
 	// empty cart data for user
 	$this->m_carts->deleteUserCart();

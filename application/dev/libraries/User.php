@@ -139,6 +139,19 @@ class User {
 	
   }
   
+  function userAddress($userAddressID = false) {
+	
+	if ($userAddressID) $this->userAddressID($userAddressID);
+	
+	if (!$this->userAddressID()) return false;
+	
+	$addresses = $this->alladdresses();
+	
+	if (!isset($addresses[$this->userAddressID()])) return false;
+	
+	return $addresses[$this->userAddressID()];
+  }
+  
   
   function pseudoMode($pseudoMode = false) {
 
