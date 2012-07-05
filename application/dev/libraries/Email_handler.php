@@ -284,7 +284,6 @@ class Email_handler {
   // set properties, add attachments and send
   function send($data = false) {
 	
-//print $this->mailtype();exit;
 	if ($data) {
 	  $this->set($data);
 	}
@@ -306,7 +305,7 @@ class Email_handler {
 	  $this->email->bcc($this->bcc());	  
 	}
 	
-    $this->email->from($this->from());
+    $this->email->from($this->from(),$this->name());
     $this->email->subject($this->subject());
     $this->email->message($this->message());
 	
