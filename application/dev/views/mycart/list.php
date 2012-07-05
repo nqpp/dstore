@@ -109,7 +109,7 @@
 
 </div>
 
-<div class="modal" id="myModal">
+<div class="modal" id="orderModal">
 	<form class="form-horizontal" action="/myorders.html?new" method="POST">
   	<div class="modal-header">
 	    <h3>Order</h3>
@@ -119,17 +119,14 @@
 		    <div class="control-group">
 		      <label class="control-label" for="input01">Select Delivery Address</label>
 		      <div class="controls">
-						<select name="deliveryAddressID" class="input-xlarge">
-							<option value="12">52B Comport St, Cairns QLD 4870</option>
-							<option value="13">27 Boyce St, Edmonton QLD 4869</option>
-						</select>
+						<select name="deliveryAddressID" id="deliveryAddressID" class="input-xlarge"></select>
 		      </div>
 		    </div>
 				<hr />
 				<div class="control-group">
 		      <label class="control-label" for="input01">Double Check Cart</label>
-		      <div class="controls">
-		        <table id="cart" class="table table-striped table-bordered">
+		      <div class="controls" id="modalCart">
+		        <table class="table table-striped table-bordered">
 						  <thead>
 							<tr>
 							  <th>Item</th>
@@ -175,8 +172,6 @@
 							</tr>
 						  </tfoot>
 						</table>
-		        <p class="help-block"><i class="icon-question-sign"></i> <strong>Why did the price change?</strong><br />
-						As you updated your delivery address, we re-calculated your freight to deliver to the new address.</p>
 		      </div>
 		    </div>
 				<hr />
@@ -196,4 +191,54 @@
 </div>
 <script type="text/javascript">
   var userAddresses = <?=$userAddresses?>;
+</script>
+<script type="text/template" id="popCart">
+	<table class="table table-striped table-bordered">
+	  <thead>
+		<tr>
+		  <th>Item</th>
+		  <th width="60">Qty</th>
+		  <th width="80">Subtotal</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<?php $cartTotal = 0; $freightTotal = 0; ?>
+		<?php if (count($carts)): ?>
+		<?php foreach ($carts as $c): ?>
+		<?php
+		$subTotal = $c->qtyTotal * $c->itemPrice;
+		$gst = ($subTotal + $c->freightTotal) * $c->taxRate;
+		$total = $subTotal + $c->freightTotal + $gst;
+		$cartTotal += $total;
+		$freightTotal += $c->freightTotal;
+		?>
+		<tr>
+		  <td>
+			<strong><?= $c->name ?></strong>
+		  </td>
+		  <td><?= $c->qtyTotal ?></td>
+		  <td>
+			<span class="pull-right"><?= number_format($total,2,'.',',') ?></span>
+		  </td>
+		</tr>
+		<?php endforeach ?>
+		<?php endif; ?>
+	  </tbody>
+	  <tfoot>
+		<tr>
+			<td colspan="2"><strong class="pull-right">Freight Total</strong></td>
+			<td><strong class="pull-right"><?= number_format($freightTotal,2,'.',',') ?></strong></td>
+		</tr>
+		<tr>
+		  <td colspan="2">
+			<strong class="pull-right">Cart Total</strong>
+		  </td>
+		  <td>
+			<strong class="pull-right"><?= number_format($cartTotal,2,'.',',') ?></strong>
+		  </td>
+		</tr>
+	  </tfoot>
+	</table>
+  <p class="help-block"><i class="icon-question-sign"></i> <strong>Why did the price change?</strong><br />
+	As you updated your delivery address, we re-calculated your freight to deliver to the new address.</p>
 </script>

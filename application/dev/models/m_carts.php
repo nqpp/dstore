@@ -31,7 +31,7 @@ class M_carts extends MM_Model {
 	function fetchUserCartJSON() {
 	
 		$cart = $this->fetchUserCart();
-		return json_encode($cart);
+		return json_encode(reset($cart));
   }
   
   function fetchGroupedForCalculated() {
@@ -90,12 +90,11 @@ class M_carts extends MM_Model {
 		$this->db->select('metaKey as qty');
 		$this->db->where('schemaName', 'price');
 		$this->db->where('productsID', $this->productsID);
-		$this->db->order_by('qty');
+		$this->db->order_by('sort');
 		$this->db->limit(1);
 		$result = $this->db->get('productMetas');
 		
 		$moqArr = $result->row();
-
 		if($this->qtyTotal < $moqArr->qty) return false;
 		return true;
 	}

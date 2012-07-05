@@ -52,35 +52,6 @@ $(function() {
 	  this.model.set({qty: $(ev.target).val()});
 	}
   });
-
-	App.UserAddresses = new Backbone.Collection();
-	
-	App.UserAddressesView = Backbone.View.extend({
-		
-		el: $('#deliveryAddressID'),
-		
-		render: function() {
-
-			this.$el.html('');
-			this.addAll();
-			return this;
-		},
-		
-		add: function(item) {
-
-			var tpl = _.template('<option value="<%=userAddressID %>"><%=address %>, <%=suburb %> <%=state %> <%=postcode %></option>');
-			this.$el.append(tpl(item.toJSON()));
-			return this;
-		},
-		
-		addAll: function() {
-
-			App.UserAddresses.each(this.add, this);
-			return this;
-		}
-	});
-	
-	App.UserAddressItemsView = new App.UserAddressesView();
 	
   App.CartView = Backbone.View.extend({
 		
@@ -154,7 +125,6 @@ $(function() {
 	updateAddress: function(ev) {
 
 		this.model.set({deliveryAddressID: $(ev.target).val()});
-		console.log(this.model);
 	},
 		
 	check: function() {
@@ -178,8 +148,7 @@ $(function() {
 });
 
 $(function() {
-	
-	App.UserAddresses.reset(userAddresses);
+
   new App.CartView({
 	model: new App.Cart(cartJSON)
   });

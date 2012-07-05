@@ -12,7 +12,7 @@ class Mycart extends MM_controller {
 	$this->load->vars('carts', $this->m_carts->fetchUserCart());
 	$this->m_cart_items->index = 'cartsID';
 	$this->load->vars('cartItems', $this->m_cart_items->fetchGrouped());
-	$this->load->vars('userAddresses', json_encode($this->user->alladdresses()));
+	$this->load->vars('userAddresses', json_encode(array_values($this->user->alladdresses())));
 	
 	$this->load->vars('content',$this->load->view('mycart/list', '', true));
 	$this->jsFiles('/scripts/userAddresses.js');
