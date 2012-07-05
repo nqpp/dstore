@@ -50,7 +50,7 @@ class M_user_addresses extends MM_Model {
 
 	function fetchForSelect() {
 		
-		$this->usersID = User::id();
+		$this->usersID = $this->user->id();
 		$this->type = 'Delivery';
 
 		$results = array();
