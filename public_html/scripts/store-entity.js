@@ -117,6 +117,8 @@ $(function() {
 			  silent: true
 			});
 		  });
+		
+			Cart.List.fetch();
 		}
 	  });
 			

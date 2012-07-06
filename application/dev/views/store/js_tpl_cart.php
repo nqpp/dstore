@@ -9,6 +9,6 @@
 
 <script type="text/template" id="cart-tpl">
 <a class="btn" href="/mycart"><i class="icon-shopping-cart"></i> Cart</a>
-<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+<a class="btn dropdown-toggle disabled" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 <ul class="dropdown-menu" id="cart"></ul>
 </script>
