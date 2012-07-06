@@ -106,7 +106,7 @@
 </div>
 
 <div class="modal hide" id="orderModal">
-	<form class="form-horizontal" action="/myorders.html?new" method="POST">
+	<form class="form-horizontal noMargin" action="/myorders.html?new" method="POST">
   	<div class="modal-header">
 	    <h3>Order</h3>
 	  </div>
@@ -129,14 +129,14 @@
 				<div class="control-group">
 		      <label class="control-label" for="purchaseOrder">Enter Purchase Order Number</label>
 		      <div class="controls">
-		        <input type="text" class="input-xlarge" id="purchaseOrder" name="purchaseOrder">
+		        <input type="text" class="input-xlarge purchaseOrder" id="purchaseOrder" name="purchaseOrder">
 		      </div>
 		    </div>
 		  </fieldset>
 	  </div>
 	  <div class="modal-footer">
 	    <a href="#" class="btn" data-dismiss="modal">Close</a>
-	    <button type="submit" class="btn btn-success btn-large">Order</button>
+	    <button type="submit" class="btn btn-success btn-large" id="doOrder" disabled="true">Order</button>
 	  </div>
 	</form>
 </div>
