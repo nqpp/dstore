@@ -14,6 +14,7 @@
 | path to your installation.
 |
 */
+//$config['base_url']	= "http://dstore.closingthegap.com.au/";
 $config['base_url']	= "http://d-store.local/";
 //$config['base_url']	= "http://dstore.dev/"; // ImageSmith Environment.
 
