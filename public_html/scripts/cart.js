@@ -27,6 +27,7 @@ $(function() {
 		
 		el: $('#cart-contain'),
 		template: _.template($('#cart-tpl').html()),
+		initial: true,
 		
 		initialize: function() {
 			
@@ -36,9 +37,33 @@ $(function() {
 		
 		render: function() {
 			
+
+			$('#cart').html('');
 			Cart.List.each(this.add);
-			this.$el.find('.btn').addClass('btn-success', 'normal');
-			this.$el.find('.btn').removeClass('btn-success', 'normal');
+			
+			if(Cart.List.length > 0) {
+				
+				this.$el.find('.dropdown-toggle').removeClass('disabled');
+			} else {
+				
+				this.$el.find('.dropdown-toggle').addClass('disabled');
+			}
+			
+			if(!this.initial) this.changed();
+			if(this.initial) this.initial = false;
+			
+			return this;
+		},
+		
+		changed: function() {
+			
+			this.$el.find('.btn').addClass('btn-success');
+			var self = this;
+			setTimeout(function() {
+				self.$el.find('.btn').removeClass('btn-success', 'normal');
+			}, 1000);
+			
+			return this;
 		},
 		
 		add: function(item) {

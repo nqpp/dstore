@@ -16,7 +16,7 @@ class Carts extends MM_Controller {
 
 	function renderJSON() {
 
-		echo $this->m_carts->fetchUserCartJSON();
+		echo json_encode($this->m_carts->fetchUserCart());
 	}
 
   function formJSONNew() {

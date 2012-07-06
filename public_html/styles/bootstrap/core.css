@@ -339,5 +339,6 @@ table .span1-5 {
   width: 80px;
 }
 
-
+/* Adjustment to form in modal */
+.noMargin { margin: 0; }
 

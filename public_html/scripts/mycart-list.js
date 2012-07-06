@@ -23,8 +23,11 @@ $(function() {
 	
 	App.OrderView = Backbone.View.extend({
 		
-		el: $('#orderModalCart'),
+		el: $('#orderModal'),
 		template: _.template($('#popCart').html()),
+		events: {
+			'keydown #purchaseOrder' : 'allowPost'
+		},
 		
 		initialize: function() {
 
@@ -53,10 +56,24 @@ $(function() {
 		
 		render: function() {
 
-			this.$el.html(this.template(this.model.toJSON()));
+			this.$el.find('#orderModalCart').html(this.template(this.model.toJSON()));
 			
 			App.UserAddressItemsView.setElement($('#deliveryAddressID'));
 			App.UserAddressItemsView.render();
+			
+			return this;
+		},
+		
+		allowPost: function(ev) {
+			
+			if($(ev.target).val() !== '') {
+				
+				this.$el.find('#doOrder').removeAttr('disabled');
+			} else {
+				
+				this.$el.find('#doOrder').attr('disabled', true);
+			}
+			
 			return this;
 		},
 		
