@@ -41,7 +41,7 @@
   </div>
   
   <div class="span4">
-	<h4>Orders</h4>
+	&nbsp
   </div>
 
 </div>
@@ -50,10 +50,12 @@
   var contactJSON = <?= $contactJSON ?>;
   var addressJSON = <?= $addressJSON ?>;
   var phoneJSON = <?= $phoneJSON ?>;
+  var employmentDataJSON = <?= $employmentDataJSON ?>;
 
 </script>
 
 <?= $js_tpl_entity ?>
-<?= $js_addresslist ?>
-<?= $js_phonelist ?>
+<?= $js_tpl_addresslist ?>
+<?= $js_tpl_phonelist ?>
+<?= $js_tpl_employmentdatalist ?>
 <?= $js_tpl_typeahead_list ?>
