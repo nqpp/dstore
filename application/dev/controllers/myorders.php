@@ -102,11 +102,11 @@ class Myorders extends MM_Controller {
   
   function getOrderDetail() {
 	
-	$order = $this->m_order->get();
-	$this->m_order_products->ordersID = $this->m_order->id;
+	$order = $this->m_orders->get();
+	$this->m_order_products->ordersID = $this->m_orders->id;
 	$order->products = $this->m_order_products->fetch();
 	
-	$this->set->vars('order', $order);
+	$this->load->vars('order', $order);
 	
   }
   
@@ -116,7 +116,7 @@ class Myorders extends MM_Controller {
 	$sysEmails = $this->m_metas->fetchKVPairObj();
 	$this->m_emails->set($sysEmails); // set sender info for email
 	
-	$this->m_emails->to = $this->user->email;
+	$this->m_emails->to = $this->user->email();
 	$this->m_emails->subject = 'DStore Order Submitted';
 	$this->m_emails->message = $this->load->view('myorders/email_message','',true);
 //	$this->m_emails->altmessage = $this->makePlainText($message);
