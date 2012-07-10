@@ -42,14 +42,13 @@ class Myorders extends MM_Controller {
   }
   
   function formHTMLNew() {
-	
 	$this->load->model('m_carts');
 	$this->load->model('m_cart_items');
 	$this->load->model('m_contact_addresses');
 	$this->load->model('m_user_addresses');
 	
 	// get cart row(s)
-	$carts = $this->m_carts->fetchUserCart();
+	$carts = $this->m_carts->fetchUserCartIndexed();
 
 	if (!count($carts)) die (header("Location:/mycart.html"));
 	
@@ -58,21 +57,25 @@ class Myorders extends MM_Controller {
 	$cartItems = $this->m_cart_items->fetchCartItems();
 	
 	// specify PO No.
-	$this->m_orders->purchaseOrder = $this->input->post('purchaseOrder'); // not required - MM_Model will pick this up.
+//	$this->m_orders->purchaseOrder = $this->input->post('purchaseOrder'); // not required - MM_Model will pick this up.
 	
 	// add the order
 	$this->m_orders->add();
 	// cycle through carts and add product for each
-	// cycle through items and add order product qty for each
 	$this->m_order_products->ordersID = $this->m_orders->id;
 	foreach ($carts as $c) {
-	  $this->m_order_products->cart = $c;
-	  $this->m_order_products->addCart();
+//	  $this->m_order_products->cart = $c;
+//	  $this->m_order_products->addCart();
+	  $this->m_order_products->set($c);
+	  $this->m_order_products->add();
 	  
+	  // cycle through items and add order product qty for each
 	  $this->m_order_product_quantities->orderProductsID = $this->m_order_products->id;
 	  foreach ($cartItems[$c->cartID] as $ci) {
-		$this->m_order_product_quantities->cartItems = $ci;
-		$this->m_order_product_quantities->addCart();
+//		$this->m_order_product_quantities->cartItems = $ci;
+//		$this->m_order_product_quantities->addCart();
+		$this->m_order_product_quantities->set($ci);
+		$this->m_order_product_quantities->add();
 		
 	  }
 	}
@@ -82,8 +85,10 @@ class Myorders extends MM_Controller {
 	$deliveryAddress = $this->m_user_addresses->get();
 	// write delivery address
 	$this->m_order_addresses->ordersID = $this->m_orders->id;
-	$this->m_order_addresses->userAddress = $deliveryAddress;
-	$this->m_order_addresses->addAddress();	
+	$this->m_order_addresses->set($deliveryAddress);
+	$this->m_order_addresses->add();	
+//	$this->m_order_addresses->userAddress = $deliveryAddress;
+//	$this->m_order_addresses->addAddress();	
 	
 	// send an email
 	
