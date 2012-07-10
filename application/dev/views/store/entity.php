@@ -48,7 +48,17 @@
 	  </div>
 	  <div class="span5">
 		<h3>Ordering</h3>
-		<table id="cart_prep" class="table table-striped table-bordered"></table>
+		<table id="cart_prep" class="table table-striped table-bordered">
+			<thead>
+			<tr>
+			  <th width="50">Code</th>
+			  <th>Colour</th>
+			  <th width="90">Qty</th>
+			</tr>
+		  </thead>
+		  <tbody></tbody>
+			<tfoot></tfoot>
+		</table>
 	  </div>
 	</div>
   </div>
@@ -72,44 +82,34 @@
 	var userAddressID = <?php echo $userAddressID ?>;
 </script>
 <script type="text/template" id="tpl-subproduct">
-  <thead>
-	<tr>
-	  <th width="50">Code</th>
-	  <th>Colour</th>
-	  <th width="90">Qty</th>
-	</tr>
-  </thead>
-  <tbody></tbody>
-  <tfoot>
-	<tr>
-	  <th colspan="2">Total Qty</th>			  
-	  <td class="display" id="qty_total"><%=qtyTotal %></td>
-	</tr>
-	<tr>
-	  <th colspan="2">Price ea</th>			  
-	  <td class="display" id="price_ea"><% if(itemPrice) { %>$<%=itemPrice %><% } %></td>			  
-	</tr>
-	<tr>
-	  <th colspan="2">Sub Total</th>			  
-	  <td class="display" id="sub_total"><% if(subtotal) { %>$<%=subtotal %><% } %></td>			  
-	</tr>
-	<tr>
-	  <th colspan="2">Freight to:
-		  <select name="deliveryAddressID" id="deliveryAddressID" class="input-xlarge"></select>
-	  </th>			  
-	  <td class="display" id="freight"><% if(freightTotal) { %>$<%=freightTotal %><% } %></td>			  
-	</tr>
-	<tr>
-	  <th colspan="2">Total GST</th>			  
-	  <td class="display" id="gst_total"><% if(gst) { %>$<%=gst %><% } %></td>
-	</tr>
-	<tr>
-	  <th colspan="2">Total inc GST</th>			  
-	  <td class="display" id="price_total"><% if(total) { %>$<%=total %><% } %></td>
-	</tr>
-	<tr>
-	  <th colspan="2"></th>
-	  <td width="89"><button id="add_to_cart" type="button" class="btn btn-success cart" disabled>Add to Cart</button></td>
-	</tr>
-  </tfoot>
+<tr>
+  <th colspan="2" class="text-right">Total Qty</th>			  
+  <td class="display" id="qty_total"><%=qtyTotal %></td>
+</tr>
+<tr>
+  <th colspan="2" class="text-right">Price ea</th>			  
+  <td class="display" id="price_ea"><% if(itemPrice) { %>$<%=itemPrice %><% } %></td>			  
+</tr>
+<tr>
+  <th colspan="2" class="text-right">Sub Total</th>			  
+  <td class="display" id="sub_total"><% if(subtotal) { %>$<%=subtotal %><% } %></td>			  
+</tr>
+<tr>
+  <th colspan="2" class="text-right">Freight to:
+		<select name="deliveryAddressID" id="deliveryAddressID" class="input-xlarge"></select>
+	</th>			  
+  <td class="display" id="freight"><% if(freightTotal) { %>$<%=freightTotal %><% } %></td>			  
+</tr>
+<tr>
+  <th colspan="2" class="text-right">Total GST</th>			  
+  <td class="display" id="gst_total"><% if(gst) { %>$<%=gst %><% } %></td>
+</tr>
+<tr>
+  <th colspan="2" class="text-right">Total inc GST</th>			  
+  <td class="display" id="price_total"><% if(total) { %>$<%=total %><% } %></td>
+</tr>
+<tr>
+  <th colspan="2"></th>
+  <td class="text-right" width="89"><button id="add_to_cart" type="button" class="btn btn-success cart" disabled>Add to Cart</button></td>
+</tr>
 </script>
