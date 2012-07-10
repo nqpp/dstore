@@ -114,21 +114,21 @@ class M_emails extends MM_Model {
     
   }
 
-  function send() {
-
-    if(!$this->id) throw new Exception('No ID supplied. [m_email:send]');
-
-    $row = $this->get();
-	$data = (object) array_merge((array) $row, (array) $this->email_config);
-
-    // send the email
-    $this->load->library('email_handler');
-    $this->email_handler->set($data);
-    $this->email_handler->send();
-
-	$this->saveSent();
-
-  }
+//  function send() {
+//
+//    if(!$this->id) throw new Exception('No ID supplied. [m_email:send]');
+//
+//    $row = $this->get();
+//	$data = (object) array_merge((array) $row, (array) $this->email_config);
+//
+//    // send the email
+//    $this->load->library('email_handler');
+//    $this->email_handler->set($data);
+//    $this->email_handler->send();
+//
+//	$this->saveSent();
+//
+//  }
   
   function saveSent() {
     

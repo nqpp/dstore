@@ -12,13 +12,22 @@
 class Email_handler {
 
   private $email; // placeholder for ci email object
-  private $nosend = true;  // control whether emails get sent
+  private $nosend = false;  // control whether emails get sent
   
   function __construct() {
 
     $ci =& get_instance();
     $ci->load->library('email');
 	$this->email = $ci->email;
+	$this->defaults();
+	
+  }
+  
+  function defaults() {
+	
+	$this->smtp_port(465);
+	$this->wrapchars('100');
+	$this->mailtype('html');
 	
   }
 
@@ -37,8 +46,8 @@ class Email_handler {
   private function config() {
 	
 	$this->config = array();
-	$this->config['mailtype'] = $this->mailtype();
-	$this->config['newline'] = $this->newline();
+	$this->config['mailtype'] = (string)$this->mailtype();
+	$this->config['newline'] = "\r\n"; // !! IMPORTANT !! must be set this way or will not validate at gmail
 	$this->config['wrapchars'] = $this->wrapchars();
 	$this->config['protocol'] = $this->protocol();
 	
@@ -56,7 +65,7 @@ class Email_handler {
 	$this->config['smtp_host'] = $this->validate_smtp_host();
 	$this->config['smtp_user'] = $this->validate_smtp_user();
 	$this->config['smtp_pass'] = $this->validate_smtp_pass();
-	$this->config['smtp_port'] = $this->smtp_port();
+	$this->config['smtp_port'] = (int)$this->smtp_port();
 
   }
   
@@ -174,14 +183,14 @@ class Email_handler {
   function smtp_port($smtp_port = false) {
 	
 	if ($smtp_port) $this->smtp_port = $smtp_port;
-	return $this->smtp_port || "465";
+	return $this->smtp_port;
 	
   }
   
   function wrapchars($wrapchars = false) {
 	
 	if ($wrapchars) $this->wrapchars = $wrapchars;
-	return $this->wrapchars || 100;
+	return $this->wrapchars;
 	
   }
   
@@ -301,7 +310,7 @@ class Email_handler {
 	if ($this->bcc()) {
 	  $this->email->bcc($this->bcc());	  
 	}
-	
+
     $this->email->from($this->from(),$this->name());
     $this->email->subject($this->subject());
     $this->email->message($this->message());
