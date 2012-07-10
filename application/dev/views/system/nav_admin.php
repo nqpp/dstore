@@ -23,6 +23,8 @@
 	<li><a href="/users.html">Users</a></li>
 	<li><a href="/permissions.html">Permissions</a></li>
 	<li><a href="/syslogs.html">System Logs</a></li>
+	<li class="divider"> </li>
+	<li><a href="/reset.html">Cart / Order Reset</a></li>
   </ul>
   
 </div>
