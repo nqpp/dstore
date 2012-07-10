@@ -42,12 +42,29 @@ class Myorders extends MM_Controller {
   }
   
   function formHTMLNew() {
+	$this->load->model('m_emails');
+	$this->load->model('m_metas');
 	$this->load->model('m_carts');
 	$this->load->model('m_cart_items');
 	$this->load->model('m_contact_addresses');
 	$this->load->model('m_user_addresses');
 	
-	// get cart row(s)
+	$this->cartToOrder();
+	$this->getOrderDetail();
+	$this->addClientEmail();
+	$this->sendClientEmail();
+	
+	// empty cart data for user
+	$this->m_carts->deleteUserCart();
+	$this->m_cart_items->removeByCartIDs();
+	
+	die (header("Location:/myorders.html"));
+	
+  }
+  
+  private function cartToOrder() {
+	
+ 	// get cart row(s)
 	$carts = $this->m_carts->fetchUserCartIndexed();
 
 	if (!count($carts)) die (header("Location:/mycart.html"));
@@ -56,24 +73,17 @@ class Myorders extends MM_Controller {
 	$this->m_cart_items->cartIDs = array_keys($carts);
 	$cartItems = $this->m_cart_items->fetchCartItems();
 	
-	// specify PO No.
-//	$this->m_orders->purchaseOrder = $this->input->post('purchaseOrder'); // not required - MM_Model will pick this up.
-	
 	// add the order
 	$this->m_orders->add();
 	// cycle through carts and add product for each
 	$this->m_order_products->ordersID = $this->m_orders->id;
 	foreach ($carts as $c) {
-//	  $this->m_order_products->cart = $c;
-//	  $this->m_order_products->addCart();
 	  $this->m_order_products->set($c);
 	  $this->m_order_products->add();
 	  
 	  // cycle through items and add order product qty for each
 	  $this->m_order_product_quantities->orderProductsID = $this->m_order_products->id;
 	  foreach ($cartItems[$c->cartID] as $ci) {
-//		$this->m_order_product_quantities->cartItems = $ci;
-//		$this->m_order_product_quantities->addCart();
 		$this->m_order_product_quantities->set($ci);
 		$this->m_order_product_quantities->add();
 		
@@ -86,20 +96,45 @@ class Myorders extends MM_Controller {
 	// write delivery address
 	$this->m_order_addresses->ordersID = $this->m_orders->id;
 	$this->m_order_addresses->set($deliveryAddress);
-	$this->m_order_addresses->add();	
-//	$this->m_order_addresses->userAddress = $deliveryAddress;
-//	$this->m_order_addresses->addAddress();	
+	$this->m_order_addresses->add();
 	
-	// send an email
-	
-	// empty cart data for user
-	$this->m_carts->deleteUserCart();
-	$this->m_cart_items->removeByCartIDs();
-	
-	die (header("Location:/myorders.html"));
-}
+  }
   
+  function getOrderDetail() {
+	
+	$order = $this->m_order->get();
+	$this->m_order_products->ordersID = $this->m_order->id;
+	$order->products = $this->m_order_products->fetch();
+	
+	$this->set->vars('order', $order);
+	
+  }
   
+  function addClientEmail() {
+	
+ 	$this->m_metas->schemaName = 'systemEmail';
+	$sysEmails = $this->m_metas->fetchKVPairObj();
+	$this->m_emails->set($sysEmails); // set sender info for email
+	
+	$this->m_emails->to = $this->user->email;
+	$this->m_emails->subject = 'DStore Order Submitted';
+	$this->m_emails->message = $this->load->view('myorders/email_message','',true);
+//	$this->m_emails->altmessage = $this->makePlainText($message);
+	$this->m_emails->add();
+	
+ }
 
+  function sendClientEmail() {
+
+    $this->load->library('email_handler');
+	
+	$this->m_metas->schemaName = 'systemEmailConfig';
+	$this->email_handler->set($this->m_metas->fetchKVPairObj());
+	$this->email_handler->set($this->m_emails->get()); // set email data
+	$this->email_handler->send();
+	
+	$this->m_emails->saveSent();
+  }
+  
 }
 //EOF

@@ -26,7 +26,7 @@ class M_order_products extends MM_Model {
   function fetchCalcGrouped() {
 	
 	$this->db->select("(qtyTotal * itemPrice) as subTotal");
-	$this->db->select("TRUNCATE((qtyTotal * itemPrice + freightTotal) * taxRate,2) as gst",false);
+	$this->db->select("TRUNCATE((qtyTotal * itemPrice + freightTotal) * taxRate/100,2) as gst",false);
 	
 	return $this->fetchGrouped();
   }

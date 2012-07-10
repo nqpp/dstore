@@ -21,17 +21,17 @@ class Mycart extends MM_controller {
 
 	if(count($product) > 0) {
 		
-		$deliveryAddress = $this->user->userAddress();
+	  $deliveryAddress = $this->user->userAddress();
 
-		$this->m_chargeouts->xto = $deliveryAddress->czone;
-		$this->m_chargeouts->xfroms = array_keys($product);
-		$this->m_chargeouts->index = 'xfrom';
-		$freight = $this->m_chargeouts->fetchIndexedForCalc();
+	  $this->m_chargeouts->xto = $deliveryAddress->czone;
+	  $this->m_chargeouts->xfroms = array_keys($product);
+	  $this->m_chargeouts->index = 'xfrom';
+	  $freight = $this->m_chargeouts->fetchIndexedForCalc();
 
-		$this->cartcalc->products($product);
-		$this->cartcalc->freights($freight);
+	  $this->cartcalc->products($product);
+	  $this->cartcalc->freights($freight);
 
-		$carts = $this->cartcalc->calcAll();
+	  $carts = $this->cartcalc->calcAll();
 	}
 
 	$this->load->vars('carts', $carts);
@@ -48,26 +48,26 @@ class Mycart extends MM_controller {
 
 	function formJSONNew() {
 		
-		$json = json_decode(file_get_contents('php://input'));
-		
-		// Set userAddress/deliveryAddress per client selection.
-		$this->user->userAddressID($json->deliveryAddressID);
-			
-		$this->m_carts->usersID = $this->user->id();
-		$this->m_carts->index = 'czone';
-		$product = $this->m_carts->fetchGroupedForCalculated();
-		
-		$deliveryAddress = $this->user->userAddress($json->deliveryAddressID);
+	  $json = json_decode(file_get_contents('php://input'));
 
-		$this->m_chargeouts->xto = $deliveryAddress->czone;
-		$this->m_chargeouts->xfroms = array_keys($product);
-		$this->m_chargeouts->index = 'xfrom';
-		$freight = $this->m_chargeouts->fetchIndexedForCalc();
+	  // Set userAddress/deliveryAddress per client selection.
+	  $this->user->userAddressID($json->deliveryAddressID);
 
-		$this->cartcalc->products($product);
-		$this->cartcalc->freights($freight);
+	  $this->m_carts->usersID = $this->user->id();
+	  $this->m_carts->index = 'czone';
+	  $product = $this->m_carts->fetchGroupedForCalculated();
 
-		die(json_encode($this->cartcalc->calcAll()));
+	  $deliveryAddress = $this->user->userAddress($json->deliveryAddressID);
+
+	  $this->m_chargeouts->xto = $deliveryAddress->czone;
+	  $this->m_chargeouts->xfroms = array_keys($product);
+	  $this->m_chargeouts->index = 'xfrom';
+	  $freight = $this->m_chargeouts->fetchIndexedForCalc();
+
+	  $this->cartcalc->products($product);
+	  $this->cartcalc->freights($freight);
+
+	  die(json_encode($this->cartcalc->calcAll()));
 	}
   
   /*
