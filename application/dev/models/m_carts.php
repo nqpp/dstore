@@ -174,7 +174,7 @@ class M_carts extends MM_Model {
    * dev method
    */
   
-  function reset() {
+  function truncate() {
 //	$this->load->
 	$this->db->truncate('carts');	
   }

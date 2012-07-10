@@ -45,7 +45,7 @@ class M_cart_items extends MM_Model {
 	
   }
 
-  function reset() {
+  function truncate() {
 	$this->db->truncate('cartItems');	
   }
 

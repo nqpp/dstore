@@ -45,7 +45,7 @@ class M_order_products extends MM_Model {
 	
   }
   
-  function reset() {
+  function truncate() {
 	$this->db->truncate('orderProducts');	
   }
 

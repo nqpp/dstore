@@ -19,13 +19,13 @@ class Reset extends MM_Controller {
   }
   
   function renderHTML() {
-//print 'reset'; exit;
-	$this->m_carts->reset();
-	$this->m_cart_items->reset();
-	$this->m_orders->reset();
-	$this->m_order_products->reset();
-	$this->m_order_product_quantities->reset();
-	$this->m_order_addresses->reset();
+
+	$this->m_carts->truncate();
+	$this->m_cart_items->truncate();
+	$this->m_orders->truncate();
+	$this->m_order_products->truncate();
+	$this->m_order_product_quantities->truncate();
+	$this->m_order_addresses->truncate();
 	
 	die( header("Location:/dashboards.html?admin"));
 	
