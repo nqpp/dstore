@@ -284,16 +284,13 @@ class Email_handler {
   // set properties, add attachments and send
   function send($data = false) {
 	
+	if ($this->nosend) return;
 	if ($data) {
 	  $this->set($data);
 	}
-//print $this->to();
-//print $this->from();
 
 	$this->config();
 	$this->validate();
-	
-	if ($this->nosend) return;
 	
     $this->email->to($this->to());
 	

@@ -32,11 +32,11 @@
 			<thead>
 			  <tr>
 				<th>Name</th>
-				<th width="60">Qty</th>
-				<th width="80">Sub Total</th>
-				<th width="80">Freight</th>
-				<th width="60">GST</th>
-				<th width="80">Total</th>
+				<th width="40" class="text-right">Qty</th>
+				<th width="60" class="text-right">Sub Total</th>
+				<th width="50" class="text-right">Freight</th>
+				<th width="50" class="text-right">GST</th>
+				<th width="70" class="text-right">Total</th>
 			  </tr>
 			</thead>
 			<tbody>
@@ -59,7 +59,7 @@
 					  <tr>
 						<th width="70">Code</th>
 						<th>Name</th>
-						<th width="60">Qty</th>
+						<th width="40">Qty</th>
 					  </tr>
 					</thead>
 					<tbody>
@@ -75,11 +75,11 @@
 					</tbody>
 				  </table>
 				</td>
-				<td><?= $op->qtyTotal ?></td>
-				<td><span class="pull-right"><?= number_format($subTotal,2,'.',',') ?></span></td>
-				<td><span class="pull-right"><?= number_format($op->freightTotal,2,'.',',') ?></td>
-				<td><span class="pull-right"><?= number_format($gst,2,'.',',') ?></td>
-				<td><span class="pull-right"><?= number_format($total,2,'.',',') ?></td>
+				<td class="text-right"><?= $op->qtyTotal ?></td>
+				<td class="text-right"><?= number_format($subTotal,2,'.',',') ?></td>
+				<td class="text-right"><?= number_format($op->freightTotal,2,'.',',') ?></td>
+				<td class="text-right"><?= number_format($gst,2,'.',',') ?></td>
+				<td class="text-right"><?= number_format($total,2,'.',',') ?></td>
 			  </tr>
 			  <?php endforeach; ?>
 			  <?php endif; ?>
@@ -87,10 +87,12 @@
 			<tfoot>
 			  <tr>
 				<td></td>
-				<td colspan="4">
-				  <span class="pull-right"><strong>Order Total</strong></span>
+				<td colspan="4" class="text-right">
+				  <strong>Order Total</strong>
 				</td>
-				<td><span class="pull-right"><strong>$<?= number_format($orderTotal,2,'.',',') ?></strong></span></td>
+				<td class="text-right">
+				  <strong>$<?= number_format($orderTotal,2,'.',',') ?></strong>
+				</td>
 			  </tr>
 			</tfoot>
 		  </table>

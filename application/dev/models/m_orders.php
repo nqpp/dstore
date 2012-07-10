@@ -88,5 +88,9 @@ class M_orders extends MM_Model {
 	$this->db->where_in('status',$s);
   }
   
+  function reset() {
+	$this->db->truncate('orders');	
+  }
+
 }
 //EOF

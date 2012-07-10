@@ -29,12 +29,20 @@
 	  <button class="btn pull-right" type="submit">Get Password</button>
 	</div>
 
-
   </div>
+
   <div class="row">
 	<div class="span4">
 	  <p>I don't have a login - 
 		<a class="" href="/request_login">Request Login</a>
+	  </p>
+	</div>
+  </div>
+
+  <div class="row">
+	<div class="span4">
+	  <p>I need to go back to login - 
+		<a class="" href="/login">Login</a>
 	  </p>
 	</div>
   </div>

@@ -34,4 +34,8 @@ class M_order_addresses extends MM_Model {
 	
   }
   
+  function reset() {
+	$this->db->truncate('orderAddresses');	
+  }
+
 }

@@ -46,7 +46,7 @@
 */
 
 $active_group = 'default';
-//$active_group = 'ismith'; // ImageSmith Environment
+//$active_group = 'live'; // Production Environment
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
@@ -65,22 +65,22 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
-// ImageSmith Environment
-$db['ismith']['hostname'] = 'localhost';
-$db['ismith']['username'] = "dstore";
-$db['ismith']['password'] = "web123";
-$db['ismith']['database'] = "dstore";
-$db['ismith']['dbdriver'] = 'mysql';
-$db['ismith']['dbprefix'] = '';
-$db['ismith']['pconnect'] = TRUE;
-$db['ismith']['db_debug'] = TRUE;
-$db['ismith']['cache_on'] = FALSE;
-$db['ismith']['cachedir'] = '';
-$db['ismith']['char_set'] = 'utf8';
-$db['ismith']['dbcollat'] = 'utf8_general_ci';
-$db['ismith']['swap_pre'] = '';
-$db['ismith']['autoinit'] = TRUE;
-$db['ismith']['stricton'] = FALSE;
+// Production Environment
+$db['live']['hostname'] = 'localhost';
+$db['live']['username'] = "dstorecl_admin";
+$db['live']['password'] = "J{3sKAVr8P^";
+$db['live']['database'] = "dstorecl_live";
+$db['live']['dbdriver'] = 'mysql';
+$db['live']['dbprefix'] = '';
+$db['live']['pconnect'] = TRUE;
+$db['live']['db_debug'] = TRUE;
+$db['live']['cache_on'] = FALSE;
+$db['live']['cachedir'] = '';
+$db['live']['char_set'] = 'utf8';
+$db['live']['dbcollat'] = 'utf8_general_ci';
+$db['live']['swap_pre'] = '';
+$db['live']['autoinit'] = TRUE;
+$db['live']['stricton'] = FALSE;
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */

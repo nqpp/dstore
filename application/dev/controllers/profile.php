@@ -18,6 +18,7 @@ class Profile extends MM_controller {
 	$this->load->vars('contactJSON',$this->m_contacts->getJSON());
 	$this->load->vars('addressJSON', $this->m_contact_addresses->fetchJSON());
 	$this->load->vars('phoneJSON', $this->m_contact_metas->fetchPhoneJSON());
+	$this->load->vars('employmentDataJSON', $this->m_contact_metas->fetchEmploymentDataJSON());
 
 	$this->m_metas->schemaName = 'phoneTypes';
 	$this->load->vars('phoneTypes', $this->m_metas->fetch());
@@ -29,11 +30,15 @@ class Profile extends MM_controller {
 	$this->load->vars('states', $this->m_metas->fetch());
 	
 	$this->load->vars('js_tpl_entity',$this->load->view('profile/js_tpl_entity','',true));
-	$this->load->vars('js_addresslist', $this->load->view('contacts/js_tpl_addresslist','',true));
-	$this->load->vars('js_phonelist', $this->load->view('contacts/js_tpl_phonelist','',true));
+	$this->load->vars('js_tpl_addresslist', $this->load->view('contacts/js_tpl_addresslist','',true));
+	$this->load->vars('js_tpl_phonelist', $this->load->view('contacts/js_tpl_phonelist','',true));
+	$this->load->vars('js_tpl_employmentdatalist', $this->load->view('contacts/js_tpl_employmentdatalist','',true));
 	$this->load->vars('js_tpl_typeahead_list', $this->load->view('contacts/js_tpl_typeahead_list','',true));
 	$this->load->vars('content', $this->load->view('profile/entity','', true));
 	$this->jsFiles('/scripts/location-lookup.js');
+	$this->jsFiles('/scripts/address-view.js');
+	$this->jsFiles('/scripts/phone-view.js');
+	$this->jsFiles('/scripts/employment-data-view.js');
 	$this->jsFiles('/scripts/contact-entity.js');
 	
   }

@@ -13,40 +13,49 @@ class Forgot_password extends Unsecure {
   
   function renderHTML() {
 	
-	$this->load->vars('content',$this->load->view('system/forgot_password','',true));
+	$this->load->vars('content',$this->load->view('forgot_password/entity','',true));
     $this->pageTemplate('page_dialog');
 	
   }
   
   function renderHTMLSuccess() {
 	
-	$this->load->vars('content',$this->load->view('system/forgot_password_success','',true));
+	$this->load->vars('content',$this->load->view('forgot_password/success','',true));
     $this->pageTemplate('page_dialog');
   }
   
   function formHTMLNew() {
 	
     $this->pageTemplate('page_dialog');
-	$user = $this->m_users->reset_password();
-	$message = $this->load->view('system/forgot_password_message',$user,true);
+    $this->load->library('email_handler');
 	
-	$this->m_metas->schemaName = 'systemEmail';
-	$sysEmails = $this->m_metas->fetchKVPairObj();
+	$user = $this->m_users->reset_password();
+	$message = $this->load->view('forgot_password/message',$user,true);
 	
 	$this->m_metas->schemaName = 'systemEmailConfig';
-	$this->m_emails->email_config = $this->m_metas->fetchKVPairObj();
+	$this->email_handler->set($this->m_metas->fetchKVPairObj());
+//	$this->m_emails->email_config = $this->m_metas->fetchKVPairObj();
+
+	$this->m_metas->schemaName = 'systemEmail';
+	$sysEmails = $this->m_metas->fetchKVPairObj();
+	$this->m_emails->set($sysEmails);
 	
 	$this->m_emails->to = $user->email;
-	$this->m_emails->bcc = $sysEmails->bcc;
-	$this->m_emails->from = $sysEmails->from;
-	$this->m_emails->name = $sysEmails->name;
+//	if ($sysEmails->cc) $this->m_emails->cc = $sysEmails->cc;
+//	if ($sysEmails->bcc) $this->m_emails->bcc = $sysEmails->bcc;
+//	$this->m_emails->from = $sysEmails->from;
+//	$this->m_emails->name = $sysEmails->name;
+	
 	$this->m_emails->subject = 'DStore Password Reset';
 	$this->m_emails->message = $message;
 //	$this->m_emails->altmessage = $this->makePlainText($message);
 	
 	$this->m_emails->add();
-	$this->m_emails->send();
-//print_r($user);	
+	$email = $this->m_emails->get();
+	
+	$this->email_handler->set($email);
+	$this->email_handler->send();
+//	$this->m_emails->send();
 	
 	die(header("Location:forgot_password.html?success"));
 	
