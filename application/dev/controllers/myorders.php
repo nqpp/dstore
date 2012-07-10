@@ -103,9 +103,10 @@ class Myorders extends MM_Controller {
   function getOrderDetail() {
 	
 	$order = $this->m_orders->get();
+	$this->m_order_products->reset();
 	$this->m_order_products->ordersID = $this->m_orders->id;
 	$order->products = $this->m_order_products->fetch();
-	
+
 	$this->load->vars('order', $order);
 	
   }
