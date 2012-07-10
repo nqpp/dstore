@@ -44,5 +44,9 @@ class M_order_product_quantities extends MM_Model {
 	
   }
   
+  function reset() {
+	$this->db->truncate('orderProductQuantities');	
+  }
+
 }
 //EOF
