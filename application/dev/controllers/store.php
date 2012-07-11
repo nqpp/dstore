@@ -45,7 +45,9 @@ class Store extends MM_controller {
 	$this->load->vars('productJSON', json_encode($product));
 	$this->load->vars('prices', $this->m_product_metas->prices());
 	$this->load->vars('images', $this->m_product_metas->images());
-	$this->load->vars('userAddresses', json_encode(array_values($this->user->alladdresses())));
+	$allAddresses = $this->user->alladdresses();
+	$addresses = $allAddresses ? array_values($allAddresses): array();
+	$this->load->vars('userAddresses', json_encode($addresses));
 	$this->load->vars('userAddressID', $this->user->userAddressID());
 
 	$this->m_carts->productsID = $this->entityID;

@@ -37,7 +37,9 @@ class Mycart extends MM_controller {
 	$this->load->vars('carts', $carts);
 	$this->m_cart_items->index = 'cartsID';
 	$this->load->vars('cartItems', $this->m_cart_items->fetchGrouped());
-	$this->load->vars('userAddresses', json_encode(array_values($this->user->alladdresses())));
+	$allAddresses = $this->user->alladdresses();
+	$addresses = $allAddresses ? array_values($allAddresses): array();
+	$this->load->vars('userAddresses', json_encode($addresses));
 	$this->load->vars('userAddressID', $this->user->userAddressID());
 	
 	$this->load->vars('content',$this->load->view('mycart/list', '', true));
