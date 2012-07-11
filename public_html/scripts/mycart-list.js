@@ -82,7 +82,7 @@ $(function() {
 			this.$el.find('tbody').html('');
 				this.model.set({freightTotal: 0}, {silent: true});
 				this.model.set({cartTotal: 0}, {silent: true});
-			
+			this.$el.find('#valDeliveryAddressID').val(userAddressID);
 			App.OrderCartItems.fetch({data: '{"deliveryAddressID":"' + userAddressID + '"}', type: 'POST', dataType: 'json', contentType: 'application/json;charset=UTF-8'});
 			return this;
 		},

@@ -96,7 +96,10 @@
 </tr>
 <tr>
   <th colspan="2" class="text-right">Freight to:
-		<select name="deliveryAddressID" id="deliveryAddressID" class="input-xlarge"></select>
+			<div id="deliveryAddressID">
+				<a class="btn dropdown-toggle" data-toggle="dropdown"><span>Select Address&hellip; </span><b class="caret"></b></a>
+				<ul class="dropdown-menu"></ul>
+			</div>
 	</th>			  
   <td class="display" id="freight"><% if(freightTotal) { %>$<%=freightTotal %><% } %></td>			  
 </tr>

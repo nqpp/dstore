@@ -7,9 +7,9 @@ $(function() {
 		el: $('#deliveryAddressID'),
 		
 		render: function() {
-			
-			this.$el.html('');
-			this.delegateEvents({'change' : 'updateUserAddressID'});
+
+			this.$el.find('.dropdown-menu').html('');
+			this.delegateEvents({'click .dropdown-menu a' : 'updateUserAddressID'});
 			this.addAll();
 			return this;
 		},
@@ -17,9 +17,15 @@ $(function() {
 		add: function(item) {
 			
 			item.set({'selectedID': userAddressID}, {silent: true});
+			
+			if(item.get('userAddressID') == userAddressID) {
 
-			var tpl = _.template('<option value="<%=userAddressID %>"<% if(selectedID == userAddressID) { %> selected="selected"<% } %>><%=address %>, <%=suburb %> <%=state %> <%=postcode %></option>');
-			this.$el.append(tpl(item.toJSON()));
+				var tpl = _.template('<%=address %><br /><%=suburb %> <%=state %> <%=postcode %>');
+				this.$el.find('.dropdown-toggle span').html(tpl(item.toJSON()));
+			}
+			
+			var tpl = _.template('<li><a href="#" rel="<%=userAddressID %>"><%=address %><br /><%=suburb %> <%=state %> <%=postcode %></a></li>');
+			this.$el.find('.dropdown-menu').append(tpl(item.toJSON()));
 			return this;
 		},
 		
@@ -30,8 +36,8 @@ $(function() {
 		},
 		
 		updateUserAddressID: function(ev) {
-			
-			userAddressID = $(ev.target).val();
+
+			userAddressID = $(ev.target).attr('rel');
 			App.UserAddresses.each(function(item) {
 				
 				item.set({'selectedID': userAddressID}, {silent: true});
@@ -40,7 +46,7 @@ $(function() {
 			
 			App.UserAddresses.trigger('change');
 			
-			return this;
+			this.render();
 		}
 	});
 	
