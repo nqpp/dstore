@@ -95,9 +95,9 @@
   <td class="display" id="sub_total"><% if(subtotal) { %>$<%=subtotal %><% } %></td>			  
 </tr>
 <tr>
-  <th colspan="2" class="text-right">Freight to:
-			<div id="deliveryAddressID">
-				<a class="btn dropdown-toggle" data-toggle="dropdown"><span>Select Address&hellip; </span><b class="caret"></b></a>
+  <th colspan="2" class="text-right">Freight to:<br />
+			<div class="btn-group pull-right" id="deliveryAddressID">
+				<a class="btn dropdown-toggle" data-toggle="dropdown"><span>Select Address&hellip; </span> <b class="caret"></b></a>
 				<ul class="dropdown-menu"></ul>
 			</div>
 	</th>			  

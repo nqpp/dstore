@@ -115,8 +115,8 @@
 		    <div class="control-group">
 		      <label class="control-label" for="input01">Select Delivery Address</label>
 		      <div class="controls">
-						<div id="deliveryAddressID">
-							<a class="btn dropdown-toggle" data-toggle="dropdown"><span>Select Address&hellip; </span><b class="caret"></b></a>
+						<div class="btn-group" id="deliveryAddressID">
+							<a class="btn dropdown-toggle" data-toggle="dropdown"><span>Select Address&hellip; </span> <b class="caret"></b></a>
 							<ul class="dropdown-menu"></ul>
 							<input type="hidden" name="deliveryAddressID" id="valDeliveryAddressID" value="<?php echo $userAddressID ?>" />
 						</div>
