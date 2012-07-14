@@ -52,9 +52,6 @@ class Mycart extends MM_controller {
 		
 	  $json = json_decode(file_get_contents('php://input'));
 
-	  // Set userAddress/deliveryAddress per client selection.
-	  $this->user->userAddressID($json->deliveryAddressID);
-
 	  $this->m_carts->usersID = $this->user->id();
 	  $this->m_carts->index = 'czone';
 	  $product = $this->m_carts->fetchGroupedForCalculated();
@@ -64,10 +61,10 @@ class Mycart extends MM_controller {
 	  $this->m_chargeouts->xto = $deliveryAddress->czone;
 	  $this->m_chargeouts->xfroms = array_keys($product);
 	  $this->m_chargeouts->index = 'xfrom';
-	  $freight = $this->m_chargeouts->fetchIndexedForCalc();
+	  $freights = $this->m_chargeouts->fetchIndexedForCalc();
 
 	  $this->cartcalc->products($product);
-	  $this->cartcalc->freights($freight);
+	  $this->cartcalc->freights($freights);
 
 	  die(json_encode($this->cartcalc->calcAll()));
 	}

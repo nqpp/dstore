@@ -214,15 +214,22 @@ class Cartcalc {
 	if (!$this->product()) return false;
 	
 	$calc->name = $this->product()->name; // Love method chaining...
+	
 	if(isset($this->product()->cartID)) $calc->cartID = $this->product()->cartID; // Still love method chaining...
+	
 	$calc->moqReached = true;
 	$calc->productsID = $this->productsID();
 	$calc->qtyTotal = $this->qtyTotal();
 	$calc->itemPrice = $this->itemPrice();
+	$calc->itemPrice_formatted = money_format("%i",$this->itemPrice());
 	$calc->freightTotal = $this->freightTotal();
+	$calc->freightTotal_formatted = money_format("%i",$this->freightTotal());
 	$calc->subtotal = $this->subtotal();
+	$calc->subtotal_formatted = money_format("%i",$this->subtotal());
 	$calc->gst = $this->gst();
+	$calc->gst_formatted = money_format("%i",$this->gst());
 	$calc->total = $this->total();
+	$calc->total_formatted = money_format("%i",$this->total());
 	$calc->taxRate = $this->taxRate();
 	
 	return $calc;

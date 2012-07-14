@@ -51,13 +51,13 @@
 		<table id="cart_prep" class="table table-striped table-bordered">
 			<thead>
 			<tr>
-			  <th width="50">Code</th>
+			  <th width="70">Code</th>
 			  <th>Colour</th>
-			  <th width="90">Qty</th>
+			  <th width="70">Qty</th>
 			</tr>
 		  </thead>
 		  <tbody></tbody>
-			<tfoot></tfoot>
+		  <tfoot></tfoot>
 		</table>
 	  </div>
 	</div>
@@ -84,15 +84,15 @@
 <script type="text/template" id="tpl-subproduct">
 <tr>
   <th colspan="2">Total Qty</th>			  
-  <td class="display" id="qty_total"><%=qtyTotal %></td>
+  <td class="display text-right" id="qty_total"><%=qtyTotal %></td>
 </tr>
 <tr>
   <th colspan="2">Price ea</th>			  
-  <td class="display" id="price_ea"><% if(itemPrice) { %>$<%=itemPrice %><% } %></td>			  
+  <td class="display text-right" id="price_ea"><% if(itemPrice) { %>$<%=itemPrice_formatted %><% } %></td>			  
 </tr>
 <tr>
-  <th colspan="2">Sub Total</th>			  
-  <td class="display" id="sub_total"><% if(subtotal) { %>$<%=subtotal %><% } %></td>			  
+  <th colspan="2">Sub Total (ex GST)</th>			  
+  <td class="display text-right" id="sub_total"><% if(subtotal) { %>$<%=subtotal_formatted %><% } %></td>			  
 </tr>
 <tr>
   <th colspan="2">Freight to:
@@ -101,18 +101,20 @@
 		<ul class="dropdown-menu"></ul>
 	</div>
 	</th>			  
-  <td class="display" id="freight"><% if(freightTotal) { %>$<%=freightTotal %><% } %></td>			  
+  <td class="display text-right" id="freight"><% if(freightTotal) { %>$<%=freightTotal_formatted %><% } %></td>			  
 </tr>
 <tr>
   <th colspan="2">Total GST</th>			  
-  <td class="display" id="gst_total"><% if(gst) { %>$<%=gst %><% } %></td>
+  <td class="display text-right" id="gst_total"><% if(gst) { %>$<%=gst_formatted %><% } %></td>
 </tr>
 <tr>
   <th colspan="2">Total inc GST</th>			  
-  <td class="display" id="price_total"><% if(total) { %>$<%=total %><% } %></td>
+  <td class="display text-right" id="price_total"><% if(total) { %>$<%=total_formatted %><% } %></td>
 </tr>
 <tr>
-  <th colspan="2"></th>
-  <td><button id="add_to_cart" type="button" class="btn btn-success cart" disabled>Add to Cart</button></td>
+  <th colspan="3">
+	<button id="add_to_cart" type="button" class="btn btn-success cart pull-right" disabled>Add to Cart</button>
+  </th>
+<!--  <td></td>-->
 </tr>
 </script>
