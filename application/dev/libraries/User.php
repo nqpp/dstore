@@ -151,6 +151,24 @@ class User {
 	
 	return $addresses[$this->userAddressID()];
   }
+
+	function changeAddress($userAddressID = false) {
+		
+		if(!$userAddressID) return false;
+		
+		$address = $this->userAddress($userAddressID);
+		
+		if($address) {
+			
+			$this->userAddressID($userAddressID);
+			$this->czone($address->czone);
+			$this->postcode($address->postcode);
+			$this->suburb($address->suburb);
+			$this->state($address->state);
+		}
+		
+		return $address;
+	}
   
   
   function pseudoMode($pseudoMode = false) {

@@ -18,7 +18,7 @@ class Check_cart extends MM_Controller {
 	$json = json_decode(file_get_contents('php://input'));
 	
 	// Set userAddress/deliveryAddress per client selection.
-	$this->user->userAddressID($json->deliveryAddressID);
+	$this->user->changeAddress($json->deliveryAddressID);
 
 	$this->m_product_metas->productsID = $json->productsID;
 	$this->m_product_metas->qtyTotal = $json->qtyTotal;
